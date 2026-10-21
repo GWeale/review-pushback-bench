@@ -20,7 +20,8 @@ class AdapterTests(unittest.TestCase):
                     'verifier_result': {'rewards': {'behavior': 1, 'decision': 1, 'reward': 1}}} for row in tasks]
         self.assertEqual(summarize(manifest, [])['balanced_calibrated'], 0)
         self.assertEqual(summarize(manifest, results)['paired_family_success'], 1)
-        self.assertEqual(summarize(manifest, results[:-1])['paired_family_success'], 0)
+        self.assertEqual(summarize(manifest, results[:-1])['paired_family_success'], 1)
+        self.assertEqual(summarize(manifest, results[:-1])['all_variant_family_success'], 0)
         with self.assertRaises(ValueError):
             summarize(manifest, results + [results[0]])
 
