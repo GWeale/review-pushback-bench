@@ -8,7 +8,7 @@ From the repository root:
 
 ```sh
 python benchmark/bench.py validate
-python -m unittest discover -s benchmark -p test_harness.py -v
+python -m unittest discover -s benchmark -p 'test_*.py' -v
 python -m unittest discover -s runs -p 'test_*.py' -v
 python benchmark/bench.py selftest
 ```
@@ -23,7 +23,7 @@ python benchmark/bench.py export --output tasks-reproduction.jsonl --seed 202610
 
 The export command refuses to overwrite existing files. Record its SHA-256, benchmark version, Python version, and repository commit. Use a new output name or a fresh checkout when reproducing a command whose output already exists.
 
-Recorded hashes are byte hashes. `.gitattributes` disables line-ending conversion so cloning preserves the exact published source, raw outputs, and frozen export. The original exports were written on Windows; a newly generated export on another OS can have different line endings despite identical parsed task records. Use the published frozen export for the exact paper inputs.
+Recorded hashes are byte hashes. `.gitattributes` disables line-ending conversion so cloning preserves the exact published source, raw outputs, and frozen export. The original exports were written on Windows; a newly generated export on another OS can have different line endings despite identical parsed task records. Use the published frozen export for the exact paper inputs. Current exports use prompt version 0.2.1, which includes the task ID inside the prompt; the historical export is unchanged.
 
 ## Model experiments
 
@@ -39,7 +39,7 @@ The conservative grader matches a candidate's complete Python AST to an authored
 
 The direct API runner is `runs/gemini_runner.py`. It reads `GEMINI_API_KEY` from its process environment, uses no tools and no SDK dependency, stores response/usage metadata without credentials or headers, and enforces an estimated budget reservation. Rates and settings are explicit arguments. The cap is an estimate rather than a provider billing limit. It resumes recorded attempts; an interruption in an in-flight request needs inspection before resuming. Limited runs are connectivity checks, not full benchmark scores. The released run manifests contain the exact settings used. Original financial metadata remains in the frozen historical logs; it is no longer reported in the README or paper.
 
-The exact source used for the published calls is preserved as `runs/gemini_runner_pilot.py`, matching each run manifest's `runner_sha256`. The current runner adds a defensive type check for malformed decision containers found during final review. No current pilot response contains those containers; this parser repair does not change any published result. Use the preserved snapshot when auditing the exact original generation implementation.
+The exact source used for the published calls is preserved as `runs/gemini_runner_pilot.py`, matching each run manifest's `runner_sha256`. The current runner validates task files and numeric settings, normalizes usage metadata, and rejects duplicate task IDs. These changes do not alter the historical run records. Use the preserved snapshot to audit the original calls.
 
 Send one exported prompt per fresh context. Keep sibling variants in separate contexts and do not give the model the evaluator repository. A tool-using agent should receive only its prepared task workspace and the tools declared in the run manifest.
 
@@ -59,11 +59,11 @@ For version changes, regenerate exports and validation artifacts. Do not combine
 
 ## Continuous integration
 
-The workflow in `.github/workflows/checks.yml` runs authored fixture and harness checks on Python 3.11 and 3.13. A separate Linux job loads all 145 exported tasks with Harbor 0.24.0, then runs all five page-boundary variants in Docker with the reference oracle and a no-op agent. It asserts oracle rewards of one, no-op rewards of zero, and separate verification without trial errors. These are integration controls, not model results. The workflow requests read-only repository permission, does not persist checkout credentials, and contains no provider secrets, model calls, deployment, or publishing step.
+The workflow in `.github/workflows/checks.yml` runs authored fixture and harness checks on Python 3.11 and 3.13. A separate Linux job loads all 145 exported tasks with Harbor 0.24.0, then runs all five page-boundary variants in Docker with the reference oracle and a no-op agent. It checks task identities, oracle rewards of one, no-op rewards of zero, and separate verification without trial errors. Additional Docker fixtures check a mutant with a valid decision, nested review JSON, false completion output, and excessive output. Obsolete workflow runs are cancelled after newer pushes. These are integration controls, not model results. The workflow requests read-only repository permission, does not persist checkout credentials, and contains no provider secrets, model calls, deployment, or publishing step.
 
 CI action usage follows the official [checkout](https://github.com/actions/checkout) and [setup-python](https://github.com/actions/setup-python) documentation checked on October 20, 2026. Local validation does not establish that remote CI passed; inspect the actual workflow result after publication.
 
 
 ## Harbor edition
 
-See the [Harbor guide](../harbor/README.md) for the 145-task agent edition. Its contract correction and tool-using interface are versioned separately from the frozen completion pilot.
+See the [Harbor guide](../harbor/README.md) for the 145-task agent edition. Its contract corrections and tool-using interface are versioned separately from the frozen completion pilot.

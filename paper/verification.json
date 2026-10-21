@@ -4,16 +4,16 @@
   "native_compiler": "pdfLaTeX; two passes; no shell escape",
   "desktop_compiler": "success on final saved sources",
   "visual_review": "All 9 updated pages rendered and inspected; readable tables and no clipping",
-  "known_domain_limits": "utc-instant excluded before outcome inspection; query-encoding caveat retained after outcome inspection",
+  "known_domain_limits": "Frozen pilot retains disclosed UTC, Unicode, SQL-collation and numeric-component limits; Harbor 0.2.0 corrects affected domains and the escaped-JSON check.",
   "model_results": "Two real API runs; conservative AST verification; no arbitrary returned Python executed",
   "sha256": {
-    "paper.md": "de649a13879d55e22761be140594c709d39e1f32d34c7d34d593906cafda563d",
-    "review-pushback-bench.pdf": "5c17db2ef856df816cbf91f5109e9200c4e1dd39be72b1dc2e113e8f3180c53b",
-    "latex/main.tex": "5a16af4bc92fd2e9c196ebfe1a05c8f38d3b9cac852148a33d096598790aba88",
-    "latex/paper-body.tex": "892b2e0f7d17e7f3efa96f999c4b8240f97589c367fb7406bb0ba4935dee1414",
+    "paper.md": "94c707a904d34b7542c54766b4ea21d9a6d35abaf4ad067151dc82e70e5fa0d9",
+    "review-pushback-bench.pdf": "ec37c811af0c9a6dc301eba819e560448fc291439a492499191350cfba1ad0ad",
+    "latex/main.tex": "7e094a687e59b99f96e0b76ac171fd15a2aef1e98e605b9aae99546d27edc499",
+    "latex/paper-body.tex": "fd4babc9ffa167f8cb2cb643d07e3e9f70acada40287cad0ad905c6d6a52f696",
     "build_paper.py": "3217c0aaa8a4e0fb757f71ac5db99592faefa1972df8fc8ca9aa49d3e8f2d710",
     "references.bib": "101f5b30c307b823f70f3eca66a571a570a4f573410de12b7253d906db057fc8",
     "sources.json": "fb3e78281b10df2ba89628c8935db876ca3ef1c7f42dcefddd204e7a13c79ca5"
   },
-  "harbor_edition": "145 tasks, 29 families; schema-checked with Harbor 0.24.0; Docker smoke verified separately in CI"
+  "harbor_edition": "145 tasks, 29 families; adapter 0.2.0 schema-checked with Harbor 0.24.0; Docker controls verified separately in CI"
 }

@@ -22,7 +22,7 @@ def public_files():
         for pattern in patterns:
             paths.extend((ROOT / directory).glob(pattern))
     for name in ('validation.v0.2.json', 'selftest.v0.2.json', 'pipeline-checks.json',
-                 'tasks.v0.2.dev.jsonl', 'primary-analysis-plan.json', 'release-checks.json', 'harbor-validation.v01.json'):
+                 'tasks.v0.2.dev.jsonl', 'primary-analysis-plan.json', 'release-checks.json', 'harbor-validation.v01.json', 'harbor-validation.v02.json'):
         paths.append(ROOT / 'artifacts' / name)
     for directory in ('gemini-2.5-flash-v02', 'gemini-3.5-flash-lite-v02'):
         for name in ('run.json', 'attempts.jsonl', 'responses.jsonl', 'canonical-grade.json'):

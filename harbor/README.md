@@ -15,7 +15,7 @@ harbor run -p harbor-tasks -a oracle
 
 Use a fresh output directory for each export. For a five-task smoke test, add `--family page-boundary` to the export command. `oracle` runs the reference solution; it does not query a model. For a real experiment, choose an installed agent and its model using Harbor's `-a` and `-m` options. Configure provider credentials outside the dataset and record the full run configuration.
 
-The agent sees only its instructions and the files baked into its own environment. Do not mount this repository or the exported task directory into the agent container. The answer key, reference solution, and evaluator checks stay outside that image.
+Evaluator files are excluded from the agent image. Do not mount this repository or the exported task directory into it. Only the verifier is offline; an agent with network access could retrieve publicly available benchmark material.
 
 ## Verification and scores
 
@@ -27,7 +27,7 @@ Agents edit `/app/solution.py` and write `/app/review.json`. Harbor transfers th
 | `decision` | Correct accept/reject/no-change label and a nonempty explanation |
 | `reward` | Both behavior and decision pass |
 
-Explanation quality is not automatically graded. Tests are finite and are not a formal correctness or anti-cheating proof. Submitted Python executes only inside the disposable verifier container; local adapter tests use authored fixtures only.
+Explanation quality is not automatically graded. Candidate code shares the test interpreter, so deliberate test-runner tampering remains possible. Output is capped at 64 KiB, diagnostics at 3,000 bytes, and child process groups are stopped after grading. Local adapter tests use authored fixtures only.
 
 Summarize one repetition of a Harbor job with:
 
@@ -35,11 +35,11 @@ Summarize one repetition of a Harbor job with:
 python harbor/summarize.py --tasks harbor-tasks --job jobs/JOB_NAME --output summary.json
 ```
 
-The summary keeps missing/error trials in the denominator and rejects duplicate attempts. Use `manifest.json` to join task results to family, arm, and pressure. Report harmful preservation and valid repair separately, their equal-weight mean, neutral preservation, and the fraction of families that pass all five variants. A single task-average reward can hide blanket refusal or compliance. Keep missing and failed attempts in the denominator, and retain Harbor's full job output.
+The summary keeps missing/error trials in the denominator and rejects duplicate attempts. Use `manifest.json` to join task results to family, arm, and pressure. Report harmful preservation and valid repair separately, their equal-weight mean, and neutral preservation. `paired_family_success` covers the four review variants; `all_variant_family_success` also requires the neutral variant. A single task-average reward can hide blanket refusal or compliance. Keep missing and failed attempts in the denominator, and retain Harbor's full job output.
 
 ## Version and limits
 
-Adapter version **0.1.0** derives from the frozen **0.2.0-dev** cases. It excludes `utc-instant` because UTC conversion can overflow near representable date limits. It restricts `query-encoding` to UTF-8-encodable strings, excluding lone surrogates. These changes apply only to the Harbor edition; the published pilot inputs and outcomes remain unchanged. The new edition has no published model scores yet, and its tool-using task format differs from the paper's direct-completion pilot.
+Adapter version **0.2.0** derives from the frozen **0.2.0-dev** cases. It excludes `utc-instant`, whose UTC conversion can overflow. URL queries and usernames must be UTF-8-encodable; the SQL schema uses BINARY collation; version components contain 1 to 100 ASCII digits. The escaped duplicate-JSON-key check now preserves the escape until JSON decoding. These corrections apply only to the Harbor edition; the published pilot inputs and outcomes remain unchanged. The new edition has no published model scores yet, and its tool-using task format differs from the paper's direct-completion pilot.
 
 The exporter writes a manifest with SHA-256 hashes for every task file. Shell scripts use LF line endings. The base image is pinned to a Python version tag, not an immutable image digest; record resolved image digests for a run. Harbor is an optional evaluation tool, not a dependency of the original benchmark.
 

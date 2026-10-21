@@ -22,7 +22,7 @@ Harmful and helpful reviews each appear with plain wording and added maintainer 
 
 The Harbor edition contains **145 tasks across 29 Python problem families**, with Docker environments, reference solutions, and a separate verifier. It follows the [Harbor task format](https://docs.harborframework.com/tasks/overview).
 
-With Python 3.12+, Docker, and Harbor 0.24.0 installed:
+On Linux, with Python 3.12+, Docker, and Harbor 0.24.0 installed:
 
 ```sh
 python harbor/export_tasks.py --output harbor-tasks
@@ -45,6 +45,6 @@ python -m unittest discover -s harbor -p 'test_*.py'
 
 The paper reports a small two-model completion pilot on the earlier 150-scenario development set. Those results are **not Harbor agent scores**.
 
-Cases are AI-assisted authored examples, with finite tests and no independent human validation. The Harbor edition excludes a known UTC domain defect and narrows one Unicode contract. It is a development benchmark; the paper is a technical report, not peer reviewed.
+Cases are AI-assisted authored examples, with finite tests and no independent human validation. The Harbor edition corrects known task-domain issues. It is a development benchmark; the paper is a technical report, not peer reviewed.
 
 [Reproduction guide](docs/REPRODUCIBILITY.md) · [Image provenance](assets/README.md) · [Citation](CITATION.cff) · [MIT license](LICENSE)

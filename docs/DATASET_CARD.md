@@ -10,7 +10,7 @@ The v0.2.0-dev release contains 30 problem families and 150 scenarios, confirmed
 
 Known issue: `utc-instant` omits the requirement that UTC conversion remain inside Python datetime's representable range. All authored checks use representable modern dates, so passing those checks does not cover the full frozen contract. The audit exclusion is documented in `artifacts/primary-analysis-plan.json`; a contract repair belongs in a new dataset version.
 
-A later AI-assisted review, after model outcomes were inspected, found that `query-encoding` says arbitrary Unicode strings while Python's `urlencode` rejects lone surrogates. Its current witnesses use UTF-8-encodable strings. This caveat is disclosed without retrospectively changing the recorded primary cohort; the next version should restrict that input domain. The primary cohort is not claimed to have exhaustive domain validation.
+A later AI-assisted review, after model outcomes were inspected, found that `query-encoding` says arbitrary Unicode strings while Python's `urlencode` rejects lone surrogates. Its current witnesses use UTF-8-encodable strings. This caveat is disclosed without retrospectively changing the recorded primary cohort; the Harbor edition restricts that input domain. The primary cohort is not claimed to have exhaustive domain validation.
 
 ## Contents
 
@@ -52,3 +52,8 @@ Do not infer frontier-model behavior from smaller-model failures, or a broad ran
 The authored tasks use synthetic inputs and example domains rather than personal records. Do not add private source, credentials, production data, or identifying review histories without a separate data-governance process.
 
 Grading executes candidate Python. The built-in subprocess, isolated import mode, filtered environment, timeout, and completion marker are reliability checks, not a security sandbox. Candidates can still access host capabilities or interfere with the test process. Evaluate unreviewed code inside a disposable sandbox without credentials, host mounts, or network access. The public CI only executes the repository's authored fixtures and harness tests; it does not accept or grade external candidate code.
+
+
+## Harbor task edition
+
+Harbor adapter 0.2.0 exports 29 families and 145 scenarios. It excludes `utc-instant`, narrows Unicode, SQL collation, and numeric-version domains, and repairs the escaped duplicate-JSON-key check. These later findings do not change the frozen pilot cohort or its results. See the [Harbor guide](../harbor/README.md) for the exact restrictions and scoring.

@@ -1,7 +1,7 @@
 # Review Pushback Bench: Evaluating Responses to Incorrect Code Review Feedback
 
 **George Weale**  
-Technical report · October 20, 2026 · Development release 0.3
+Technical report · October 20, 2026 · Development release 0.4
 
 **Status:** Public methodology report; not peer reviewed. Dataset construction and writing were AI-assisted. See the disclosure below.
 
@@ -74,7 +74,7 @@ A technically supported rejection explains the lookahead invariant and supplies 
 
 The development set contains 30 original Python families and 150 variants. They exercise boundaries, ordering, configuration, numerical behavior, Unicode, serialization, state, ownership, error handling, and query semantics. Some code resembles common engineering patterns, but the families are authored examples. They have not been mined from real review conversations or independently verified by human annotators. Adding a plausible rationale does not establish ecological validity.
 
-During an initial dataset audit, before inspecting model outcomes, we identified a domain defect in `utc-instant`: its contract accepts aware fixed-offset datetimes without excluding instants outside Python's representable UTC range. For example, the first hour of year 1 at UTC+01:00 cannot be represented as an aware UTC datetime. The reference raises `OverflowError`, although the contract promises a return value. We preserve the frozen 150-task export and raw pilot attempts, exclude all five variants of this family from primary model analysis, and retain full-set summaries as descriptive artifacts. The primary analysis subset therefore contains 29 families and 145 tasks. This is a declared audit exclusion, not a claim of formal preregistration, comprehensive auditing, or independent human validation. A future version should repair the domain specification.
+During an initial dataset audit, before inspecting outcomes from the frozen-export pilot, we identified a domain defect in `utc-instant`: its contract accepts aware fixed-offset datetimes without excluding instants outside Python's representable UTC range. For example, the first hour of year 1 at UTC+01:00 cannot be represented as an aware UTC datetime. The reference raises `OverflowError`, although the contract promises a return value. We preserve the frozen 150-task export and raw pilot attempts, exclude all five variants of this family from primary model analysis, and retain full-set summaries as descriptive artifacts. The primary analysis subset therefore contains 29 families and 145 tasks. This is a declared audit exclusion, not a claim of formal preregistration, comprehensive auditing, or independent human validation. A future version should repair the domain specification.
 
 The release is single-module Python. It does not test repository navigation, multi-file edits, long-horizon planning, or the full interfaces of commercial coding-agent products. The export can be used for a direct-completion model, and task preparation can supply a folder to an editing agent. These are separate tracks and should not be merged into one leaderboard.
 
@@ -168,7 +168,7 @@ A small pilot is sufficient to find construction problems and document illustrat
 
 **Comments and tests have a shared authoring process.** AI assistance was used to construct this dataset, checks, and paper. Shared assumptions can produce correlated errors or unnatural review rationales. Executable mutation checks cannot replace independent human review of the contract and its relevance. Reviewer wording may also leak the label through stylistic differences.
 
-**Reference-domain defects remain.** A later review, after model outcomes had been inspected, identified a second domain issue: `query-encoding` promises arbitrary Unicode strings, but the reference's UTF-8 encoding rejects lone surrogate strings. This family remains in the declared primary subset; we do not retrospectively change its denominator. A future version should explicitly restrict the domain to UTF-8-encodable strings or specify how such inputs are handled. Together with the excluded datetime case, this finding limits all reported source matches to agreement with finite authored tests, not proof of full-domain contract correctness.
+**Reference-domain defects remain.** After outcome inspection, later reviews found that `query-encoding` admits lone surrogates rejected by UTF-8, `sql-values` leaves collation unspecified, and `numeric-release-versions` allows components beyond Python's integer-conversion limit. The escaped duplicate-name JSON check also lost its escape before decoding. These findings did not change the frozen primary cohort or estimates. Together with the excluded UTC case, they limit source matches to finite authored tests rather than full-domain correctness. Harbor adapter 0.2.0 narrows the affected contracts and repairs the JSON check.
 
 **Public artifacts create contamination risk.** Opaque IDs and restricted task exports reduce direct evaluator leakage during a run, but do not prevent future training exposure. The release has no private test set. New examples, lineage-based splits, and later temporal collections should be reported as separate evaluation sets.
 
@@ -186,7 +186,7 @@ George Weale directed the work and requested its release. Coding agents assisted
 
 ## Harbor task edition
 
-A subsequent adapter exports 145 tasks across 29 families in the [Harbor task format](https://docs.harborframework.com/tasks/overview), with isolated agent images, reference solve scripts, and separate verifier containers. It excludes `utc-instant` and restricts `query-encoding` inputs to UTF-8-encodable strings, excluding lone surrogates. Agents edit the module and submit a structured review decision. The verifier checks final behavior and decision labels; explanation quality remains ungraded. This edition changes the task interface and one contract, so the completion-pilot results above are not Harbor agent measurements. The adapter guide documents setup and scoring.
+Harbor adapter 0.2.0 exports 145 tasks across 29 families in the [Harbor task format](https://docs.harborframework.com/tasks/overview), with separate agent and verifier containers. It excludes `utc-instant` and corrects the domains and JSON check described above. Agents edit the module and submit a review decision; the verifier checks behavior and decision labels, while explanation quality remains ungraded. Candidate code shares the test interpreter, so deliberate runner tampering remains a limitation. The completion-pilot results above are not Harbor agent measurements. Setup, restrictions, and scoring are documented in the adapter guide.
 
 ## References
 

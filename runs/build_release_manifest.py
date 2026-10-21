@@ -34,7 +34,7 @@ def main():
         ('pipeline', 'log', 'artifacts/pipeline-checks.json', 'python runs/verify_pipeline.py'),
         ('tests', 'log', 'artifacts/release-checks.json', 'python runs/check_release.py'),
         ('tasks-v02', 'data', 'artifacts/tasks.v0.2.dev.jsonl', 'python benchmark/bench.py export --output NEW_PATH.jsonl --seed 20261020'),
-        ('harbor-validation', 'log', 'artifacts/harbor-validation.v01.json', 'python harbor/validate_tasks.py --tasks EXPORTED_TASKS --require-harbor'),
+        ('harbor-validation', 'log', 'artifacts/harbor-validation.v02.json', 'python harbor/validate_tasks.py --tasks EXPORTED_TASKS --require-harbor'),
         ('analysis-plan', 'data', 'artifacts/primary-analysis-plan.json', 'Pre-outcome static audit decision recorded locally before score inspection.'),
         ('paper-md', 'other', 'paper/paper.md', 'Authored technical report, source for paper/build_paper.py.'),
         ('paper-pdf', 'other', 'paper/review-pushback-bench.pdf', 'python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.'),
@@ -55,7 +55,7 @@ def main():
     claim('dataset-validation', 'computational',
           'The frozen v0.2.0-dev development set has 30 authored families and 150 scenarios. '
           'All correct references pass authored visible/evaluator checks; all intended mutants pass visible checks and fail evaluator checks.',
-          outputs=['validation', 'tasks-v02'], caveats=['These are finite authored checks, not formal proof over the full contract. One UTC domain defect is disclosed.'])
+          outputs=['validation', 'tasks-v02'], caveats=['These are finite authored checks, not formal proof over the full contract. Known contract-domain limits are disclosed.'])
     claim('policy-controls', 'computational',
           'Synthetic no-op and blind compliance score 0.5 balanced behavior and zero paired-family success; '
           'the answer-key policy scores 1.0. These are not model measurements.', outputs=['policies'])

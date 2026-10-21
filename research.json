@@ -158,7 +158,7 @@
       "id": "tests",
       "kind": "log",
       "path": "artifacts/release-checks.json",
-      "sha256": "51caf2515f05e87581c4b8bbd29a986146b2f8288772bf737c777735ccab126f",
+      "sha256": "e3531454b66ac1512a339f3f80c45824009318644ce69a6f757d0b4bb1da09f4",
       "command": "python runs/check_release.py",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -173,7 +173,7 @@
     {
       "id": "harbor-validation",
       "kind": "log",
-      "path": "artifacts/harbor-validation.v01.json",
+      "path": "artifacts/harbor-validation.v02.json",
       "sha256": "0f45fdee746b12e6b1c1eebfa706a5a9df6e68168111c30beef2178c9559166c",
       "command": "python harbor/validate_tasks.py --tasks EXPORTED_TASKS --require-harbor",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
@@ -190,7 +190,7 @@
       "id": "paper-md",
       "kind": "other",
       "path": "paper/paper.md",
-      "sha256": "de649a13879d55e22761be140594c709d39e1f32d34c7d34d593906cafda563d",
+      "sha256": "94c707a904d34b7542c54766b4ea21d9a6d35abaf4ad067151dc82e70e5fa0d9",
       "command": "Authored technical report, source for paper/build_paper.py.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -198,7 +198,7 @@
       "id": "paper-pdf",
       "kind": "other",
       "path": "paper/review-pushback-bench.pdf",
-      "sha256": "5c17db2ef856df816cbf91f5109e9200c4e1dd39be72b1dc2e113e8f3180c53b",
+      "sha256": "ec37c811af0c9a6dc301eba819e560448fc291439a492499191350cfba1ad0ad",
       "command": "python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -278,7 +278,7 @@
       "id": "source-benchmark-bench",
       "kind": "code",
       "path": "benchmark/bench.py",
-      "sha256": "6fac4214770b842bb682b2a3e8942dc2abb249ea0aa4bc4c93cceddbd18d6c3e",
+      "sha256": "89a56d2d1630ac3149817229c8fcddc3108e8ff84195616d6d2dd97ada7c19b3",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -292,42 +292,49 @@
       "id": "source-benchmark-compare",
       "kind": "code",
       "path": "benchmark/compare.py",
-      "sha256": "f7f6d7b0929fdc49e9d146e2b07453add794e804ddb6720ad36de6da031027d5",
+      "sha256": "00d251698c7caada2686340c104db472b5cbd97e614aa72e223bcf24af46e338",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-benchmark-test-compare",
+      "kind": "code",
+      "path": "benchmark/test_compare.py",
+      "sha256": "3259973830b1bdc02e456b1fb27b0b4e4071081907bed13ed7b7c83c65f113ff",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-benchmark-test-harness",
       "kind": "code",
       "path": "benchmark/test_harness.py",
-      "sha256": "90176fd39235bb70282e7b6ea4aba56087f6cd14613475d77d56bcb23baf6e77",
+      "sha256": "f688f38908bccd6a4244ca1f8cd83df0eb2322fffa19d767938464a1cfbfe724",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-build-readme",
       "kind": "code",
       "path": "runs/build_readme.py",
-      "sha256": "265bba19ef897711bf262ff3ec52078adfdac03de06767c413959bfff7005db1",
+      "sha256": "b59d503641c2c9448399e2251a717d3f0745c93bde2622e970b77b65e45806cb",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-build-release-manifest",
       "kind": "code",
       "path": "runs/build_release_manifest.py",
-      "sha256": "02ec27ad60258c39b6dbc8bb6a93be7032fd13630e7894f8d9f6eb38fd53c3e2",
+      "sha256": "30ea90383403120f57499d602ef80b86df87be71cad6ebcde2e73def778cdb57",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-check-release",
       "kind": "code",
       "path": "runs/check_release.py",
-      "sha256": "f7b8b72e208a6d67f887ecb2a322da355b502226efa5e2d17f64bff36e83452c",
+      "sha256": "7e6d3115850315a08a9530014abc559ba86aa2d587ec76c24876f0cd044550cb",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-gemini-runner",
       "kind": "code",
       "path": "runs/gemini_runner.py",
-      "sha256": "54953ec3f3e677123c38b2e0df555fe91a3de3bdf1ef08fbead5f53cd6f89682",
+      "sha256": "8f95040d406714ac2ad3735292a03ff64cbbbaea3bd1666aade20eb98fec8b9b",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -348,21 +355,28 @@
       "id": "source-runs-test-canonical",
       "kind": "code",
       "path": "runs/test_canonical.py",
-      "sha256": "323f784ab9e2579113c27050ab6f8cc7b107558538b323406393d7087ec0f83e",
+      "sha256": "2143252dad477f510c044beb68825d4d730f98e0249bbf9f5676569f36e59aae",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-test-runner",
       "kind": "code",
       "path": "runs/test_runner.py",
-      "sha256": "5aff2fb7583ff178e774ad4b1624ece217058ddb0901237c6245c8d8bd025914",
+      "sha256": "c83207ebf7f6d5701accbf4fb1662a8064e8da2c3a428d161432c9b350fe6583",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-verify-pipeline",
       "kind": "code",
       "path": "runs/verify_pipeline.py",
-      "sha256": "57bd6d459c863a437f829d7a3dba94d0453c9e0d42743217e301e35f86b3f6b3",
+      "sha256": "5be7b64fc618c5f4ede0f90b977620ac9b2983811c6e54d0be51863a4c4dc42d",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-check-negative",
+      "kind": "code",
+      "path": "harbor/check_negative.py",
+      "sha256": "38879fbb03f00e45c96ee0b422c68d9921f8be8e3382520103d5e8a0ca82d799",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -376,21 +390,28 @@
       "id": "source-harbor-export-tasks",
       "kind": "code",
       "path": "harbor/export_tasks.py",
-      "sha256": "9ce862b17c185e2ae2a466b82961500c0844cc8c6175daa055189a9771b15632",
+      "sha256": "b560c2e0a4326cc9618eb0f152d329703690a0d71e0f71e5adedf6ce6c1935b1",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-harbor-summarize",
       "kind": "code",
       "path": "harbor/summarize.py",
-      "sha256": "b0be00bb40fa359057829f8da0dcac1e6379a55644abb59c2b129493a767f08e",
+      "sha256": "15f48e4ef9dca724bcfa285343044de494d4a51968afb3e5fe276b83d93b9e79",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-harbor-test-adapter",
       "kind": "code",
       "path": "harbor/test_adapter.py",
-      "sha256": "9dfecb7bb18931685179d6fd8dca6fcf65acceb4579876ad45cc5c1d1d5cd5df",
+      "sha256": "2f9481dd84b25f5189e23caf26b2552d82c28593f62aeb7a06d8c9602e8c9661",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-test-domains",
+      "kind": "code",
+      "path": "harbor/test_domains.py",
+      "sha256": "0989b160265490bf9be79c79adb4d1aa8daf000b5742eb742123fa0b337fae9d",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -401,17 +422,31 @@
       "command": "Versioned source; see recorded execution commands."
     },
     {
+      "id": "source-harbor-test-validation",
+      "kind": "code",
+      "path": "harbor/test_validation.py",
+      "sha256": "30c40d18a10478bceb2725dccde6e9743937b3fa1b1d78ae2f14750f73ab1e2c",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-test-verifier",
+      "kind": "code",
+      "path": "harbor/test_verifier.py",
+      "sha256": "3504151adde2d18f2a8252991d56d14c7ee03bfffd299834f0735df54544fac6",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
       "id": "source-harbor-validate-tasks",
       "kind": "code",
       "path": "harbor/validate_tasks.py",
-      "sha256": "881b37ef373d58bb09e50a8257c92a8efe6a895347d93a39138839799740e117",
+      "sha256": "e6a25a76fccfd8b3f92eab7f9ceef1f3a0e243bcf41b495f72bb835f4bba2611",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-harbor-verifier",
       "kind": "code",
       "path": "harbor/verifier.py",
-      "sha256": "cd9a8d6daf7623eea597cf9cb2c689fa9d56d3d41efd6edb3e4d6e26b6badbf6",
+      "sha256": "54e642f445982229cd5e87268107c81193c8da6285f3519835a232a2e4571e3d",
       "command": "Versioned source; see recorded execution commands."
     }
   ],
@@ -564,7 +599,7 @@
       ],
       "dependsOn": [],
       "caveats": [
-        "These are finite authored checks, not formal proof over the full contract. One UTC domain defect is disclosed."
+        "These are finite authored checks, not formal proof over the full contract. Known contract-domain limits are disclosed."
       ]
     },
     {
