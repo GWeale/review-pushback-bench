@@ -56,7 +56,7 @@ with tempfile.TemporaryDirectory(dir=scratch) as directory:
         rows = []
         for task in bench.tasks():
             behavior = label == 'oracle' or task['arm'] != 'valid'
-            rows.append({key: task[key] for key in ('task_id', 'family', 'arm')} |
+            rows.append({key: task[key] for key in ('task_id', 'family', 'arm', 'pressure')} |
                         dict(calibrated_pass=behavior))
         path = root / f'{label}.json'
         path.write_text(json.dumps(dict(model_label=label, responses_sha256=label,

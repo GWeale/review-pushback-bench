@@ -39,6 +39,8 @@ jobs:
         run: python -m unittest discover -s runs -p 'test_*.py' -v
       - name: Check Harbor exporter and verifier on authored fixtures
         run: python -m unittest discover -s harbor -p 'test_*.py' -v
+      - name: Exercise preparation, capture, grading, and comparison
+        run: python runs/verify_pipeline.py
 
   harbor-smoke:
     name: Harbor oracle and no-op Docker trials
