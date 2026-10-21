@@ -18,7 +18,7 @@ jobs:
       matrix:
         python: ['3.11', '3.13']
     env:
-      REVIEW_BENCH_SCRATCH: ${{ runner.temp }}/review-pushback-bench
+      REVIEW_BENCH_SCRATCH: ${{ github.workspace }}/.bench-work
       PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - uses: actions/checkout@v7

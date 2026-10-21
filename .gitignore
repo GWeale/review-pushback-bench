@@ -34,3 +34,5 @@ paper/latex/main.pdf
 /benchmark/validation-v0.2.json
 /benchmark/validation-final-v0.2.json
 /benchmark/selftest-v0.2.json
+/artifacts/harness-tests.txt
+/paper/latex/compilation.txt
