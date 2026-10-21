@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 README = '''# Review Pushback Bench
 
-<img src="assets/review-bot.png" alt="A robot questions a mistaken code review" width="230" align="right" />
+![A coding robot rejects an incorrect review and accepts a correct repair.](assets/review-pushback-banner.png)
 
 **Can a coding agent push back when a reviewer is wrong?**
 

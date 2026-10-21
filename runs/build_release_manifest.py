@@ -38,7 +38,7 @@ def main():
         ('analysis-plan', 'data', 'artifacts/primary-analysis-plan.json', 'Pre-outcome static audit decision recorded locally before score inspection.'),
         ('paper-md', 'other', 'paper/paper.md', 'Authored technical report, source for paper/build_paper.py.'),
         ('paper-pdf', 'other', 'paper/review-pushback-bench.pdf', 'python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.'),
-        ('image', 'figure', 'assets/review-bot.png', 'Built-in imagegen; exact prompt in assets/README.md.'),
+        ('image', 'figure', 'assets/review-pushback-banner.png', 'User-selected built-in imagegen illustration; exact prompt and hash in assets/README.md.'),
     ]
     claims = []
     evidence = []

@@ -205,9 +205,9 @@
     {
       "id": "image",
       "kind": "figure",
-      "path": "assets/review-bot.png",
-      "sha256": "574b2355da90ad4a5c1ddce21f9a16e6022d4689992f11f4cbf1c8a1e9c5c9dd",
-      "command": "Built-in imagegen; exact prompt in assets/README.md.",
+      "path": "assets/review-pushback-banner.png",
+      "sha256": "bfaf3304cf00ca9196b10d7d5dbe0630047029df61010d819417424451e84108",
+      "command": "User-selected built-in imagegen illustration; exact prompt and hash in assets/README.md.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -306,14 +306,14 @@
       "id": "source-runs-build-readme",
       "kind": "code",
       "path": "runs/build_readme.py",
-      "sha256": "e994ca1375ccdf641dd6d2cefa8e115639353738ed344d33a44e22d8133bed05",
+      "sha256": "265bba19ef897711bf262ff3ec52078adfdac03de06767c413959bfff7005db1",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-build-release-manifest",
       "kind": "code",
       "path": "runs/build_release_manifest.py",
-      "sha256": "01893bd6b4f3e408a81ec90829ca0a8b6d8845718f471928cd2c1549a8b01d54",
+      "sha256": "02ec27ad60258c39b6dbc8bb6a93be7032fd13630e7894f8d9f6eb38fd53c3e2",
       "command": "Versioned source; see recorded execution commands."
     },
     {
