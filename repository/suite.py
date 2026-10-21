@@ -143,7 +143,8 @@ def export(destination, case_id=None):
             prepare(case, env/'project', mutant=arm=='valid')
             (env/'checkpoint.json').write_text('{}\n')
             (env/'response.json').write_text('{}\n')
-            (env/'Dockerfile').write_text('FROM python:3.13.7-slim-bookworm\nWORKDIR /app\nCOPY . /app/\n', newline='\n')
+            (env/'typing_extensions.py').write_text('# Compatibility for the pinned pydash Protocol import on Python 3.11+.\nfrom typing import Protocol\n',newline='\n')
+            (env/'Dockerfile').write_text('FROM python:3.13.7-slim-bookworm\nWORKDIR /app\nCOPY . /app/\nENV PYTHONPATH=/app:/app/project\n', newline='\n')
             original=(ROOT/'vendor'/case['repository']/case['path']).read_text(encoding='utf-8')
             phases=[] if arm=='valid' else [('understanding',checkpoint_prompt(case),'checkpoint')]
             phases.append(('review',review_prompt(case,arm),'review'))

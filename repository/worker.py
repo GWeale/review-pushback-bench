@@ -3,6 +3,8 @@ import importlib
 import json
 from pathlib import Path
 import sys
+import types
+import typing
 sys.dont_write_bytecode = True
 sys.pycache_prefix = '/__review_pushback_unused_cache__'
 
@@ -17,6 +19,12 @@ def normalize(value):
 
 def invoke(root, request):
     sys.path.insert(0, str(root))
+    # The pinned pydash uses only typing_extensions.Protocol. Python 3.11+
+    # supplies the same API in typing; keep this compatibility layer explicit.
+    if request['call'].get('module') == 'pydash':
+        compatibility = types.ModuleType('typing_extensions')
+        compatibility.Protocol = typing.Protocol
+        sys.modules['typing_extensions'] = compatibility
     args = request['args']
     if request['call']['kind'] == 'call':
         function = getattr(importlib.import_module(request['call']['module']), request['call']['function'])
