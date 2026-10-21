@@ -51,6 +51,8 @@ Raw calls, checkpoints, decisions, and every resulting source file are retained.
 
 The pilot's earlier action wording did not explicitly state that edits accumulate across turns. Current exported prompts clarify that comparison. Its raw responses and scores are retained, including neutral `agree` labels where the strict schema expects `none`. Behavioral results should be read separately from these label failures.
 
+For the original generation harness, use commit `2f8c730`. The [provenance record](../artifacts/repository-pilot.v05/provenance.json) distinguishes that snapshot from later grading fixes. Reproduction against a provider model name need not reproduce the same responses.
+
 Generate a new pilot only with `GEMINI_API_KEY` already in the process environment:
 
 ```sh
@@ -61,6 +63,10 @@ python repository/summarize.py --pilot new-pilot --grades grades.json --output s
 
 Do not mix this pilot with the earlier direct-completion results.
 
+In the saved two-case pilot, both checkpoints were correct. Final behavior passed in 2/2 neutral controls, 1/2 plain harmful branches, 0/2 authority branches, and 2/2 valid repairs. One authority branch regressed on its second review turn; the other regressed on its first. All 12 saved review states were graded. See the [summary](../artifacts/repository-pilot-summary.v05.json) and [execution records](../artifacts/repository-pilot-grade.v05.json). These observations are too small for a model ranking. Native oracle/no-op results are preserved [separately](../artifacts/repository-native.v05/index.json).
+
 ## Human review gate
 
 [human_review.json](human_review.json) contains an unfilled record for every case. Two independent engineers should check the upstream contract, mutation, and distinguishing tests, cite their evidence, and resolve disagreements. `review.py` reports recorded coverage; it cannot authenticate identities. All 20 cases remain pending. Agent reviews do not count as human annotation.
+
+Each case links its pinned upstream file. Add actual signoffs to its `reviews` array with these fields: `reviewer`, `independent_human`, `status`, `contract_evidence`, `mutation_check`, and `test_adequacy`. Approved signoffs require `status: "approved"`, `independent_human: true`, and substantive evidence. Record disagreements in `unresolved_disagreement` until adjudicated. Keep reviewers independent of case construction.

@@ -42,6 +42,18 @@ The frozen v0.2.0-dev development set has 30 authored families and 150 scenarios
 
 Synthetic no-op and blind compliance score 0.5 balanced behavior and zero paired-family success; the answer-key policy scores 1.0. These are not model measurements.
 
+<!-- claim:repository-fixtures -->
+
+Version 0.5 adds 20 cases from five pinned Python projects and 80 staged Harbor tasks. All correct fixtures pass finite checks; all declared mutants pass basic examples and fail a distinguishing check. Harbor 0.24.0 loads all 80 task schemas.
+
+<!-- claim:repository-review-status -->
+
+All 20 repository cases remain pending independent human validation; the release has no private holdout.
+
+<!-- claim:repository-tool-agent-pilot -->
+
+A separate Gemini 2.5 Flash read/edit tool-agent pilot covers 2 convenience cases, 2 correct checkpoints, and 12/12 graded saved review states. Correct-start arms share the exact saved pre-review conversation. Execution and strict disposition scores are reported separately.
+
 <!-- claim:release-checks -->
 
 Local harness, adapter, canonical-grading, pipeline, and release-integrity checks pass.
@@ -60,4 +72,4 @@ gemini-3.5-flash-lite returned 150/150 valid-format responses. On the primary 14
 
 <!-- claim:interpretation -->
 
-This is an open development benchmark and methodology report with a small direct-completion pilot; it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.
+This is an open development benchmark and methodology report with separate small direct-completion and read/edit tool-agent pilots; it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.

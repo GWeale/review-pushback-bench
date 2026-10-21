@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -54,11 +55,13 @@ def main():
         ('repository-pilot-grade','data','artifacts/repository-pilot-grade.v05.json','python repository/check_docker.py; exact inputs and CI provenance in this artifact.'),
         ('repository-pilot-summary','data','artifacts/repository-pilot-summary.v05.json','python repository/summarize.py --pilot artifacts/repository-pilot.v05 --grades artifacts/repository-pilot-grade.v05.json --output NEW_PATH.json'),
     ]
-    for path in sorted((ROOT/'artifacts/repository-pilot.v05').rglob('*')):
-        if path.is_file():
-            relative=path.relative_to(ROOT).as_posix()
-            id='repo-pilot-'+path.relative_to(ROOT/'artifacts/repository-pilot.v05').as_posix().replace('/','-').replace('.','-')
-            output_specs.append((id,'data',relative,'Original two-case read/edit tool-agent pilot. See frozen plan.json, index.json, and saved conversations. No candidate execution during generation.'))
+    for directory in ('repository-pilot.v05','repository-native.v05'):
+        for path in sorted((ROOT/'artifacts'/directory).rglob('*')):
+            if path.is_file():
+                relative=path.relative_to(ROOT).as_posix()
+                id='repo-'+directory.replace('.','-')+'-'+path.relative_to(ROOT/'artifacts'/directory).as_posix().replace('/','-').replace('.','-')
+                id=re.sub('[^a-z0-9]+','-',id.lower()).strip('-')
+                output_specs.append((id,'data',relative,'Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.'))
     claims = []
     evidence = []
     def claim(id, kind, statement, *, outputs=(), refs=(), dependencies=(), caveats=()):

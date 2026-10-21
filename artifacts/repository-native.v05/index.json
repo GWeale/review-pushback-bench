@@ -1,0 +1,57 @@
+{
+  "ci_run": 39534656286,
+  "ci_revision": "44882722266a3a5e719380ac26754febe92bf29a",
+  "ci_url": "https://github.com/GWeale/review-pushback-bench/actions/runs/39534656286",
+  "trials": [
+    {
+      "agent": "oracle",
+      "task": "review-pushback/repo-60d883ceb26c93e5",
+      "path": "artifacts/repository-native.v05/oracle/repo-60d883ceb26c93e5__Vr6txFt/result.json",
+      "sha256": "2a1ae4e98545317f849b668878ca7d750b93c5c14ffbd2dd22379790ca7f0f5b"
+    },
+    {
+      "agent": "oracle",
+      "task": "review-pushback/repo-acbb573d7179a4fb",
+      "path": "artifacts/repository-native.v05/oracle/repo-acbb573d7179a4fb__NFAbKE5/result.json",
+      "sha256": "6c785714746b1a470c47388b8d7fcd2061854be118625b781c19532f76f14e82"
+    },
+    {
+      "agent": "oracle",
+      "task": "review-pushback/repo-dcfc4fd1783aaed9",
+      "path": "artifacts/repository-native.v05/oracle/repo-dcfc4fd1783aaed9__nEEJXkh/result.json",
+      "sha256": "423590ba3eef17d8457316c3ef068020dfaf1a894ea6fa3e894d281037844860"
+    },
+    {
+      "agent": "oracle",
+      "task": "review-pushback/repo-e8eb7c023d57a4d1",
+      "path": "artifacts/repository-native.v05/oracle/repo-e8eb7c023d57a4d1__4noggvF/result.json",
+      "sha256": "383710ed34c6c6e56a429eea4af038a4515342669807e800ae3dfd0aa59b876e"
+    },
+    {
+      "agent": "nop",
+      "task": "review-pushback/repo-60d883ceb26c93e5",
+      "path": "artifacts/repository-native.v05/nop/repo-60d883ceb26c93e5__oB8b5LS/result.json",
+      "sha256": "7c08c7259c758a3946479917b61a6fe1770a69e4e9dcf4aa79de8f0d1f77a902"
+    },
+    {
+      "agent": "nop",
+      "task": "review-pushback/repo-acbb573d7179a4fb",
+      "path": "artifacts/repository-native.v05/nop/repo-acbb573d7179a4fb__T6Cuu2R/result.json",
+      "sha256": "9174e186a81bf42e5a612e41261352ec60a786fbfabb00fdd6c6a3fc4a6e90e8"
+    },
+    {
+      "agent": "nop",
+      "task": "review-pushback/repo-dcfc4fd1783aaed9",
+      "path": "artifacts/repository-native.v05/nop/repo-dcfc4fd1783aaed9__PGRrimo/result.json",
+      "sha256": "f6f2ddc1e54bc797976e7181238556ba154e5dd7b7640e423fe44dca53f859cf"
+    },
+    {
+      "agent": "nop",
+      "task": "review-pushback/repo-e8eb7c023d57a4d1",
+      "path": "artifacts/repository-native.v05/nop/repo-e8eb7c023d57a4d1__RAmbejS/result.json",
+      "sha256": "5a71936367620d5e90c5209dd8f19bbd1376d6c358d8de4ae404d9e8ff902437"
+    }
+  ],
+  "step_rewards_checked": 18,
+  "all_expected": true
+}

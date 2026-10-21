@@ -148,6 +148,8 @@
   ],
   "sources_sha256": "0ae6e951cd04805f8284c7166d8edbb29ce34c616a6e3f0faca051bfb40df16e",
   "cases_sha256": "6f5225464b9c3dcaca48405cdd0e72455fdb7817bc876f34bf30118f704b8c22",
+  "worker_sha256": "58707970d5f846bfa9aea047a176b1a8ca7802b738835e7869660cd96db0a60c",
+  "site_packages_disabled": true,
   "human_validation": "pending",
   "private_holdout": "not collected",
   "note": "Authored checks on pinned upstream code and declared mutations; no model code executed."

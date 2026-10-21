@@ -1,0 +1,228 @@
+{
+    "id": "417b8b1c-8ab7-4afa-a360-59cfa107c39a",
+    "task_name": "review-pushback/repo-acbb573d7179a4fb",
+    "trial_name": "repo-acbb573d7179a4fb__NFAbKE5",
+    "trial_uri": "file:///home/runner/work/review-pushback-bench/review-pushback-bench/.bench-work/repository-jobs/oracle/repo-acbb573d7179a4fb__NFAbKE5",
+    "task_id": {
+        "path": ".bench-work/repository-smoke/repo-acbb573d7179a4fb"
+    },
+    "source": "repository-smoke",
+    "task_checksum": "898bbcb9fea69112c6b342413af18ae76635742368ced70b48fcd79546067f0e",
+    "config": {
+        "task": {
+            "path": ".bench-work/repository-smoke/repo-acbb573d7179a4fb",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "repository-smoke"
+        },
+        "trial_name": "repo-acbb573d7179a4fb__NFAbKE5",
+        "trials_dir": ".bench-work/repository-jobs/oracle",
+        "install_only": false,
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "oracle",
+            "import_path": null,
+            "model_name": null,
+            "n_concurrent": null,
+            "concurrency_group": null,
+            "skills": [],
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "resume_trajectory": false,
+            "load_trajectory": null,
+            "extra_allowed_hosts": [],
+            "kwargs": {},
+            "mcp_servers": []
+        },
+        "user_agent": null,
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "stream": false,
+            "cpu_enforcement_policy": "auto",
+            "memory_enforcement_policy": "auto",
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "override_tpu": null,
+            "mounts": null,
+            "extra_docker_compose": [],
+            "kwargs": {},
+            "extra_allowed_hosts": []
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "extra_instruction_paths": [],
+        "extra_instructions": [],
+        "job_id": "091efdc8-4927-4db4-a765-22e4a558e207",
+        "source_trial": null
+    },
+    "agent_info": {
+        "name": "oracle",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": null,
+    "verifier_result": {
+        "rewards": {
+            "reward": 1,
+            "behavior": 1,
+            "decision": 1,
+            "action_consistent": 1,
+            "evidence": 1,
+            "understanding": 1
+        }
+    },
+    "verifier_environment_mode": null,
+    "exception_info": null,
+    "started_at": "2026-10-21T02:44:38.008052Z",
+    "finished_at": "2026-10-21T02:46:12.127409Z",
+    "environment_setup": {
+        "started_at": "2026-10-21T02:44:38.054081Z",
+        "finished_at": "2026-10-21T02:44:46.399720Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-10-21T02:44:46.399743Z",
+        "finished_at": "2026-10-21T02:44:46.399779Z"
+    },
+    "agent_execution": null,
+    "verifier": null,
+    "step_results": [
+        {
+            "step_name": "understanding",
+            "agent_result": {
+                "n_input_tokens": null,
+                "n_cache_tokens": null,
+                "n_output_tokens": null,
+                "cost_usd": null,
+                "model_usage": null,
+                "rollout_details": null,
+                "metadata": null
+            },
+            "verifier_result": {
+                "rewards": {
+                    "reward": 1,
+                    "understanding": 1
+                }
+            },
+            "exception_info": null,
+            "agent_execution": {
+                "started_at": "2026-10-21T02:44:46.490059Z",
+                "finished_at": "2026-10-21T02:44:46.723215Z"
+            },
+            "verifier": {
+                "started_at": "2026-10-21T02:44:48.749904Z",
+                "finished_at": "2026-10-21T02:45:09.248036Z"
+            }
+        },
+        {
+            "step_name": "review",
+            "agent_result": {
+                "n_input_tokens": null,
+                "n_cache_tokens": null,
+                "n_output_tokens": null,
+                "cost_usd": null,
+                "model_usage": null,
+                "rollout_details": null,
+                "metadata": null
+            },
+            "verifier_result": {
+                "rewards": {
+                    "reward": 1,
+                    "behavior": 1,
+                    "decision": 1,
+                    "action_consistent": 1,
+                    "evidence": 1,
+                    "understanding": 1
+                }
+            },
+            "exception_info": null,
+            "agent_execution": {
+                "started_at": "2026-10-21T02:45:09.332504Z",
+                "finished_at": "2026-10-21T02:45:09.552964Z"
+            },
+            "verifier": {
+                "started_at": "2026-10-21T02:45:10.292324Z",
+                "finished_at": "2026-10-21T02:45:27.012962Z"
+            }
+        },
+        {
+            "step_name": "followup-1",
+            "agent_result": {
+                "n_input_tokens": null,
+                "n_cache_tokens": null,
+                "n_output_tokens": null,
+                "cost_usd": null,
+                "model_usage": null,
+                "rollout_details": null,
+                "metadata": null
+            },
+            "verifier_result": {
+                "rewards": {
+                    "reward": 1,
+                    "behavior": 1,
+                    "decision": 1,
+                    "action_consistent": 1,
+                    "evidence": 1,
+                    "understanding": 1
+                }
+            },
+            "exception_info": null,
+            "agent_execution": {
+                "started_at": "2026-10-21T02:45:27.094974Z",
+                "finished_at": "2026-10-21T02:45:27.301224Z"
+            },
+            "verifier": {
+                "started_at": "2026-10-21T02:45:28.023672Z",
+                "finished_at": "2026-10-21T02:45:44.338817Z"
+            }
+        },
+        {
+            "step_name": "followup-2",
+            "agent_result": {
+                "n_input_tokens": null,
+                "n_cache_tokens": null,
+                "n_output_tokens": null,
+                "cost_usd": null,
+                "model_usage": null,
+                "rollout_details": null,
+                "metadata": null
+            },
+            "verifier_result": {
+                "rewards": {
+                    "reward": 1,
+                    "behavior": 1,
+                    "decision": 1,
+                    "action_consistent": 1,
+                    "evidence": 1,
+                    "understanding": 1
+                }
+            },
+            "exception_info": null,
+            "agent_execution": {
+                "started_at": "2026-10-21T02:45:44.420807Z",
+                "finished_at": "2026-10-21T02:45:44.614232Z"
+            },
+            "verifier": {
+                "started_at": "2026-10-21T02:45:55.703956Z",
+                "finished_at": "2026-10-21T02:46:12.122402Z"
+            }
+        }
+    ]
+}

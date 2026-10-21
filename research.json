@@ -127,6 +127,42 @@
       "title": "Self-contained task format and reward file convention",
       "url": "https://docs.harborframework.com/tasks/overview",
       "accessed": "2026-10-20"
+    },
+    {
+      "id": "harbor-multi-step",
+      "title": "Harbor multi-step task documentation",
+      "url": "https://docs.harborframework.com/tasks/multi-step",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "upstream-boltons",
+      "title": "boltons pinned package source",
+      "url": "https://github.com/mahmoud/boltons/tree/4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "upstream-more-itertools",
+      "title": "more-itertools pinned package source",
+      "url": "https://github.com/more-itertools/more-itertools/tree/4aeb4338ae1407d8da9723e86da99efeb446f719",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "upstream-itsdangerous",
+      "title": "itsdangerous pinned package source",
+      "url": "https://github.com/pallets/itsdangerous/tree/672971d66a2ef9f85151e53283113f33d642dabd",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "upstream-pydash",
+      "title": "pydash pinned package source",
+      "url": "https://github.com/dgilland/pydash/tree/ef6a6427e488e29e827e0e0819f2630ad3ff4cdc",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "upstream-humanize",
+      "title": "humanize pinned package source",
+      "url": "https://github.com/python-humanize/humanize/tree/785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b",
+      "accessed": "2026-10-20"
     }
   ],
   "outputs": [
@@ -158,7 +194,7 @@
       "id": "tests",
       "kind": "log",
       "path": "artifacts/release-checks.json",
-      "sha256": "e3531454b66ac1512a339f3f80c45824009318644ce69a6f757d0b4bb1da09f4",
+      "sha256": "7f4cd58b58ac016d7f226e1285c578e9fb3bb3a315fe7e4b5f86cbd5389bca4d",
       "command": "python runs/check_release.py",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -190,7 +226,7 @@
       "id": "paper-md",
       "kind": "other",
       "path": "paper/paper.md",
-      "sha256": "94c707a904d34b7542c54766b4ea21d9a6d35abaf4ad067151dc82e70e5fa0d9",
+      "sha256": "056a9860af4473cf2269335cc10493ba1b1ef1df3769b9c1d20fafd1dafae790",
       "command": "Authored technical report, source for paper/build_paper.py.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -198,7 +234,7 @@
       "id": "paper-pdf",
       "kind": "other",
       "path": "paper/review-pushback-bench.pdf",
-      "sha256": "ec37c811af0c9a6dc301eba819e560448fc291439a492499191350cfba1ad0ad",
+      "sha256": "189f10f660df918c70609f201981326a16000a24453b9e624b6aeac2f11292a3",
       "command": "python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -208,6 +244,478 @@
       "path": "assets/review-pushback-banner.png",
       "sha256": "bfaf3304cf00ca9196b10d7d5dbe0630047029df61010d819417424451e84108",
       "command": "User-selected built-in imagegen illustration; exact prompt and hash in assets/README.md.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-validation",
+      "kind": "log",
+      "path": "artifacts/repository-validation.v05.json",
+      "sha256": "d7c4c1142295cf717403e1307c254c71a773556f45ab4e9baa5aadb3a568185f",
+      "command": "python repository/suite.py validate --output NEW_PATH.json",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-schema",
+      "kind": "log",
+      "path": "artifacts/repository-harbor-validation.v05.json",
+      "sha256": "e38b91e11157566a3f0842a6e2bbc9637b530d20ca119c20e32b7862444be737",
+      "command": "python repository/check_native.py --tasks EXPORTED_TASKS --output NEW_PATH.json",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-cases",
+      "kind": "data",
+      "path": "repository/cases.json",
+      "sha256": "6f5225464b9c3dcaca48405cdd0e72455fdb7817bc876f34bf30118f704b8c22",
+      "command": "Benchmark-authored case definitions; reviews are not historical upstream comments.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-sources",
+      "kind": "data",
+      "path": "repository/sources.json",
+      "sha256": "0ae6e951cd04805f8284c7166d8edbb29ce34c616a6e3f0faca051bfb40df16e",
+      "command": "Pinned upstream files and documented packaging shim, with per-file SHA-256.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-review-packet",
+      "kind": "data",
+      "path": "repository/human_review.json",
+      "sha256": "94342a14667c2e55f3b9d331671149cfe923124c591eadfae9a63e6113ce9171",
+      "command": "Unfilled independent human review records.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-human-review",
+      "kind": "log",
+      "path": "artifacts/repository-human-review.v05.json",
+      "sha256": "7fe9fc84320fa62feb66a5855b900435ecf54262398207281d09db7a41a6826c",
+      "command": "python repository/review.py --output NEW_PATH.json",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-native",
+      "kind": "log",
+      "path": "artifacts/repository-native.v05.json",
+      "sha256": "a1d82f709bd76193dac78ebe634d1dd6df3d9f155fb931b3a877ede8e54f0317",
+      "command": "python repository/check_native.py --tasks SMOKE_TASKS --jobs NATIVE_JOBS --output NEW_PATH.json; Linux Docker CI.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-pilot-grade",
+      "kind": "data",
+      "path": "artifacts/repository-pilot-grade.v05.json",
+      "sha256": "03cf769ec48e670bda69b878c65de343b87063e5882083ab1f20bbfe0fbb2a76",
+      "command": "python repository/check_docker.py; exact inputs and CI provenance in this artifact.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repository-pilot-summary",
+      "kind": "data",
+      "path": "artifacts/repository-pilot-summary.v05.json",
+      "sha256": "17cdb6256ee89af7e5a1b377509f0e6e279e41d9b30bb78063cf1be5bdcfe88c",
+      "command": "python repository/summarize.py --pilot artifacts/repository-pilot.v05 --grades artifacts/repository-pilot-grade.v05.json --output NEW_PATH.json",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/0/candidate.py",
+      "sha256": "710226a29f01557fd0f4a63f53ac6a0c8e139d2e89469aa72d1f8f82700482ed",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/0/response.json",
+      "sha256": "1e16963e4d2b28927629781697b9c76630c8f33e8fe7bf8d4553d46f654011e0",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/0/trace.json",
+      "sha256": "feafa0f5df93e45813528bf924c4582923f8ab05e9197192c23eaf7a3f2a153d",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-1-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/1/candidate.py",
+      "sha256": "18e9dce7e92eab777bafc9d0e9fcdb32c5e5109aa3dc7b08b4166e474d5aa1c7",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-1-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/1/response.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-1-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/1/trace.json",
+      "sha256": "9a83d79912d669be08cd5bec364d2296592a2de39f5bfe13c5d45485d547f61f",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-2-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/2/candidate.py",
+      "sha256": "18e9dce7e92eab777bafc9d0e9fcdb32c5e5109aa3dc7b08b4166e474d5aa1c7",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-2-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/2/response.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-authority-2-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/authority/2/trace.json",
+      "sha256": "c4d12fc0be224d5848bc1e5590a2a89a3e1dcffae903cac2aeb59f3097b01a3d",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-checkpoint-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/checkpoint.json",
+      "sha256": "ee2508beeddec35f7feab8c6927f57a752f6c225d7b5bea7540e3b140f257b4b",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-harmful-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/harmful/0/candidate.py",
+      "sha256": "710226a29f01557fd0f4a63f53ac6a0c8e139d2e89469aa72d1f8f82700482ed",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-harmful-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/harmful/0/response.json",
+      "sha256": "d1822062ac08577f503dc582ad081cacc72335874674ba42278cc25fb756f16a",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-harmful-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/harmful/0/trace.json",
+      "sha256": "29636cefe557f5bfca717aa9eb626cfbe5c33d81c7bbd1b4b7e76507920aa80b",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-neutral-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/neutral/0/candidate.py",
+      "sha256": "710226a29f01557fd0f4a63f53ac6a0c8e139d2e89469aa72d1f8f82700482ed",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-neutral-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/neutral/0/response.json",
+      "sha256": "34b4cff869049e31e44c9c0d4f22acdbb5c46c04a9d7df54f29b6074f28ff6d5",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-neutral-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/neutral/0/trace.json",
+      "sha256": "bd4321aea8e27de8b9385a1d86be058366c85284daab88a9ab7ae95b9e8cb034",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-valid-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/valid/0/candidate.py",
+      "sha256": "1ab97a208b3299067d3ff4f1f461c5aa06998dc139b686c52230420c8c3b1eb9",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-valid-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/valid/0/response.json",
+      "sha256": "ca1a2e0ed3f1685326131d4ad97a7e10ba1dcd44cc1aa6eb68ccfd595fead48f",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-boltons-ceil-equality-valid-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/boltons-ceil-equality/valid/0/trace.json",
+      "sha256": "3e720e96ff8381394066f4b09bf66fabe1eb261eb43e00261a672c4232631121",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-index-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/index.json",
+      "sha256": "71e8a03ab7133bf81526fb820ae5756ba0ccffe35d9ac48d2b4fa8f819f6edb1",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-plan-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/plan.json",
+      "sha256": "aef16dd5dabe97504c10cffbe51ce005eeb345b5bb7a0208013b28465e59cf57",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-provenance-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/provenance.json",
+      "sha256": "d96bbba80b4aae660fedfa91deddeaac02b844385fff2f79b73a23366baf9188",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/0/candidate.py",
+      "sha256": "d23d82b370028b2aea0cc678096793bc8c1395aa2b520220d4c80e23b5e6e5d7",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/0/response.json",
+      "sha256": "f0e66d22a45361952761d5fa4fd96a67d4601f49c7a39987894eae83ca427a3d",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/0/trace.json",
+      "sha256": "ffa7f6d966baca6e036e392f5879a73dc658ae6808b798dff934a79585a6ecf8",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-1-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/1/candidate.py",
+      "sha256": "d23d82b370028b2aea0cc678096793bc8c1395aa2b520220d4c80e23b5e6e5d7",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-1-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/1/response.json",
+      "sha256": "2dc7127fd32e16cd14cc5685491d178a34acec8d7d8a943d15c1b3d34584b926",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-1-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/1/trace.json",
+      "sha256": "197fb2564ea39217ce4545ed7e5c6100810193dbcbbb91142e4ba129ad276d93",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-2-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/2/candidate.py",
+      "sha256": "d23d82b370028b2aea0cc678096793bc8c1395aa2b520220d4c80e23b5e6e5d7",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-2-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/2/response.json",
+      "sha256": "4a50e8b678505c490475bf03fd3b87b5d5a28487f40c2a3e71bf3ffee3ede065",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-authority-2-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/authority/2/trace.json",
+      "sha256": "38a4f824b6ec27a76dec5d93794c6938ce82dc8959da9a744acc724c40f745ba",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-checkpoint-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/checkpoint.json",
+      "sha256": "c816b5860cb7e11e343fd7b49360c70c0e661d900b6a76bfd7a01cea5dedcb06",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-harmful-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/harmful/0/candidate.py",
+      "sha256": "d23d82b370028b2aea0cc678096793bc8c1395aa2b520220d4c80e23b5e6e5d7",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-harmful-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/harmful/0/response.json",
+      "sha256": "bdff9637e313418eeed4d02bd273f5d7f035b1d05ea8bee21573c4ca8117e10d",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-harmful-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/harmful/0/trace.json",
+      "sha256": "caa6d6cab4f2e68ae35b436a3ce45b439334ce8c02455b004917d532ff158f93",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-neutral-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/neutral/0/candidate.py",
+      "sha256": "ebba3c88a49e8f6b85d2aa578cf834429d7266e8a729fc75223a378ab2b01096",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-neutral-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/neutral/0/response.json",
+      "sha256": "e342917c521e24cf20fdb3098dad2ff826058fedb694e0fa3f7ae36cdb9156d0",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-neutral-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/neutral/0/trace.json",
+      "sha256": "7b6d8ed5a84eb44c21f5e471e95ce2fed66f17d0b25e6e7ffb4c5d22bca4b393",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-valid-0-candidate-py",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/valid/0/candidate.py",
+      "sha256": "e54bbadad1e1e992b89c18166698a71e1ebe2cc8a6b97b6ac85278e61cb2dff1",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-valid-0-response-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/valid/0/response.json",
+      "sha256": "53716190ccc2a2378d36a9cf77781be74103b956037db0b429d42fe3ac13fea3",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-pilot-v05-pydash-compact-falsy-valid-0-trace-json",
+      "kind": "data",
+      "path": "artifacts/repository-pilot.v05/pydash-compact-falsy/valid/0/trace.json",
+      "sha256": "e5660ec240b18da3c58a1921bd7ded8e9829cfd9763b155c48c8a55a49530168",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-index-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/index.json",
+      "sha256": "0b7ed1479dc81602e38879fc181c6fa3b9266d5a4ddfef6ed098e55d604c81f3",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-nop-repo-60d883ceb26c93e5-ob8b5ls-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/nop/repo-60d883ceb26c93e5__oB8b5LS/result.json",
+      "sha256": "7c08c7259c758a3946479917b61a6fe1770a69e4e9dcf4aa79de8f0d1f77a902",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-nop-repo-acbb573d7179a4fb-t6cuu2r-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/nop/repo-acbb573d7179a4fb__T6Cuu2R/result.json",
+      "sha256": "9174e186a81bf42e5a612e41261352ec60a786fbfabb00fdd6c6a3fc4a6e90e8",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-nop-repo-dcfc4fd1783aaed9-pgrrimo-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/nop/repo-dcfc4fd1783aaed9__PGRrimo/result.json",
+      "sha256": "f6f2ddc1e54bc797976e7181238556ba154e5dd7b7640e423fe44dca53f859cf",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-nop-repo-e8eb7c023d57a4d1-rambejs-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/nop/repo-e8eb7c023d57a4d1__RAmbejS/result.json",
+      "sha256": "5a71936367620d5e90c5209dd8f19bbd1376d6c358d8de4ae404d9e8ff902437",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-oracle-repo-60d883ceb26c93e5-vr6txft-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/oracle/repo-60d883ceb26c93e5__Vr6txFt/result.json",
+      "sha256": "2a1ae4e98545317f849b668878ca7d750b93c5c14ffbd2dd22379790ca7f0f5b",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-oracle-repo-acbb573d7179a4fb-nfabke5-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/oracle/repo-acbb573d7179a4fb__NFAbKE5/result.json",
+      "sha256": "6c785714746b1a470c47388b8d7fcd2061854be118625b781c19532f76f14e82",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-oracle-repo-dcfc4fd1783aaed9-neejxkh-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/oracle/repo-dcfc4fd1783aaed9__nEEJXkh/result.json",
+      "sha256": "423590ba3eef17d8457316c3ef068020dfaf1a894ea6fa3e894d281037844860",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "repo-repository-native-v05-oracle-repo-e8eb7c023d57a4d1-4noggvf-result-json",
+      "kind": "data",
+      "path": "artifacts/repository-native.v05/oracle/repo-e8eb7c023d57a4d1__4noggvF/result.json",
+      "sha256": "383710ed34c6c6e56a429eea4af038a4515342669807e800ae3dfd0aa59b876e",
+      "command": "Saved tool-agent or native control artifact. See its index, plan, and provenance. No candidate execution during generation.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -313,21 +821,21 @@
       "id": "source-runs-build-readme",
       "kind": "code",
       "path": "runs/build_readme.py",
-      "sha256": "b59d503641c2c9448399e2251a717d3f0745c93bde2622e970b77b65e45806cb",
+      "sha256": "a6ab92aa340e597be562b07cad6aa201fcb1104f5785f52e1ab239f47f2a0fd7",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-build-release-manifest",
       "kind": "code",
       "path": "runs/build_release_manifest.py",
-      "sha256": "30ea90383403120f57499d602ef80b86df87be71cad6ebcde2e73def778cdb57",
+      "sha256": "c51d3118fcd09f2dfa0b31becdaee8e8506f844d6e9a00145205c0439ad70772",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-check-release",
       "kind": "code",
       "path": "runs/check_release.py",
-      "sha256": "7e6d3115850315a08a9530014abc559ba86aa2d587ec76c24876f0cd044550cb",
+      "sha256": "b363af7a8f8126b21ddd08d47b6b7498856c341a63146d2a0f1188e106f09909",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -447,6 +955,69 @@
       "kind": "code",
       "path": "harbor/verifier.py",
       "sha256": "54e642f445982229cd5e87268107c81193c8da6285f3519835a232a2e4571e3d",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-check-docker",
+      "kind": "code",
+      "path": "repository/check_docker.py",
+      "sha256": "a35f8d6ed4ecc5502ef227810e5583e82baa2673ce3c9d7b777848697b4fdcff",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-check-native",
+      "kind": "code",
+      "path": "repository/check_native.py",
+      "sha256": "b4a3cca98977a520ccba08698c73e4f09699de250a0d4bcd1c62f8b8e28011b6",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-pilot",
+      "kind": "code",
+      "path": "repository/pilot.py",
+      "sha256": "ddb0e4634c950f4b2fe615a156db9ed13d04d7a6ed7dcead0913b5900448195d",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-review",
+      "kind": "code",
+      "path": "repository/review.py",
+      "sha256": "3138ff92fca30433dfd9572bb4342db969c1218dcc81b85c2cf54e77c025a09e",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-suite",
+      "kind": "code",
+      "path": "repository/suite.py",
+      "sha256": "fdd2f6564bc3463d4c542ae8f8fbf5103abf74a9c5f86193ffc1ccbe1b507a24",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-summarize",
+      "kind": "code",
+      "path": "repository/summarize.py",
+      "sha256": "129ff5e72aa45caee547c13117af310bdd56e5706cede352fbd4f382d7eb5dcc",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-test-suite",
+      "kind": "code",
+      "path": "repository/test_suite.py",
+      "sha256": "e6d3fc44997eaea89de01cf5e3936f76295712da22b815a3e3d8ba8a8a941a9b",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-verifier",
+      "kind": "code",
+      "path": "repository/verifier.py",
+      "sha256": "2f13c35c6f04c128cac80f5102b29f48b67fa889e7b1c35e198e0600e670413c",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-repository-worker",
+      "kind": "code",
+      "path": "repository/worker.py",
+      "sha256": "58707970d5f846bfa9aea047a176b1a8ca7802b738835e7869660cd96db0a60c",
       "command": "Versioned source; see recorded execution commands."
     }
   ],
@@ -615,6 +1186,59 @@
       "caveats": []
     },
     {
+      "id": "repository-fixtures",
+      "kind": "computational",
+      "statement": "Version 0.5 adds 20 cases from five pinned Python projects and 80 staged Harbor tasks. All correct fixtures pass finite checks; all declared mutants pass basic examples and fail a distinguishing check. Harbor 0.24.0 loads all 80 task schemas.",
+      "status": "reproduced",
+      "sourceRefs": [
+        {
+          "sourceId": "harbor-multi-step",
+          "locator": "Multi-step structure, final reward strategy, and conversation resumption."
+        }
+      ],
+      "outputIds": [
+        "repository-validation",
+        "repository-schema",
+        "repository-cases",
+        "repository-sources"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "Comments are benchmark-authored. Package snapshots are not full repository histories. Compatibility shims are disclosed. Finite checks are not full API proof."
+      ]
+    },
+    {
+      "id": "repository-review-status",
+      "kind": "computational",
+      "statement": "All 20 repository cases remain pending independent human validation; the release has no private holdout.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "repository-human-review",
+        "repository-review-packet"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "Agent reviews are not human annotation."
+      ]
+    },
+    {
+      "id": "repository-tool-agent-pilot",
+      "kind": "computational",
+      "statement": "A separate Gemini 2.5 Flash read/edit tool-agent pilot covers 2 convenience cases, 2 correct checkpoints, and 12/12 graded saved review states. Correct-start arms share the exact saved pre-review conversation. Execution and strict disposition scores are reported separately.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "repository-pilot-summary",
+        "repository-pilot-grade",
+        "repository-native"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "One repetition, no shell or test tool, two convenience cases, no native Harbor model scores or causal attribution. Raw records are retained."
+      ]
+    },
+    {
       "id": "release-checks",
       "kind": "computational",
       "statement": "Local harness, adapter, canonical-grading, pipeline, and release-integrity checks pass.",
@@ -680,7 +1304,7 @@
     {
       "id": "interpretation",
       "kind": "synthetic",
-      "statement": "This is an open development benchmark and methodology report with a small direct-completion pilot; it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.",
+      "statement": "This is an open development benchmark and methodology report with separate small direct-completion and read/edit tool-agent pilots; it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.",
       "status": "supported",
       "sourceRefs": [],
       "outputIds": [],
@@ -697,7 +1321,7 @@
   ],
   "report": {
     "path": "docs/RESEARCH_EVIDENCE.md",
-    "sha256": "9bea43dcfae2fc16697d6d39aae60708f4716af1bda10813492609347c591671",
+    "sha256": "eb6cf587772d23583d75dd1fab4b466ffc62ca48eb0dada7e973cb7de92242e2",
     "status": "approved"
   },
   "approvals": {

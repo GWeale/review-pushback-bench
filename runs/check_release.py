@@ -26,7 +26,7 @@ def public_files():
                  'repository-validation.v05.json', 'repository-harbor-validation.v05.json', 'repository-human-review.v05.json',
                  'repository-pilot-grade.v05.json', 'repository-pilot-summary.v05.json', 'repository-native.v05.json'):
         paths.append(ROOT / 'artifacts' / name)
-    for directory in ('repository', 'artifacts/repository-pilot.v05'):
+    for directory in ('repository', 'artifacts/repository-pilot.v05', 'artifacts/repository-native.v05'):
         paths.extend(p for p in (ROOT / directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
     for directory in ('gemini-2.5-flash-v02', 'gemini-3.5-flash-lite-v02'):
         for name in ('run.json', 'attempts.jsonl', 'responses.jsonl', 'canonical-grade.json'):

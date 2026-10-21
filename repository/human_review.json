@@ -4,102 +4,142 @@
     {
       "id": "boltons-clamp-point",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "clamp",
+      "source_url": "https://github.com/mahmoud/boltons/blob/4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d/boltons/mathutils.py"
     },
     {
       "id": "boltons-ceil-equality",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "ceil",
+      "source_url": "https://github.com/mahmoud/boltons/blob/4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d/boltons/mathutils.py"
     },
     {
       "id": "boltons-floor-equality",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "floor",
+      "source_url": "https://github.com/mahmoud/boltons/blob/4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d/boltons/mathutils.py"
     },
     {
       "id": "boltons-zero-plural",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "cardinalize",
+      "source_url": "https://github.com/mahmoud/boltons/blob/4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d/boltons/strutils.py"
     },
     {
       "id": "more-strict-tail",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "chunked",
+      "source_url": "https://github.com/more-itertools/more-itertools/blob/4aeb4338ae1407d8da9723e86da99efeb446f719/more_itertools/more.py"
     },
     {
       "id": "more-first-falsy-default",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "first",
+      "source_url": "https://github.com/more-itertools/more-itertools/blob/4aeb4338ae1407d8da9723e86da99efeb446f719/more_itertools/more.py"
     },
     {
       "id": "more-last-sequence",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "last",
+      "source_url": "https://github.com/more-itertools/more-itertools/blob/4aeb4338ae1407d8da9723e86da99efeb446f719/more_itertools/more.py"
     },
     {
       "id": "more-only-cardinality",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "only",
+      "source_url": "https://github.com/more-itertools/more-itertools/blob/4aeb4338ae1407d8da9723e86da99efeb446f719/more_itertools/more.py"
     },
     {
       "id": "signer-payload-separator",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "Signer.unsign",
+      "source_url": "https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py"
     },
     {
       "id": "signer-newest-key",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "Signer.derive_key",
+      "source_url": "https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py"
     },
     {
       "id": "signer-old-key-verification",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "Signer.verify_signature",
+      "source_url": "https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py"
     },
     {
       "id": "signer-payload-binding",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "HMACAlgorithm.get_signature",
+      "source_url": "https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py"
     },
     {
       "id": "pydash-compact-falsy",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "compact",
+      "source_url": "https://github.com/dgilland/pydash/blob/ef6a6427e488e29e827e0e0819f2630ad3ff4cdc/src/pydash/arrays.py"
     },
     {
       "id": "pydash-drop-boundary",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "drop",
+      "source_url": "https://github.com/dgilland/pydash/blob/ef6a6427e488e29e827e0e0819f2630ad3ff4cdc/src/pydash/arrays.py"
     },
     {
       "id": "pydash-left-insertion",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "sorted_index_by",
+      "source_url": "https://github.com/dgilland/pydash/blob/ef6a6427e488e29e827e0e0819f2630ad3ff4cdc/src/pydash/arrays.py"
     },
     {
       "id": "pydash-right-insertion",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "sorted_last_index_by",
+      "source_url": "https://github.com/dgilland/pydash/blob/ef6a6427e488e29e827e0e0819f2630ad3ff4cdc/src/pydash/arrays.py"
     },
     {
       "id": "humanize-ordinal-teens",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "ordinal",
+      "source_url": "https://github.com/python-humanize/humanize/blob/785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b/src/humanize/number.py"
     },
     {
       "id": "humanize-zero-word",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "apnumber",
+      "source_url": "https://github.com/python-humanize/humanize/blob/785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b/src/humanize/number.py"
     },
     {
       "id": "humanize-negative-fraction",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "fractional",
+      "source_url": "https://github.com/python-humanize/humanize/blob/785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b/src/humanize/number.py"
     },
     {
       "id": "humanize-gnu-base",
       "reviews": [],
-      "unresolved_disagreement": false
+      "unresolved_disagreement": false,
+      "symbol": "naturalsize",
+      "source_url": "https://github.com/python-humanize/humanize/blob/785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b/src/humanize/filesize.py"
     }
   ]
 }

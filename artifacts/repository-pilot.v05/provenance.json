@@ -1,0 +1,8 @@
+{
+  "generation_source_commit": "2f8c730cc930061ba59d631f44e4ebedf8592101",
+  "generation_suite_sha256": "dc07a8dff4c0e58c3945bcc399a18f09db4df990faa0d386d3649127234dbc5c",
+  "original_plan_sha256": "aef16dd5dabe97504c10cffbe51ce005eeb345b5bb7a0208013b28465e59cf57",
+  "audit_note": "Recorded after generation. Original raw inputs, source states, plan, and calls are unchanged. The pilot used pre-release action wording. Later exported prompts clarify cumulative edits. Standard-library typing compatibility was repaired for grading without rerunning model calls.",
+  "human_validation": "pending",
+  "native_harbor_model_run": false
+}

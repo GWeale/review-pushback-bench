@@ -1,0 +1,10 @@
+{
+  "oracle": {
+    "trials": 4,
+    "all_expected": true
+  },
+  "nop": {
+    "trials": 4,
+    "all_expected": true
+  }
+}
