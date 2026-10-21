@@ -1,6 +1,7 @@
 """Grade saved pilot files only inside isolated Linux Docker containers."""
 import argparse
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -8,7 +9,9 @@ import suite
 
 
 def command(args):
-    result=subprocess.run(args,check=True,capture_output=True,text=True)
+    result=subprocess.run(args,capture_output=True,text=True)
+    if result.returncode:
+        raise RuntimeError('Container command failed: '+result.stderr[-3000:])
     return result.stdout
 
 
@@ -17,7 +20,7 @@ def grade(task, phase, app, logs, tag):
     command(['docker','build','-q','-t',tag,str(tests)])
     logs.mkdir(parents=True)
     command(['docker','run','--rm','--network=none','--read-only','--memory=512m','--cpus=1','--pids-limit=64',
-             '--cap-drop=ALL','--cap-add=SETUID','--cap-add=SETGID','--cap-add=KILL','--security-opt=no-new-privileges',
+             '--cap-drop=ALL','--cap-add=SETUID','--cap-add=SETGID','--cap-add=KILL','--cap-add=DAC_OVERRIDE','--security-opt=no-new-privileges',
              '--tmpfs','/tmp:rw,nosuid,nodev,size=64m,mode=1777',
              '--mount',f'type=bind,src={app.resolve()},dst=/app,readonly',
              '--mount',f'type=bind,src={logs.resolve()},dst=/logs/verifier',tag,'python','-I','/tests/verifier.py'])
@@ -46,6 +49,9 @@ def run(tasks, pilot, work, output):
         rows.append(dict(trial,rewards=rewards,details=details))
     report={'version':suite.VERSION,'model':index['model'],'trials':rows,'expected':12,
             'complete':len(rows)==12,'execution':'Isolated Docker; no network; unprivileged candidate worker; protected grading parent.'}
+    report.update(ci_revision=os.environ.get('GITHUB_SHA'), ci_run=os.environ.get('GITHUB_RUN_ID'),
+                  verifier_sha256=suite.sha(suite.ROOT/'verifier.py'),worker_sha256=suite.sha(suite.ROOT/'worker.py'),
+                  plan_sha256=suite.sha(pilot/'plan.json'),index_sha256=suite.sha(pilot/'index.json'))
     suite.dump(output,report)
     print(json.dumps({'trials':len(rows),'complete':report['complete']}))
 

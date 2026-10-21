@@ -49,6 +49,8 @@ The saved [pilot plan](../artifacts/repository-pilot.v05/plan.json) fixes two ca
 
 Raw calls, checkpoints, decisions, and every resulting source file are retained. Model-written Python runs only in isolated Docker grading, never in the local pilot runner. Malformed or absent responses stay in the denominator. This is a tool-agent integration pilot, not a native Harbor model evaluation or a model ranking.
 
+The pilot's earlier action wording did not explicitly state that edits accumulate across turns. Current exported prompts clarify that comparison. Its raw responses and scores are retained, including neutral `agree` labels where the strict schema expects `none`. Behavioral results should be read separately from these label failures.
+
 Generate a new pilot only with `GEMINI_API_KEY` already in the process environment:
 
 ```sh

@@ -105,6 +105,7 @@ jobs:
           harbor run -p .bench-work/repository-smoke -a nop -n 2 --jobs-dir .bench-work/repository-jobs --job-name nop
           python repository/check_native.py --tasks .bench-work/repository-smoke --jobs .bench-work/repository-jobs --output .bench-work/repository-native.json
       - name: Grade saved model files in isolated containers
+        if: always()
         run: python repository/check_docker.py --tasks .bench-work/repository-all --pilot artifacts/repository-pilot.v05 --work .bench-work/pilot-grade --output .bench-work/repository-pilot-grade.json
       - name: Retain auditable scores and native trial results
         if: always()
@@ -115,6 +116,7 @@ jobs:
             .bench-work/repository-native.json
             .bench-work/repository-pilot-grade.json
             .bench-work/repository-jobs/**/result.json
+            .bench-work/repository-jobs/**/verifier/**
 
 # No model API calls or provider keys are used in CI. Saved pilot candidates
 # execute only in separate Docker containers without network access.

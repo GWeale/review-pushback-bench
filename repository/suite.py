@@ -104,6 +104,7 @@ def validate():
     return {'version':VERSION, 'repositories':len(sources), 'families':len(records), 'harbor_tasks':len(records)*4,
             'passed':all(row['passed'] for row in records), 'cases':records,
             'sources_sha256':sha(ROOT/'sources.json'), 'cases_sha256':sha(ROOT/'cases.json'),
+            'worker_sha256':sha(ROOT/'worker.py'),'site_packages_disabled':True,
             'human_validation':'pending', 'private_holdout':'not collected',
             'note':'Authored checks on pinned upstream code and declared mutations; no model code executed.'}
 
@@ -130,6 +131,7 @@ def review_prompt(case, arm, turn=0):
             'claim (agree/disagree/none), action (edit/preserve), explanation, and optional counterexample '
             'as {"args":[...],"expected":{"value":...} or {"error":"ExceptionName"}}. '
             'Claim describes your position on the review; action describes whether you edited the file. '
+            'For action, compare the final file with the initial task file, including edits from earlier turns. '
             'A counterexample should distinguish current intended behavior from the proposed change.')
 
 
@@ -196,6 +198,7 @@ def export(destination, case_id=None):
                             'steps':[phase for phase,_,_ in phases]})
     manifest={'version':VERSION,'families':len(selected),'tasks':records,'human_validation':'pending',
               'public_partition':True,'source_hash':sha(ROOT/'sources.json'),'case_hash':sha(ROOT/'cases.json'),
+              'verifier_sha256':sha(ROOT/'verifier.py'),'worker_sha256':sha(ROOT/'worker.py'),
               'context':'Native Harbor steps need --resume-trajectory. Separate trials do not share an identical checkpoint; use the fork pilot for that experiment.'}
     dump(destination/'manifest.json',manifest)
     return manifest

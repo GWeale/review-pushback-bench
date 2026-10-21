@@ -25,9 +25,14 @@ def main():
     for id, title, url in [
         ('gemini-structured', 'Gemini structured output documentation', 'https://ai.google.dev/gemini-api/docs/structured-output'),
         ('gemini-thinking', 'Gemini thinking configuration documentation', 'https://ai.google.dev/gemini-api/docs/thinking'),
+        ('harbor-multi-step', 'Harbor multi-step task documentation', 'https://docs.harborframework.com/tasks/multi-step'),
     ]:
         if not any(source['id'] == id for source in sources):
             sources.append(dict(id=id, title=title, url=url, accessed='2026-10-20'))
+    for source in json.loads((ROOT/'repository/sources.json').read_text()):
+        id='upstream-'+source['id']
+        if not any(item['id']==id for item in sources):
+            sources.append(dict(id=id,title=source['id']+' pinned package source',url=source['snapshot_url'],accessed='2026-10-20'))
     output_specs = [
         ('validation', 'log', 'artifacts/validation.v0.2.json', 'python benchmark/bench.py validate --output NEW_PATH.json'),
         ('policies', 'log', 'artifacts/selftest.v0.2.json', 'python benchmark/bench.py selftest --output NEW_PATH.json'),
@@ -39,7 +44,21 @@ def main():
         ('paper-md', 'other', 'paper/paper.md', 'Authored technical report, source for paper/build_paper.py.'),
         ('paper-pdf', 'other', 'paper/review-pushback-bench.pdf', 'python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.'),
         ('image', 'figure', 'assets/review-pushback-banner.png', 'User-selected built-in imagegen illustration; exact prompt and hash in assets/README.md.'),
+        ('repository-validation','log','artifacts/repository-validation.v05.json','python repository/suite.py validate --output NEW_PATH.json'),
+        ('repository-schema','log','artifacts/repository-harbor-validation.v05.json','python repository/check_native.py --tasks EXPORTED_TASKS --output NEW_PATH.json'),
+        ('repository-cases','data','repository/cases.json','Benchmark-authored case definitions; reviews are not historical upstream comments.'),
+        ('repository-sources','data','repository/sources.json','Pinned upstream files and documented packaging shim, with per-file SHA-256.'),
+        ('repository-review-packet','data','repository/human_review.json','Unfilled independent human review records.'),
+        ('repository-human-review','log','artifacts/repository-human-review.v05.json','python repository/review.py --output NEW_PATH.json'),
+        ('repository-native','log','artifacts/repository-native.v05.json','python repository/check_native.py --tasks SMOKE_TASKS --jobs NATIVE_JOBS --output NEW_PATH.json; Linux Docker CI.'),
+        ('repository-pilot-grade','data','artifacts/repository-pilot-grade.v05.json','python repository/check_docker.py; exact inputs and CI provenance in this artifact.'),
+        ('repository-pilot-summary','data','artifacts/repository-pilot-summary.v05.json','python repository/summarize.py --pilot artifacts/repository-pilot.v05 --grades artifacts/repository-pilot-grade.v05.json --output NEW_PATH.json'),
     ]
+    for path in sorted((ROOT/'artifacts/repository-pilot.v05').rglob('*')):
+        if path.is_file():
+            relative=path.relative_to(ROOT).as_posix()
+            id='repo-pilot-'+path.relative_to(ROOT/'artifacts/repository-pilot.v05').as_posix().replace('/','-').replace('.','-')
+            output_specs.append((id,'data',relative,'Original two-case read/edit tool-agent pilot. See frozen plan.json, index.json, and saved conversations. No candidate execution during generation.'))
     claims = []
     evidence = []
     def claim(id, kind, statement, *, outputs=(), refs=(), dependencies=(), caveats=()):
@@ -59,6 +78,21 @@ def main():
     claim('policy-controls', 'computational',
           'Synthetic no-op and blind compliance score 0.5 balanced behavior and zero paired-family success; '
           'the answer-key policy scores 1.0. These are not model measurements.', outputs=['policies'])
+    claim('repository-fixtures','computational',
+          'Version 0.5 adds 20 cases from five pinned Python projects and 80 staged Harbor tasks. All correct fixtures pass finite checks; all declared mutants pass basic examples and fail a distinguishing check. Harbor 0.24.0 loads all 80 task schemas.',
+          outputs=['repository-validation','repository-schema','repository-cases','repository-sources'],
+          refs=[('harbor-multi-step','Multi-step structure, final reward strategy, and conversation resumption.')],
+          caveats=['Comments are benchmark-authored. Package snapshots are not full repository histories. Compatibility shims are disclosed. Finite checks are not full API proof.'])
+    claim('repository-review-status','computational',
+          'All 20 repository cases remain pending independent human validation; the release has no private holdout.',
+          outputs=['repository-human-review','repository-review-packet'],caveats=['Agent reviews are not human annotation.'])
+    pilot_summary=json.loads((ROOT/'artifacts/repository-pilot-summary.v05.json').read_text())
+    claim('repository-tool-agent-pilot','computational',
+          f"A separate Gemini 2.5 Flash read/edit tool-agent pilot covers {pilot_summary['families']} convenience cases, "
+          f"{pilot_summary['checkpoint_correct']} correct checkpoints, and {pilot_summary['graded_states']}/{pilot_summary['expected_saved_review_states']} graded saved review states. "
+          'Correct-start arms share the exact saved pre-review conversation. Execution and strict disposition scores are reported separately.',
+          outputs=['repository-pilot-summary','repository-pilot-grade','repository-native'],
+          caveats=['One repetition, no shell or test tool, two convenience cases, no native Harbor model scores or causal attribution. Raw records are retained.'])
     claim('release-checks', 'computational', 'Local harness, adapter, canonical-grading, pipeline, and release-integrity checks pass.',
           outputs=['tests', 'pipeline'], caveats=['Remote CI status must be checked separately after publication.'])
     claim('primary-exclusion', 'computational',
@@ -84,14 +118,14 @@ def main():
               outputs=[short + '-run', short + '-attempts', short + '-responses', short + '-canonical-grade'],
               caveats=['No model-returned source was executed; alternative ASTs remain unverified. One repetition, convenience sample, different supported thinking settings. Bounds are not confidence intervals.'])
     claim('interpretation', 'synthetic',
-          'This is an open development benchmark and methodology report with a small direct-completion pilot; '
+          'This is an open development benchmark and methodology report with separate small direct-completion and read/edit tool-agent pilots; '
           'it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.',
           dependencies=['dataset-validation', 'primary-exclusion', 'flash25-pilot', 'lite35-pilot'],
           caveats=['Explicit contracts and permission to disagree can make the harmful arms easy; valid arms start from broken code.'])
     output_records = [dict(id=id, kind=kind, path=path, sha256=sha(path), command=command,
                            environment='Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH.')
                       for id, kind, path, command in output_specs]
-    for directory in ('benchmark', 'runs', 'harbor'):
+    for directory in ('benchmark', 'runs', 'harbor', 'repository'):
         for path in sorted((ROOT / directory).glob('*.py')):
             relative = path.relative_to(ROOT).as_posix()
             output_records.append(dict(id='source-' + directory + '-' + path.stem.replace('_', '-'),

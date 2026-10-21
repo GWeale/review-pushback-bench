@@ -104,7 +104,11 @@ def grade(payload, app, worker, temporary):
     behavior = all(results)
     evidence = False
     witness = response.get('counterexample')
-    if isinstance(witness, dict) and isinstance(witness.get('args'), list) and len(json.dumps(witness)) < 4096:
+    try:
+        valid_witness = isinstance(witness,dict) and isinstance(witness.get('args'),list) and len(json.dumps(witness,allow_nan=False)) < 4096
+    except (TypeError, ValueError, RecursionError):
+        valid_witness = False
+    if valid_witness:
         values = []
         for label, source in [('reference', payload['reference_source']), ('mutant', payload['mutant_source'])]:
             destination = temporary / label
