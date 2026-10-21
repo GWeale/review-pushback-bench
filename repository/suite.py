@@ -204,5 +204,8 @@ if __name__=='__main__':
     result=validate() if args.command=='validate' else export(args.output,args.case)
     if args.command=='validate':
         dump(args.output,result)
+        for row in result['cases']:
+            if not row['passed']:
+                print(json.dumps(row))
     print(json.dumps({k:v for k,v in result.items() if k not in ('cases','tasks')},indent=2))
     raise SystemExit(0 if result.get('passed',True) else 1)
