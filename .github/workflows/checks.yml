@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   authored-fixtures:
     name: Python ${{ matrix.python }} authored fixtures
@@ -64,6 +68,8 @@ jobs:
         run: harbor run -p .bench-work/smoke -a nop -n 2 --jobs-dir .bench-work/jobs --job-name nop
       - name: Assert reference rewards and no-op rejection
         run: python harbor/check_smoke.py --jobs .bench-work/jobs --tasks .bench-work/smoke
+      - name: Reject bad code and malformed submissions in the production verifier
+        run: python harbor/check_negative.py --tasks .bench-work/smoke --work .bench-work/negative
 
 # This workflow does not call model APIs, read provider keys, publish anything,
 # or grade submitted model code. Run unreviewed candidates in a separate sandbox.
