@@ -30,7 +30,7 @@ jobs:
       - name: Validate authored correct implementations and mutants
         run: python benchmark/bench.py validate
       - name: Check harness behavior
-        run: python -m unittest discover -s benchmark -p test_harness.py -v
+        run: python -m unittest discover -s benchmark -p 'test_*.py' -v
       - name: Check API adapter and conservative grading without network calls
         run: python -m unittest discover -s runs -p 'test_*.py' -v
       - name: Check Harbor exporter and verifier on authored fixtures

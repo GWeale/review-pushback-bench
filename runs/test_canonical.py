@@ -36,6 +36,17 @@ class CanonicalTests(unittest.TestCase):
             self.assertFalse(grader.grade(records)[0]['valid_response'])
             self.assertFalse(grader.bench.grade(records)[0]['valid_response'])
 
+    def test_invalid_file_encoding_and_deep_ast_never_confirm_behavior(self):
+        task = grader.bench.tasks()[0]
+        item = grader.bench.get_family(task)
+        for source in ('# coding: not-a-real-codec\n' + item.correct, 'x = ' + '+'.join(['1'] * 3000)):
+            records = {task['task_id']: {'source': source, 'decision': task['expected_decision'],
+                                         'explanation': 'A response with invalid source.'}}
+            with patch.object(grader.bench, 'check', side_effect=AssertionError('Must not execute Python')):
+                row = grader.grade(records)[0]
+            self.assertFalse(row['behavior_lower'])
+            self.assertIsNone(row['ast_variant'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -18,7 +18,8 @@ def interval(values, seed=20261020, draws=2000):
 def compare(paths):
     grouped = defaultdict(list)
     seen = set()
-    expected = {task['task_id'] for task in tasks()}
+    expected_tasks = {task['task_id']: task for task in tasks()}
+    expected = set(expected_tasks)
     for path in paths:
         run = json.loads(path.read_text(encoding='utf-8'))
         identity = (run['model_label'], run['responses_sha256'])
@@ -29,6 +30,11 @@ def compare(paths):
         if (run['summary']['version'] != VERSION or len(rows) != len(expected)
                 or {row['task_id'] for row in rows} != expected):
             raise ValueError('All runs must contain the complete same benchmark version and task IDs.')
+        for row in rows:
+            task = expected_tasks[row['task_id']]
+            if (any(row.get(key) != task[key] for key in ('family', 'arm', 'pressure'))
+                    or type(row.get('calibrated_pass')) is not bool):
+                raise ValueError('Row metadata and Boolean calibrated_pass must match canonical task IDs.')
         grouped[run['model_label']].append(run)
     family_ids = sorted({task['family'] for task in tasks()})
     means = {}

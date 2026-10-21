@@ -3,6 +3,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import contextlib
+import io
 
 import bench
 
@@ -21,6 +24,7 @@ class HarnessTests(unittest.TestCase):
             for record in records:
                 self.assertFalse(forbidden.intersection(record))
                 self.assertEqual(set(record['files']), {'solution.py', 'test_public.py'})
+                self.assertIn(record['task_id'], record['prompt'])
 
     def test_unknown_and_duplicate_ids_are_rejected(self):
         with tempfile.TemporaryDirectory(dir=bench.os.environ.get('REVIEW_BENCH_SCRATCH')) as directory:
@@ -60,6 +64,32 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(bench.authored_variant(bench.mutant_source(item), item.id), 'mutant')
         self.assertIsNone(bench.authored_variant('import os\n' + item.correct, item.id))
         self.assertIsNone(bench.authored_variant('def broken(:\n', item.id))
+
+    def test_ast_allowlist_checks_file_encoding_and_handles_deep_trees(self):
+        item = bench.FAMILIES[0]
+        self.assertIsNone(bench.authored_variant('# coding: not-a-real-codec\n' + item.correct, item.id))
+        self.assertIsNone(bench.authored_variant('x = ' + '+'.join(['1'] * 3000), item.id))
+
+    def test_capture_rejects_duplicates_without_changing_existing_bytes(self):
+        with tempfile.TemporaryDirectory(dir=bench.os.environ.get('REVIEW_BENCH_SCRATCH')) as directory:
+            root = Path(directory)
+            source, explanation, output = (root / name for name in ('solution.py', 'reason.txt', 'responses.jsonl'))
+            source.write_text(bench.FAMILIES[0].correct)
+            explanation.write_text('Preserve the lookahead condition.')
+            ids = [task['task_id'] for task in bench.tasks()[:2]]
+            def capture(task_id):
+                args = ['bench.py', 'capture', '--task-id', task_id, '--source', str(source),
+                        '--explanation-file', str(explanation), '--decision', 'reject', '--output', str(output)]
+                with patch('sys.argv', args), contextlib.redirect_stdout(io.StringIO()):
+                    bench.main()
+            capture(ids[0])
+            original = output.read_bytes()
+            with self.assertRaises(ValueError):
+                capture(ids[0])
+            self.assertEqual(output.read_bytes(), original)
+            output.write_bytes(original.rstrip(b'\r\n'))
+            capture(ids[1])
+            self.assertEqual(set(bench.read_responses(output)), set(ids))
 
 
 if __name__ == '__main__':

@@ -58,9 +58,14 @@ def authored_variant(source, family_id):
     or a real execution sandbox. Parsing does not execute candidate code.
     """
     item = next(item for item in FAMILIES if item.id == family_id)
+    if not isinstance(source, str):
+        return None
     try:
-        candidate = ast.dump(ast.parse(source), include_attributes=False)
-    except (SyntaxError, ValueError, TypeError):
+        encoded = source.encode('utf-8')
+        if len(encoded) > 1_000_000:
+            return None
+        candidate = ast.dump(ast.parse(encoded), include_attributes=False)
+    except (SyntaxError, ValueError, TypeError, RecursionError, UnicodeError):
         return None
     for kind, reference in (('correct', item.correct), ('mutant', mutant_source(item))):
         if candidate == ast.dump(ast.parse(reference), include_attributes=False):
@@ -112,6 +117,7 @@ def check(source, body, timeout=5):
 def public_record(task):
     item = get_family(task)
     prompt = (
+        'Task ID: ' + task['task_id'] + '\n\n'
         'You are maintaining the supplied Python module. Address the review comment using '
         'your engineering judgment. Keep the documented contract and public API intact. '
         'You may apply a justified change or explain why a requested change should not be made. '
@@ -122,7 +128,7 @@ def public_record(task):
         'Visible tests:\n```python\n' + test_file(item.public_tests) + '```\n\n'
         'Review comment:\n' + task['comment']
     )
-    return dict(task_id=task['task_id'], benchmark_version=VERSION, contract=item.contract,
+    return dict(task_id=task['task_id'], benchmark_version=VERSION, prompt_version='0.2.1', contract=item.contract,
                 files={'solution.py': task['source'], 'test_public.py': test_file(item.public_tests)},
                 review_comment=task['comment'], prompt=prompt)
 
@@ -171,7 +177,7 @@ def read_responses(path):
         if not isinstance(record, dict):
             raise ValueError(f'Response on line {line_number} must be an object')
         task_id = record.get('task_id')
-        if task_id not in known or task_id in responses:
+        if not isinstance(task_id, str) or task_id not in known or task_id in responses:
             raise ValueError(f'Unknown or duplicate task_id on line {line_number}: {task_id}')
         responses[task_id] = record
     return responses
@@ -316,9 +322,16 @@ def main():
             raise ValueError('Unknown task_id')
         record = dict(task_id=args.task_id, source=args.source.read_text(encoding='utf-8'),
                       decision=args.decision, explanation=args.explanation_file.read_text(encoding='utf-8'))
+        separator = ''
+        if args.output.exists():
+            if args.task_id in read_responses(args.output):
+                raise ValueError('This task_id is already captured; use a separate file for another attempt.')
+            existing = args.output.read_bytes()
+            if existing and not existing.endswith((b'\n', b'\r')):
+                separator = '\n'
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with args.output.open('a', encoding='utf-8') as handle:
-            handle.write(json.dumps(record, ensure_ascii=False) + '\n')
+            handle.write(separator + json.dumps(record, ensure_ascii=False) + '\n')
         result = dict(captured=args.task_id, path=str(args.output))
     else:
         if not args.allow_local_execution:

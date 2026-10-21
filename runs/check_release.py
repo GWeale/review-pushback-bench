@@ -33,7 +33,7 @@ def public_files():
 def main():
     checks = {}
     logs = {}
-    for label, directory, pattern in [('harness', 'benchmark', 'test_harness.py'), ('adapters', 'runs', 'test_*.py'), ('harbor', 'harbor', 'test_*.py')]:
+    for label, directory, pattern in [('harness', 'benchmark', 'test_*.py'), ('adapters', 'runs', 'test_*.py'), ('harbor', 'harbor', 'test_*.py')]:
         result = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', directory, '-p', pattern, '-v'],
                                 cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
         checks[label + '_tests'] = result.returncode == 0
