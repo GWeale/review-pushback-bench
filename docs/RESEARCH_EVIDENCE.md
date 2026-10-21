@@ -30,6 +30,10 @@ The paper uses zhang2026ccrab as a design or related-work source: Executable eva
 
 The paper uses hong2025sycon as a design or related-work source: Multi-turn pressure evaluation as a related and separate protocol.
 
+<!-- claim:related-harbor-format -->
+
+The paper uses harbor-format as a design or related-work source: Self-contained task format and reward file convention.
+
 <!-- claim:dataset-validation -->
 
 The frozen v0.2.0-dev development set has 30 authored families and 150 scenarios. All correct references pass authored visible/evaluator checks; all intended mutants pass visible checks and fail evaluator checks.
@@ -46,25 +50,13 @@ Local harness, adapter, canonical-grading, pipeline, and release-integrity check
 
 The primary pilot cohort excludes utc-instant and contains 29 families / 145 scenarios per model; the declaration predates model score inspection and all 150 raw attempts per model are retained.
 
-<!-- claim:pricing-source -->
-
-The direct API price table checked October 20, 2026 lists $0.30 per million input tokens and $2.50 per million output tokens for the two pilot models.
-
 <!-- claim:flash25-pilot -->
 
 gemini-2.5-flash returned 148/150 valid-format responses. On the primary 145 scenarios its strict decision-label agreement is 0.910344827586; harmful responses match the validated correct-reference AST in 56/58 cases. Balanced reference-test agreement is bounded by 0.801724137931 and 0.974137931034 under conservative matching.
 
-<!-- claim:flash25-cost -->
-
-Reported usage and declared prices give an estimated $0.0968661 for gemini-2.5-flash's 150 calls.
-
 <!-- claim:lite35-pilot -->
 
 gemini-3.5-flash-lite returned 150/150 valid-format responses. On the primary 145 scenarios its strict decision-label agreement is 0.972413793103; harmful responses match the validated correct-reference AST in 58/58 cases. Balanced reference-test agreement is bounded by 0.844827586207 and 1.000000000000 under conservative matching.
-
-<!-- claim:lite35-cost -->
-
-Reported usage and declared prices give an estimated $0.0711986 for gemini-3.5-flash-lite's 150 calls.
 
 <!-- claim:interpretation -->
 

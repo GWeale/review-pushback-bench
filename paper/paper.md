@@ -1,12 +1,13 @@
 # Review Pushback Bench: Evaluating Responses to Incorrect Code Review Feedback
 
 **George Weale**  
-Technical report · October 20, 2026 · Development release 0.2  
+Technical report · October 20, 2026 · Development release 0.3
+
 **Status:** Public methodology report; not peer reviewed. Dataset construction and writing were AI-assisted. See the disclosure below.
 
 ## Abstract
 
-An implementing agent may receive a fluent, specific code review that is technically wrong. Evaluating whether it preserves correct behavior requires more than counting refusals: rejecting every suggestion can look successful on a dataset containing only bad reviews. We introduce Review Pushback Bench, an executable evaluation of responses to incorrect code review feedback. Each problem family supplies a reference implementation, a specific behavior-breaking mutation, and a distinguishing contract. Five variants combine harmful feedback on reference code, valid feedback on mutated code, and a neutral control; harmful and valid reviews each receive plain and authority-pressure wording. The development release contains 30 original, single-module Python families and 150 variants. A contract-domain defect found before outcome inspection excludes one family from primary pilot analysis, leaving 29 families and 145 variants. Deterministic controls show that blanket refusal and blind compliance each receive 50% balanced behavioral accuracy and solve no complete matched family. An exploratory pilot makes 300 API attempts across two inexpensive model configurations. Conservative full-program AST verification finds no confirmed harmful mutant adoption among valid-format primary submissions, but identifies one failure to apply valid feedback and exposes decision-label ambiguity. Unrecognized alternative programs remain unverified rather than being scored incorrect. The result suggests that explicit-contract harmful cases may be too easy for these configurations. It does not establish a frontier-model ranking or causally identify sycophancy.
+An implementing agent may receive a fluent, specific code review that is technically wrong. Evaluating whether it preserves correct behavior requires more than counting refusals: rejecting every suggestion can look successful on a dataset containing only bad reviews. We introduce Review Pushback Bench, an executable evaluation of responses to incorrect code review feedback. Each problem family supplies a reference implementation, a specific behavior-breaking mutation, and a distinguishing contract. Five variants combine harmful feedback on reference code, valid feedback on mutated code, and a neutral control; harmful and valid reviews each receive plain and authority-pressure wording. The development release contains 30 original, single-module Python families and 150 variants. A contract-domain defect found before outcome inspection excludes one family from primary pilot analysis, leaving 29 families and 145 variants. Deterministic controls show that blanket refusal and blind compliance each receive 50% balanced behavioral accuracy and solve no complete matched family. An exploratory pilot makes 300 API attempts across two model configurations. Conservative full-program AST verification finds no confirmed harmful mutant adoption among valid-format primary submissions, but identifies one failure to apply valid feedback and exposes decision-label ambiguity. Unrecognized alternative programs remain unverified rather than being scored incorrect. The result suggests that explicit-contract harmful cases may be too easy for these configurations. It does not establish a frontier-model ranking or causally identify sycophancy.
 
 ## 1. Introduction
 
@@ -136,7 +137,6 @@ For `gemini-2.5-flash`, 56 harmful primary responses matched the reference AST, 
 
 The confirmed Flash 2.5 mutant match occurred in the valid/plain pagination task. The review correctly requested changing `>=` to `>`, but the model rejected it and retained the existing mutant. Its explanation said that an exactly full page should have no further page, while incorrectly treating `>=` as consistent with that conclusion. The authored exactly-full witness identifies a failure to repair under valid feedback. It is not an instance of incorrect review feedback breaking working code.
 
-Both configurations reported 59,962 input tokens. Flash-Lite reported 21,284 output-plus-thought tokens, and Flash reported 31,551. Applying the runs' recorded rates gives estimated costs of $0.0712 and $0.0969, or approximately $0.1681 combined for the 300 full-pilot attempts. These are usage-based price estimates, not invoices. They exclude preflight requests, preparation, dataset auditing, and artifact production.
 
 The pilot does not demonstrate harmful mutant adoption on the primary set: all 114 valid-format harmful submissions matched the reference AST, and two harmful attempts were malformed. The plain/authority preservation difference is zero for both configurations under this verification method. With explicit contracts and one authority cue, these cases may be too easy to discriminate the tested configurations. This negative result is a reason to improve task realism, not evidence that pressure susceptibility is absent in general.
 
@@ -148,11 +148,11 @@ Strict label agreement is not equivalent to engineering judgment. AI-assisted in
 
 This finding limits interpretation of calibrated balance. Future versions should distinguish the disposition of a review claim from the action taken on the code, and validate the decision vocabulary before treating it as a semantic outcome. We preserve the original labels rather than retroactively normalizing them to improve the result. Explanation quality has not received independent human scoring.
 
-## 6. Reproduction and a low-cost evaluation protocol
+## 6. Reproduction and evaluation protocol
 
 The benchmark itself uses the Python standard library. From the repository root, `python benchmark/bench.py validate` checks the authored fixtures, `python benchmark/bench.py selftest` checks the synthetic policies, and the unit-test suite checks failure handling. Exported tasks omit family labels, expected decisions, reference alternatives, and evaluator tests. A fixed export seed controls presentation order, not provider randomness.
 
-For a model pilot, freeze the code revision, task export hash, system prompt, exact provider model ID, reasoning settings, output limit, and parser before calls. Use a fresh context per task so a related variant cannot reveal an answer. Preserve raw responses and failures; retry transport failures according to a declared rule, never selectively retry wrong answers. Record input/output usage and actual billed cost when available. A common prompting and tool harness compares models under that harness; native product harnesses compare complete systems. The pilot's provider-returned model names do not independently establish immutable weight snapshots, so a later run against the same name may differ.
+For a model pilot, freeze the code revision, task export hash, system prompt, exact provider model ID, reasoning settings, output limit, and parser before calls. Use a fresh context per task so a related variant cannot reveal an answer. Preserve raw responses and failures; retry transport failures according to a declared rule, never selectively retry wrong answers. Record input/output usage. A common prompting and tool harness compares models under that harness; native product harnesses compare complete systems. The pilot's provider-returned model names do not independently establish immutable weight snapshots, so a later run against the same name may differ.
 
 Candidate source is executable code. A subprocess, stripped environment, timeout, and completion marker improve reliability but are not a security sandbox. Behavioral evaluation of unreviewed model-generated source requires an isolated disposable environment with restricted access. A completion marker prevents an accidental early successful exit from being counted as a test pass; it is not a general defense against malicious submissions.
 
@@ -183,6 +183,10 @@ Review Pushback Bench makes a narrow engineering judgment observable: whether an
 ## Disclosure and provenance
 
 George Weale directed the work and requested its release. Coding agents assisted with problem authoring, implementation, literature lookup, validation, and manuscript drafting. Agent checks are not independent human annotation or peer review. No employer affiliation, endorsement, or institutional review is claimed. Original fixtures are distinguished from the published benchmarks that informed the method. All performance claims must be read with their declared evidence type: executable fixture validation, deterministic synthetic-policy control, or an explicitly documented model run.
+
+## Harbor task edition
+
+A subsequent adapter exports 145 tasks across 29 families in the [Harbor task format](https://harborframework.com/docs/tasks/overview), with isolated agent images, reference solve scripts, and separate verifier containers. It excludes `utc-instant` and restricts `query-encoding` inputs to UTF-8-encodable strings, excluding lone surrogates. Agents edit the module and submit a structured review decision. The verifier checks final behavior and decision labels; explanation quality remains ungraded. This edition changes the task interface and one contract, so the completion-pilot results above are not Harbor agent measurements. The adapter guide documents setup and scoring.
 
 ## References
 

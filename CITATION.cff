@@ -5,7 +5,7 @@ title: "Review Pushback Bench"
 authors:
   - family-names: Weale
     given-names: George
-version: 0.2.0-dev
+version: 0.3.0-dev
 date-released: 2026-10-20
 license: MIT
 repository-code: "https://github.com/GWeale/review-pushback-bench"

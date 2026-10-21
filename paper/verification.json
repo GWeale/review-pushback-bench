@@ -3,16 +3,17 @@
   "pages": 9,
   "native_compiler": "pdfLaTeX; two passes; no shell escape",
   "desktop_compiler": "success on final saved sources",
-  "visual_review": "All 9 final pages rendered and inspected; readable tables; no clipping or orphan reference page",
+  "visual_review": "All 9 updated pages rendered and inspected; readable tables and no clipping",
   "known_domain_limits": "utc-instant excluded before outcome inspection; query-encoding caveat retained after outcome inspection",
   "model_results": "Two real API runs; conservative AST verification; no arbitrary returned Python executed",
   "sha256": {
-    "paper.md": "551927b1d900387aa2ccfd2cb9d6018b0a5593f0a43cbb452f131e50326c2f7e",
-    "review-pushback-bench.pdf": "ef2a7a307e4e94b8d332dafd9ac986bc78d44f77af551e2441d141f4b4d39999",
-    "latex/main.tex": "b6c489cf14abbbbd5a89b59e2b9ea1a4cd68679f7f3caa1619aa049e41fe5434",
-    "latex/paper-body.tex": "9b93cc8a78bca93e5db0ec97ee6fc9e133a918ef9d474ccd849b48a5ad40f381",
+    "paper.md": "046ea6432e20debfd2ada0a398137d2ad6441c4e483a29570682c09079275c20",
+    "review-pushback-bench.pdf": "ff3520a7ad473fed5b0b60efb14327cf86328773f9ff118a2ae5e3b636f421d0",
+    "latex/main.tex": "5a16af4bc92fd2e9c196ebfe1a05c8f38d3b9cac852148a33d096598790aba88",
+    "latex/paper-body.tex": "4b3e241e2bfdb87037f6183cd72f14a62763107faea29cbbb2ea21b7748ccaa2",
     "build_paper.py": "3217c0aaa8a4e0fb757f71ac5db99592faefa1972df8fc8ca9aa49d3e8f2d710",
     "references.bib": "101f5b30c307b823f70f3eca66a571a570a4f573410de12b7253d906db057fc8",
-    "sources.json": "e69974c1463e47ad97edc089c4681525ff50b483d84ed5fee93de145bbba9a14"
-  }
+    "sources.json": "02b29c58c4c9e15b1b96215f522a7123f44fd7690a433d04459b438ce6b3fcee"
+  },
+  "harbor_edition": "145 tasks, 29 families; schema-checked with Harbor 0.24.0; Docker smoke verified separately in CI"
 }

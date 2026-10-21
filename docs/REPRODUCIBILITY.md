@@ -37,13 +37,13 @@ python runs/grade_canonical.py --responses artifacts/model-runs/gemini-2.5-flash
 
 The conservative grader matches a candidate's complete Python AST to an authored reference or mutant. It inherits the reference's previously executed test outcome only for exact matches; alternatives remain unverified. It reports full-denominator lower/upper bounds, which are not confidence intervals. Returned source is parsed, never executed. The generic executable grader and its comparison script use a different output schema; do not pass canonical-bound artifacts to `benchmark/compare.py`.
 
-The direct API runner is `runs/gemini_runner.py`. It reads `GEMINI_API_KEY` from its process environment, uses no tools and no SDK dependency, stores response/usage metadata without credentials or headers, and enforces an estimated budget reservation. Rates and settings are explicit arguments. The cap is an estimate rather than a provider billing limit. It resumes recorded attempts; an interruption in an in-flight request needs inspection before resuming. Limited runs are connectivity checks, not full benchmark scores. The paper and released run manifests contain the exact settings used.
+The direct API runner is `runs/gemini_runner.py`. It reads `GEMINI_API_KEY` from its process environment, uses no tools and no SDK dependency, stores response/usage metadata without credentials or headers, and enforces an estimated budget reservation. Rates and settings are explicit arguments. The cap is an estimate rather than a provider billing limit. It resumes recorded attempts; an interruption in an in-flight request needs inspection before resuming. Limited runs are connectivity checks, not full benchmark scores. The released run manifests contain the exact settings used. Original financial metadata remains in the frozen historical logs; it is no longer reported in the README or paper.
 
 The exact source used for the published calls is preserved as `runs/gemini_runner_pilot.py`, matching each run manifest's `runner_sha256`. The current runner adds a defensive type check for malformed decision containers found during final review. No current pilot response contains those containers; this parser repair does not change any published result. Use the preserved snapshot when auditing the exact original generation implementation.
 
 Send one exported prompt per fresh context. Keep sibling variants in separate contexts and do not give the model the evaluator repository. A tool-using agent should receive only its prepared task workspace and the tools declared in the run manifest.
 
-Use the `run-record.example.json` template. Fill the exact model ID, provider endpoint, agent version, prompt hashes, allowed tools, reasoning and sampling settings, token/time/tool budgets, repetition, and parsing/retry policy before generating results. Record unsupported parameters rather than silently assuming they were honored. Record actual usage and costs after the run.
+Use the `run-record.example.json` template. Fill the exact model ID, provider endpoint, agent version, prompt hashes, allowed tools, reasoning and sampling settings, token/time/tool budgets, repetition, and parsing/retry policy before generating results. Record unsupported parameters rather than silently assuming they were honored. Record actual token usage after the run.
 
 Save the full final source and actual accept/reject/no-change response. Missing and malformed responses stay in the score denominator. Infrastructure retries must follow a declared policy; do not selectively retry responses because the checks fail.
 
@@ -53,12 +53,17 @@ Do not call a synthetic policy result a model score. Do not merge direct-complet
 
 ## Reporting checklist
 
-Report the number of families and scenarios, dataset/export hashes, coverage, harmful preservation, valid repair, calibrated balance, neutral preservation, paired family success, failure categories, pressure delta, latency, usage, and cost. Show family-level uncertainty and explain its limitations. Include representative successful rejections, harmful compliance, and false refusals without selecting only favorable examples.
+Report the number of families and scenarios, dataset/export hashes, coverage, harmful preservation, valid repair, calibrated balance, neutral preservation, paired family success, failure categories, pressure delta, latency, and token usage. Show family-level uncertainty and explain its limitations. Include representative successful rejections, harmful compliance, and false refusals without selecting only favorable examples.
 
 For version changes, regenerate exports and validation artifacts. Do not combine artifacts from the original 10-family development pilot with an expanded release. The dataset card describes the public nature and limits of this set.
 
 ## Continuous integration
 
-The workflow in `.github/workflows/checks.yml` runs only authored fixture validation and harness tests on Python 3.11 and 3.13 in disposable GitHub-hosted runners. It requests read-only repository permission and does not persist checkout credentials. It contains no provider secrets, model calls, deployment, candidate uploads, or publishing step.
+The workflow in `.github/workflows/checks.yml` runs authored fixture and harness checks on Python 3.11 and 3.13. A separate Linux job loads all 145 exported tasks with Harbor 0.24.0, then runs all five page-boundary variants in Docker with the reference oracle and a no-op agent. It asserts oracle rewards of one, no-op rewards of zero, and separate verification without trial errors. These are integration controls, not model results. The workflow requests read-only repository permission, does not persist checkout credentials, and contains no provider secrets, model calls, deployment, or publishing step.
 
 CI action usage follows the official [checkout](https://github.com/actions/checkout) and [setup-python](https://github.com/actions/setup-python) documentation checked on October 20, 2026. Local validation does not establish that remote CI passed; inspect the actual workflow result after publication.
+
+
+## Harbor edition
+
+See the [Harbor guide](../harbor/README.md) for the 145-task agent edition. Its contract correction and tool-using interface are versioned separately from the frozen completion pilot.

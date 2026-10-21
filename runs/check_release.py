@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 def public_files():
     paths = [ROOT / name for name in ('README.md', 'LICENSE', 'CITATION.cff', '.gitignore', '.gitattributes',
                                      'run-record.example.json', 'research.json')]
-    for directory, patterns in [('benchmark', ['*.py']), ('runs', ['*.py']), ('docs', ['*.md']),
+    for directory, patterns in [('benchmark', ['*.py']), ('harbor', ['*.py', '*.md']), ('runs', ['*.py']), ('docs', ['*.md']),
                                 ('inputs', ['*.md']), ('assets', ['*.png', '*.md']),
                                 ('.github/workflows', ['*.yml']),
                                 ('paper', ['*.md', '*.bib', '*.py', '*.json', 'review-pushback-bench.pdf']),
@@ -22,7 +22,7 @@ def public_files():
         for pattern in patterns:
             paths.extend((ROOT / directory).glob(pattern))
     for name in ('validation.v0.2.json', 'selftest.v0.2.json', 'pipeline-checks.json',
-                 'tasks.v0.2.dev.jsonl', 'primary-analysis-plan.json', 'release-checks.json'):
+                 'tasks.v0.2.dev.jsonl', 'primary-analysis-plan.json', 'release-checks.json', 'harbor-validation.v01.json'):
         paths.append(ROOT / 'artifacts' / name)
     for directory in ('gemini-2.5-flash-v02', 'gemini-3.5-flash-lite-v02'):
         for name in ('run.json', 'attempts.jsonl', 'responses.jsonl', 'canonical-grade.json'):
@@ -33,7 +33,7 @@ def public_files():
 def main():
     checks = {}
     logs = {}
-    for label, directory, pattern in [('harness', 'benchmark', 'test_harness.py'), ('adapters', 'runs', 'test_*.py')]:
+    for label, directory, pattern in [('harness', 'benchmark', 'test_harness.py'), ('adapters', 'runs', 'test_*.py'), ('harbor', 'harbor', 'test_*.py')]:
         result = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', directory, '-p', pattern, '-v'],
                                 cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
         checks[label + '_tests'] = result.returncode == 0

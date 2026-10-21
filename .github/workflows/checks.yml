@@ -33,6 +33,37 @@ jobs:
         run: python -m unittest discover -s benchmark -p test_harness.py -v
       - name: Check API adapter and conservative grading without network calls
         run: python -m unittest discover -s runs -p 'test_*.py' -v
+      - name: Check Harbor exporter and verifier on authored fixtures
+        run: python -m unittest discover -s harbor -p 'test_*.py' -v
+
+  harbor-smoke:
+    name: Harbor oracle and no-op Docker trials
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      REVIEW_BENCH_SCRATCH: ${{ github.workspace }}/.bench-work
+      HARBOR_TELEMETRY: '0'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Install optional Harbor evaluation runtime
+        run: python -m pip install harbor==0.24.0
+      - name: Export and validate all Harbor tasks
+        run: |
+          mkdir -p .bench-work
+          python harbor/export_tasks.py --output .bench-work/all-tasks
+          python harbor/validate_tasks.py --tasks .bench-work/all-tasks --require-harbor
+          python harbor/export_tasks.py --output .bench-work/smoke --family page-boundary
+      - name: Run all five matched smoke variants with reference solutions
+        run: harbor run -p .bench-work/smoke -a oracle -n 2 --jobs-dir .bench-work/jobs --job-name oracle
+      - name: Run the same tasks with no edits or decision submission
+        run: harbor run -p .bench-work/smoke -a nop -n 2 --jobs-dir .bench-work/jobs --job-name nop
+      - name: Assert reference rewards and no-op rejection
+        run: python harbor/check_smoke.py --jobs .bench-work/jobs
 
 # This workflow does not call model APIs, read provider keys, publish anything,
 # or grade submitted model code. Run unreviewed candidates in a separate sandbox.

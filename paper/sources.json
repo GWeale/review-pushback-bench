@@ -5,5 +5,6 @@
   {"id":"zhuo2024bigcodebench","url":"https://arxiv.org/abs/2406.15877","accessed":"2026-10-20","locator":"Abstract, paragraphs describing practical function calls and tasks","use":"Motivation for API-semantics task scope"},
   {"id":"jain2024livecodebench","url":"https://arxiv.org/abs/2403.07974","accessed":"2026-10-20","locator":"Abstract describing continual collection and code-related scenarios","use":"Temporal collection and separation of code capabilities"},
   {"id":"zhang2026ccrab","url":"https://arxiv.org/abs/2603.23448","accessed":"2026-10-20","locator":"Abstract describing tests derived from human review feedback; v3 April 7, 2026","use":"Executable evaluation of review consequences; distinction in evaluated role"},
-  {"id":"hong2025sycon","url":"https://arxiv.org/abs/2505.23840","accessed":"2026-10-20","locator":"Abstract and EMNLP Findings journal reference","use":"Multi-turn pressure evaluation as a related and separate protocol"}
+  {"id":"hong2025sycon","url":"https://arxiv.org/abs/2505.23840","accessed":"2026-10-20","locator":"Abstract and EMNLP Findings journal reference","use":"Multi-turn pressure evaluation as a related and separate protocol"},
+  {"id":"harbor-format","url":"https://harborframework.com/docs/tasks/overview","accessed":"2026-10-20","use":"Self-contained task format and reward file convention","locator":"Task structure and Rewards sections"}
 ]

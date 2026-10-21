@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "tasks": 145,
+  "families": 29,
+  "harbor_version": "0.24.0",
+  "harbor_tasks_loaded": 145,
+  "authored_correct_and_mutant_checks": 58,
+  "python": "3.13.4",
+  "candidate_python_executed": false,
+  "note": "Schema and authored checks only. Docker trials are a separate CI check."
+}

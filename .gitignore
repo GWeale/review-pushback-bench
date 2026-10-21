@@ -36,3 +36,7 @@ paper/latex/main.pdf
 /benchmark/selftest-v0.2.json
 /artifacts/harness-tests.txt
 /paper/latex/compilation.txt
+
+# Generated Harbor task exports and local trial output
+/harbor-tasks/
+/jobs/

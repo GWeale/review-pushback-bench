@@ -17,13 +17,12 @@ def main():
     validation = json.loads((ROOT / 'artifacts/validation.v0.2.json').read_text())
     policy = json.loads((ROOT / 'artifacts/selftest.v0.2.json').read_text())
     assert validation['passed'] and policy['passed']
-    sources = json.loads((ROOT / 'research.json').read_text(encoding='utf-8'))['sources']
+    sources = [s for s in json.loads((ROOT / 'research.json').read_text(encoding='utf-8'))['sources'] if s['id'] != 'gemini-pricing']
     paper_sources = json.loads((ROOT / 'paper/sources.json').read_text(encoding='utf-8'))
     for source in paper_sources:
         if not any(item['id'] == source['id'] for item in sources):
             sources.append(dict(id=source['id'], title=source['use'], url=source['url'], accessed=source['accessed']))
     for id, title, url in [
-        ('gemini-pricing', 'Gemini Developer API pricing', 'https://ai.google.dev/gemini-api/docs/pricing'),
         ('gemini-structured', 'Gemini structured output documentation', 'https://ai.google.dev/gemini-api/docs/structured-output'),
         ('gemini-thinking', 'Gemini thinking configuration documentation', 'https://ai.google.dev/gemini-api/docs/thinking'),
     ]:
@@ -35,6 +34,7 @@ def main():
         ('pipeline', 'log', 'artifacts/pipeline-checks.json', 'python runs/verify_pipeline.py'),
         ('tests', 'log', 'artifacts/release-checks.json', 'python runs/check_release.py'),
         ('tasks-v02', 'data', 'artifacts/tasks.v0.2.dev.jsonl', 'python benchmark/bench.py export --output NEW_PATH.jsonl --seed 20261020'),
+        ('harbor-validation', 'log', 'artifacts/harbor-validation.v01.json', 'python harbor/validate_tasks.py --tasks EXPORTED_TASKS --require-harbor'),
         ('analysis-plan', 'data', 'artifacts/primary-analysis-plan.json', 'Pre-outcome static audit decision recorded locally before score inspection.'),
         ('paper-md', 'other', 'paper/paper.md', 'Authored technical report, source for paper/build_paper.py.'),
         ('paper-pdf', 'other', 'paper/review-pushback-bench.pdf', 'python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.'),
@@ -65,11 +65,6 @@ def main():
           'The primary pilot cohort excludes utc-instant and contains 29 families / 145 scenarios per model; '
           'the declaration predates model score inspection and all 150 raw attempts per model are retained.',
           outputs=['analysis-plan'], caveats=['This was a concurrent pre-outcome audit decision, not formal preregistration.'])
-    claim('pricing-source', 'empirical',
-          'The direct API price table checked October 20, 2026 lists $0.30 per million input tokens and $2.50 '
-          'per million output tokens for the two pilot models.',
-          refs=[('gemini-pricing', 'Gemini 2.5 Flash and Gemini 3.5 Flash-Lite: Standard price tables')],
-          caveats=['Prices may change; calculated costs are not provider invoices.'])
     for folder, short in [('gemini-2.5-flash-v02', 'flash25'), ('gemini-3.5-flash-lite-v02', 'lite35')]:
         base = f'artifacts/model-runs/{folder}'
         run = json.loads((ROOT / base / 'run.json').read_text())
@@ -77,7 +72,7 @@ def main():
         assert run['status'] == 'completed' and run['attempts'] == 150
         for suffix, kind in [('run.json', 'log'), ('attempts.jsonl', 'data'), ('responses.jsonl', 'data'), ('canonical-grade.json', 'data')]:
             output_specs.append((short + '-' + suffix.split('.')[0], kind, base + '/' + suffix,
-                'Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.'))
+                'Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.'))
         summary = grade['summary']
         h = summary['by_arm']['harmful']
         claim(short + '-pilot', 'computational',
@@ -88,10 +83,6 @@ def main():
               f"and {summary['balanced_behavior_upper_bound']:.12f} under conservative matching.",
               outputs=[short + '-run', short + '-attempts', short + '-responses', short + '-canonical-grade'],
               caveats=['No model-returned source was executed; alternative ASTs remain unverified. One repetition, convenience sample, different supported thinking settings. Bounds are not confidence intervals.'])
-        claim(short + '-cost', 'computational',
-              f"Reported usage and declared prices give an estimated ${run['price_based_estimate_usd']:.7f} "
-              f"for {run['config']['model_id']}'s 150 calls.", outputs=[short + '-run'], dependencies=['pricing-source'],
-              caveats=['Price-based estimate; actual billed cost unavailable. Preflight requests are separate.'])
     claim('interpretation', 'synthetic',
           'This is an open development benchmark and methodology report with a small direct-completion pilot; '
           'it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.',
@@ -100,7 +91,7 @@ def main():
     output_records = [dict(id=id, kind=kind, path=path, sha256=sha(path), command=command,
                            environment='Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH.')
                       for id, kind, path, command in output_specs]
-    for directory in ('benchmark', 'runs'):
+    for directory in ('benchmark', 'runs', 'harbor'):
         for path in sorted((ROOT / directory).glob('*.py')):
             relative = path.relative_to(ROOT).as_posix()
             output_records.append(dict(id='source-' + directory + '-' + path.stem.replace('_', '-'),
@@ -111,11 +102,11 @@ def main():
     question_path = 'inputs/question.md'
     (ROOT / question_path).write_text('# Research question and authorized release scope\n\n'
         'Can an implementing coding model reject an incorrect code-review change while accepting valid repairs? '
-        'Create and publish a reproducible GitHub benchmark, technical paper, preliminary inexpensive tests, and companion illustration. '
+        'Create and publish a reproducible GitHub benchmark, technical paper, preliminary tests, and companion illustration. '
         'The user explicitly requested multi-agent creation and GitHub publication on October 20, 2026. '
         'The release is not represented as peer reviewed.\n', encoding='utf-8')
     manifest = dict(schemaVersion='1.0', id='review-pushback-bench',
-        title='Review Pushback Bench: methodology and inexpensive model pilot', deliverableMode='report',
+        title='Review Pushback Bench: methodology and preliminary model pilot', deliverableMode='report',
         question=dict(path=question_path, sha256=sha(question_path)), sources=sources,
         outputs=output_records, claims=claims,
         report=dict(path=report_path, sha256=sha(report_path), status='approved'),

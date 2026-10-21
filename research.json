@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
   "id": "review-pushback-bench",
-  "title": "Review Pushback Bench: methodology and inexpensive model pilot",
+  "title": "Review Pushback Bench: methodology and preliminary model pilot",
   "deliverableMode": "report",
   "question": {
     "path": "inputs/question.md",
-    "sha256": "f7c83e435f4767f917800cd792fd93711068f1de9bd21117dfa4c2b8d0eb2199"
+    "sha256": "e1333881407a22a0520d0634bfe606befca4e5a30a342e22c17477af7fa95649"
   },
   "sources": [
     {
@@ -111,12 +111,6 @@
       "accessed": "2026-10-20"
     },
     {
-      "id": "gemini-pricing",
-      "title": "Gemini Developer API pricing",
-      "url": "https://ai.google.dev/gemini-api/docs/pricing",
-      "accessed": "2026-10-20"
-    },
-    {
       "id": "gemini-structured",
       "title": "Gemini structured output documentation",
       "url": "https://ai.google.dev/gemini-api/docs/structured-output",
@@ -126,6 +120,12 @@
       "id": "gemini-thinking",
       "title": "Gemini thinking configuration documentation",
       "url": "https://ai.google.dev/gemini-api/docs/thinking",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "harbor-format",
+      "title": "Self-contained task format and reward file convention",
+      "url": "https://harborframework.com/docs/tasks/overview",
       "accessed": "2026-10-20"
     }
   ],
@@ -158,7 +158,7 @@
       "id": "tests",
       "kind": "log",
       "path": "artifacts/release-checks.json",
-      "sha256": "c0620bfbd1b821052bd6fb84f9f6bc5333c000611529887005e326ec34471c51",
+      "sha256": "51caf2515f05e87581c4b8bbd29a986146b2f8288772bf737c777735ccab126f",
       "command": "python runs/check_release.py",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -168,6 +168,14 @@
       "path": "artifacts/tasks.v0.2.dev.jsonl",
       "sha256": "6d5f55002d5a226570986425cc427549670a2b0384a3b950b1c6efc2fb352a12",
       "command": "python benchmark/bench.py export --output NEW_PATH.jsonl --seed 20261020",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "harbor-validation",
+      "kind": "log",
+      "path": "artifacts/harbor-validation.v01.json",
+      "sha256": "0f45fdee746b12e6b1c1eebfa706a5a9df6e68168111c30beef2178c9559166c",
+      "command": "python harbor/validate_tasks.py --tasks EXPORTED_TASKS --require-harbor",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -182,7 +190,7 @@
       "id": "paper-md",
       "kind": "other",
       "path": "paper/paper.md",
-      "sha256": "551927b1d900387aa2ccfd2cb9d6018b0a5593f0a43cbb452f131e50326c2f7e",
+      "sha256": "046ea6432e20debfd2ada0a398137d2ad6441c4e483a29570682c09079275c20",
       "command": "Authored technical report, source for paper/build_paper.py.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -190,7 +198,7 @@
       "id": "paper-pdf",
       "kind": "other",
       "path": "paper/review-pushback-bench.pdf",
-      "sha256": "ef2a7a307e4e94b8d332dafd9ac986bc78d44f77af551e2441d141f4b4d39999",
+      "sha256": "ff3520a7ad473fed5b0b60efb14327cf86328773f9ff118a2ae5e3b636f421d0",
       "command": "python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -207,7 +215,7 @@
       "kind": "log",
       "path": "artifacts/model-runs/gemini-2.5-flash-v02/run.json",
       "sha256": "09864db0898f88504411833bbf02497f8ee75a3824f0c6251cd3a33501a402b0",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -215,7 +223,7 @@
       "kind": "data",
       "path": "artifacts/model-runs/gemini-2.5-flash-v02/attempts.jsonl",
       "sha256": "18215015f0977d27580e2f79bf10843ce1688ce35a70ec551547ba26834d78f3",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -223,7 +231,7 @@
       "kind": "data",
       "path": "artifacts/model-runs/gemini-2.5-flash-v02/responses.jsonl",
       "sha256": "c0ec4cfbe5d849e2b6e173c596f27e628b0bd5ca7ef3b309bb0f59a124d90c98",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -231,7 +239,7 @@
       "kind": "data",
       "path": "artifacts/model-runs/gemini-2.5-flash-v02/canonical-grade.json",
       "sha256": "adb13d171ccef2f784cda51a8220d738e50872df493fff14240ab390820ecea3",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -239,7 +247,7 @@
       "kind": "log",
       "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/run.json",
       "sha256": "c356877302617158793e46095be7aea240155d1a3dd54bf79970516a93c21d4c",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -247,7 +255,7 @@
       "kind": "data",
       "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/attempts.jsonl",
       "sha256": "79a4eb2a0c599c8f77e1f3821137e3c11b241df49d3fbbb0bda4973defc440b2",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -255,7 +263,7 @@
       "kind": "data",
       "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/responses.jsonl",
       "sha256": "b3c2778ade1e1189b7533389c8670c3f6574c0fcabbebc93d582dfc98fbca50b",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -263,7 +271,7 @@
       "kind": "data",
       "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/canonical-grade.json",
       "sha256": "c0f887b6be1a8f476431e21504d574ce863312dc1604c840d6e8dd0498e393e9",
-      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "command": "Original generation: see the reproduction guide and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
     {
@@ -298,21 +306,21 @@
       "id": "source-runs-build-readme",
       "kind": "code",
       "path": "runs/build_readme.py",
-      "sha256": "2c9b84da2aa50e17abc0aaa45367b6070e9c4559d4dff32ca6b7a8aae06b980d",
+      "sha256": "e508f86574abcfe846e574f3b56a26f4043f436a6a466c1457135a8a8d46f11d",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-build-release-manifest",
       "kind": "code",
       "path": "runs/build_release_manifest.py",
-      "sha256": "4678a815f7a087c6e460b415d1d75e1126e38bb68980d8c5ffb25701d49621df",
+      "sha256": "01893bd6b4f3e408a81ec90829ca0a8b6d8845718f471928cd2c1549a8b01d54",
       "command": "Versioned source; see recorded execution commands."
     },
     {
       "id": "source-runs-check-release",
       "kind": "code",
       "path": "runs/check_release.py",
-      "sha256": "22b1c96bde3bbcc8c109e2028cbe75beaea6630db13316b2d667aeb10420dde2",
+      "sha256": "f7b8b72e208a6d67f887ecb2a322da355b502226efa5e2d17f64bff36e83452c",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -355,6 +363,48 @@
       "kind": "code",
       "path": "runs/verify_pipeline.py",
       "sha256": "57bd6d459c863a437f829d7a3dba94d0453c9e0d42743217e301e35f86b3f6b3",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-check-smoke",
+      "kind": "code",
+      "path": "harbor/check_smoke.py",
+      "sha256": "0ac92c066562dfef1957b0bb5ef6c5c439166c9ed7e1ef866d80af84728141d8",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-export-tasks",
+      "kind": "code",
+      "path": "harbor/export_tasks.py",
+      "sha256": "9ce862b17c185e2ae2a466b82961500c0844cc8c6175daa055189a9771b15632",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-summarize",
+      "kind": "code",
+      "path": "harbor/summarize.py",
+      "sha256": "17b5f74700f4bacadcbbd40a8ab28b369c06e3e3df7f7c04520088bbe434ac9e",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-test-adapter",
+      "kind": "code",
+      "path": "harbor/test_adapter.py",
+      "sha256": "9dfecb7bb18931685179d6fd8dca6fcf65acceb4579876ad45cc5c1d1d5cd5df",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-validate-tasks",
+      "kind": "code",
+      "path": "harbor/validate_tasks.py",
+      "sha256": "881b37ef373d58bb09e50a8257c92a8efe6a895347d93a39138839799740e117",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-verifier",
+      "kind": "code",
+      "path": "harbor/verifier.py",
+      "sha256": "cd9a8d6daf7623eea597cf9cb2c689fa9d56d3d41efd6edb3e4d6e26b6badbf6",
       "command": "Versioned source; see recorded execution commands."
     }
   ],
@@ -479,6 +529,23 @@
       ]
     },
     {
+      "id": "related-harbor-format",
+      "kind": "empirical",
+      "statement": "The paper uses harbor-format as a design or related-work source: Self-contained task format and reward file convention.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "harbor-format",
+          "locator": "Task structure and Rewards sections"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
       "id": "dataset-validation",
       "kind": "computational",
       "statement": "The frozen v0.2.0-dev development set has 30 authored families and 150 scenarios. All correct references pass authored visible/evaluator checks; all intended mutants pass visible checks and fail evaluator checks.",
@@ -535,23 +602,6 @@
       ]
     },
     {
-      "id": "pricing-source",
-      "kind": "empirical",
-      "statement": "The direct API price table checked October 20, 2026 lists $0.30 per million input tokens and $2.50 per million output tokens for the two pilot models.",
-      "status": "supported",
-      "sourceRefs": [
-        {
-          "sourceId": "gemini-pricing",
-          "locator": "Gemini 2.5 Flash and Gemini 3.5 Flash-Lite: Standard price tables"
-        }
-      ],
-      "outputIds": [],
-      "dependsOn": [],
-      "caveats": [
-        "Prices may change; calculated costs are not provider invoices."
-      ]
-    },
-    {
       "id": "flash25-pilot",
       "kind": "computational",
       "statement": "gemini-2.5-flash returned 148/150 valid-format responses. On the primary 145 scenarios its strict decision-label agreement is 0.910344827586; harmful responses match the validated correct-reference AST in 56/58 cases. Balanced reference-test agreement is bounded by 0.801724137931 and 0.974137931034 under conservative matching.",
@@ -569,22 +619,6 @@
       ]
     },
     {
-      "id": "flash25-cost",
-      "kind": "computational",
-      "statement": "Reported usage and declared prices give an estimated $0.0968661 for gemini-2.5-flash's 150 calls.",
-      "status": "reproduced",
-      "sourceRefs": [],
-      "outputIds": [
-        "flash25-run"
-      ],
-      "dependsOn": [
-        "pricing-source"
-      ],
-      "caveats": [
-        "Price-based estimate; actual billed cost unavailable. Preflight requests are separate."
-      ]
-    },
-    {
       "id": "lite35-pilot",
       "kind": "computational",
       "statement": "gemini-3.5-flash-lite returned 150/150 valid-format responses. On the primary 145 scenarios its strict decision-label agreement is 0.972413793103; harmful responses match the validated correct-reference AST in 58/58 cases. Balanced reference-test agreement is bounded by 0.844827586207 and 1.000000000000 under conservative matching.",
@@ -599,22 +633,6 @@
       "dependsOn": [],
       "caveats": [
         "No model-returned source was executed; alternative ASTs remain unverified. One repetition, convenience sample, different supported thinking settings. Bounds are not confidence intervals."
-      ]
-    },
-    {
-      "id": "lite35-cost",
-      "kind": "computational",
-      "statement": "Reported usage and declared prices give an estimated $0.0711986 for gemini-3.5-flash-lite's 150 calls.",
-      "status": "reproduced",
-      "sourceRefs": [],
-      "outputIds": [
-        "lite35-run"
-      ],
-      "dependsOn": [
-        "pricing-source"
-      ],
-      "caveats": [
-        "Price-based estimate; actual billed cost unavailable. Preflight requests are separate."
       ]
     },
     {
@@ -637,7 +655,7 @@
   ],
   "report": {
     "path": "docs/RESEARCH_EVIDENCE.md",
-    "sha256": "d093710c46e4a204948041d0f20ba1974d10bce39f8e9b05606d290b55cbad32",
+    "sha256": "9bea43dcfae2fc16697d6d39aae60708f4716af1bda10813492609347c591671",
     "status": "approved"
   },
   "approvals": {
