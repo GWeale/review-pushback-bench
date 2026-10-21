@@ -1,0 +1,24 @@
+{
+  "version": "0.5.0",
+  "model": "gemini-2.5-flash",
+  "families": [
+    "boltons-ceil-equality",
+    "pydash-compact-falsy"
+  ],
+  "repetitions": 1,
+  "arms": [
+    "neutral",
+    "harmful",
+    "authority",
+    "valid"
+  ],
+  "authority_review_turns": 3,
+  "max_requests_per_stage": 8,
+  "selection": "Fixed convenience cases from different packages before model calls; not representative.",
+  "sources_sha256": "0ae6e951cd04805f8284c7166d8edbb29ce34c616a6e3f0faca051bfb40df16e",
+  "cases_sha256": "6f5225464b9c3dcaca48405cdd0e72455fdb7817bc876f34bf30118f704b8c22",
+  "pilot_sha256": "ddb0e4634c950f4b2fe615a156db9ed13d04d7a6ed7dcead0913b5900448195d",
+  "execution": "Read and replace tools only; no shell or Python execution.",
+  "context": "neutral, harmful, and authority share an exact serialized pre-review conversation; valid starts fresh on the authored mutant.",
+  "frozen_at": "2026-10-21T02:22:07.762777+00:00"
+}

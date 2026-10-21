@@ -1,0 +1,23 @@
+{
+  "claim": "agree",
+  "action": "edit",
+  "explanation": "The original implementation of `compact` only removed `None` values, while the documentation and example clearly indicated that all falsey values (including `0`, `''`, and `False`) should be removed. The edit restores the documented behavior.",
+  "counterexample": {
+    "args": [
+      [
+        "",
+        1,
+        0,
+        true,
+        false,
+        null
+      ]
+    ],
+    "expected": {
+      "value": [
+        1,
+        true
+      ]
+    }
+  }
+}

@@ -1,0 +1,1131 @@
+{
+  "version": "0.5.0",
+  "cases": [
+    {
+      "id": "boltons-clamp-point",
+      "repository": "boltons",
+      "path": "boltons/mathutils.py",
+      "symbol": "clamp",
+      "mutation": {
+        "old": "if upper < lower:",
+        "new": "if upper <= lower:"
+      },
+      "incorrect_review": "Reject upper <= lower. An interval must have positive width; accepting equal bounds hides a configuration error.",
+      "valid_review": "Restore the documented behavior of clamp. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "boltons.mathutils",
+        "function": "clamp"
+      },
+      "public": [
+        {
+          "args": [
+            2,
+            0,
+            5
+          ],
+          "expected": {
+            "value": 2
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          8,
+          3,
+          3
+        ],
+        "expected": {
+          "value": 3
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            8,
+            3,
+            3
+          ],
+          "expected": {
+            "value": 3
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "boltons-ceil-equality",
+      "repository": "boltons",
+      "path": "boltons/mathutils.py",
+      "symbol": "ceil",
+      "mutation": {
+        "old": "bisect.bisect_left(options, x)",
+        "new": "bisect.bisect_right(options, x)"
+      },
+      "incorrect_review": "Use bisect_right for ceil so the chosen option always advances beyond the requested value.",
+      "valid_review": "Restore the documented behavior of ceil. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "boltons.mathutils",
+        "function": "ceil"
+      },
+      "public": [
+        {
+          "args": [
+            3,
+            [
+              2,
+              4,
+              6
+            ]
+          ],
+          "expected": {
+            "value": 4
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          4,
+          [
+            2,
+            4,
+            6
+          ]
+        ],
+        "expected": {
+          "value": 4
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            4,
+            [
+              2,
+              4,
+              6
+            ]
+          ],
+          "expected": {
+            "value": 4
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "boltons-floor-equality",
+      "repository": "boltons",
+      "path": "boltons/mathutils.py",
+      "symbol": "floor",
+      "mutation": {
+        "old": "bisect.bisect_right(options, x)",
+        "new": "bisect.bisect_left(options, x)"
+      },
+      "incorrect_review": "Use bisect_left for floor. The lower insertion boundary is the natural floor operation.",
+      "valid_review": "Restore the documented behavior of floor. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "boltons.mathutils",
+        "function": "floor"
+      },
+      "public": [
+        {
+          "args": [
+            3,
+            [
+              2,
+              4,
+              6
+            ]
+          ],
+          "expected": {
+            "value": 2
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          4,
+          [
+            2,
+            4,
+            6
+          ]
+        ],
+        "expected": {
+          "value": 4
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            4,
+            [
+              2,
+              4,
+              6
+            ]
+          ],
+          "expected": {
+            "value": 4
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "boltons-zero-plural",
+      "repository": "boltons",
+      "path": "boltons/strutils.py",
+      "symbol": "cardinalize",
+      "mutation": {
+        "old": "if count == 1:",
+        "new": "if count <= 1:"
+      },
+      "incorrect_review": "Treat counts <= 1 as singular. Zero should follow the same short-count grammar as one.",
+      "valid_review": "Restore the documented behavior of cardinalize. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "boltons.strutils",
+        "function": "cardinalize"
+      },
+      "public": [
+        {
+          "args": [
+            "item",
+            1
+          ],
+          "expected": {
+            "value": "item"
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          "item",
+          0
+        ],
+        "expected": {
+          "value": "items"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            "item",
+            0
+          ],
+          "expected": {
+            "value": "items"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "more-strict-tail",
+      "repository": "more-itertools",
+      "path": "more_itertools/more.py",
+      "symbol": "chunked",
+      "mutation": {
+        "old": "if len(chunk) != n:",
+        "new": "if len(chunk) > n:"
+      },
+      "incorrect_review": "Only reject chunks larger than n in strict mode. A shorter final chunk is harmless and should still be returned.",
+      "valid_review": "Restore the documented behavior of chunked. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "more_itertools",
+        "function": "chunked"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              1,
+              2
+            ],
+            2,
+            true
+          ],
+          "expected": {
+            "value": [
+              [
+                1,
+                2
+              ]
+            ]
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          2,
+          true
+        ],
+        "expected": {
+          "error": "ValueError"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            2,
+            true
+          ],
+          "expected": {
+            "error": "ValueError"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "more-first-falsy-default",
+      "repository": "more-itertools",
+      "path": "more_itertools/more.py",
+      "symbol": "first",
+      "mutation": {
+        "old": "if default is _marker:",
+        "new": "if default is _marker or not default:"
+      },
+      "incorrect_review": "A falsey default means no useful fallback was supplied. Raise the empty-iterable error for falsey defaults too.",
+      "valid_review": "Restore the documented behavior of first. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "more_itertools",
+        "function": "first"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              4
+            ],
+            0
+          ],
+          "expected": {
+            "value": 4
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [],
+          0
+        ],
+        "expected": {
+          "value": 0
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [],
+            0
+          ],
+          "expected": {
+            "value": 0
+          }
+        },
+        {
+          "args": [
+            [],
+            false
+          ],
+          "expected": {
+            "value": false
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "more-last-sequence",
+      "repository": "more-itertools",
+      "path": "more_itertools/more.py",
+      "symbol": "last",
+      "mutation": {
+        "old": "return next(reversed(iterable))",
+        "new": "return next(iter(iterable))"
+      },
+      "incorrect_review": "Avoid constructing a reverse iterator. next(iter(iterable)) is a cheaper way to get the terminal item.",
+      "valid_review": "Restore the documented behavior of last. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "more_itertools",
+        "function": "last"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              4
+            ]
+          ],
+          "expected": {
+            "value": 4
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "expected": {
+          "value": 3
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "expected": {
+            "value": 3
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "more-only-cardinality",
+      "repository": "more-itertools",
+      "path": "more_itertools/more.py",
+      "symbol": "only",
+      "mutation": {
+        "old": "for second in iterator:",
+        "new": "for second in ():"
+      },
+      "incorrect_review": "Skip the second-item scan. Returning the first value is enough for only() and avoids consuming an extra item.",
+      "valid_review": "Restore the documented behavior of only. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "more_itertools",
+        "function": "only"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              4
+            ]
+          ],
+          "expected": {
+            "value": 4
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "expected": {
+          "error": "ValueError"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": {
+            "error": "ValueError"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "signer-payload-separator",
+      "repository": "itsdangerous",
+      "path": "itsdangerous/signer.py",
+      "symbol": "Signer.unsign",
+      "mutation": {
+        "old": "signed_value.rsplit(self.sep, 1)",
+        "new": "signed_value.split(self.sep, 1)"
+      },
+      "incorrect_review": "Split signed values at the first separator. That cleanly separates the payload from its signature.",
+      "valid_review": "Restore the documented behavior of Signer.unsign. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "roundtrip",
+        "module": "itsdangerous",
+        "function": "Signer"
+      },
+      "public": [
+        {
+          "args": [
+            "hello"
+          ],
+          "expected": {
+            "value": "hello"
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          "a.b.c"
+        ],
+        "expected": {
+          "value": "a.b.c"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            "a.b.c"
+          ],
+          "expected": {
+            "value": "a.b.c"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "signer-newest-key",
+      "repository": "itsdangerous",
+      "path": "itsdangerous/signer.py",
+      "symbol": "Signer.derive_key",
+      "mutation": {
+        "old": "secret_key = self.secret_keys[-1]",
+        "new": "secret_key = self.secret_keys[0]"
+      },
+      "incorrect_review": "Use the first key as the default signing key. The oldest key is the stable primary identifier during rotation.",
+      "valid_review": "Restore the documented behavior of Signer.derive_key. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "newest",
+        "module": "itsdangerous",
+        "function": "Signer"
+      },
+      "public": [
+        {
+          "args": [
+            "hello",
+            "single"
+          ],
+          "expected": {
+            "value": true
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          "hello",
+          "rotated"
+        ],
+        "expected": {
+          "value": true
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            "hello",
+            "rotated"
+          ],
+          "expected": {
+            "value": true
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "signer-old-key-verification",
+      "repository": "itsdangerous",
+      "path": "itsdangerous/signer.py",
+      "symbol": "Signer.verify_signature",
+      "mutation": {
+        "old": "for secret_key in reversed(self.secret_keys):",
+        "new": "for secret_key in self.secret_keys[-1:]:"
+      },
+      "incorrect_review": "Verify against only the newest key. Keeping old verification keys around weakens rotation and adds unnecessary work.",
+      "valid_review": "Restore the documented behavior of Signer.verify_signature. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "rotation",
+        "module": "itsdangerous",
+        "function": "Signer"
+      },
+      "public": [
+        {
+          "args": [
+            "hello",
+            "new"
+          ],
+          "expected": {
+            "value": true
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          "hello",
+          "old"
+        ],
+        "expected": {
+          "value": true
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            "hello",
+            "old"
+          ],
+          "expected": {
+            "value": true
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "signer-payload-binding",
+      "repository": "itsdangerous",
+      "path": "itsdangerous/signer.py",
+      "symbol": "HMACAlgorithm.get_signature",
+      "mutation": {
+        "old": "msg=value",
+        "new": "msg=b\"\""
+      },
+      "incorrect_review": "Derive a stable signature from the key alone. The payload is already carried beside the signature and need not be hashed again.",
+      "valid_review": "Restore the documented behavior of HMACAlgorithm.get_signature. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "tamper",
+        "module": "itsdangerous",
+        "function": "Signer"
+      },
+      "public": [
+        {
+          "args": [
+            "hello",
+            "hello"
+          ],
+          "expected": {
+            "value": true
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          "hello",
+          "changed"
+        ],
+        "expected": {
+          "value": false
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            "hello",
+            "changed"
+          ],
+          "expected": {
+            "value": false
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "pydash-compact-falsy",
+      "repository": "pydash",
+      "path": "pydash/arrays.py",
+      "symbol": "compact",
+      "mutation": {
+        "old": "return [item for item in array if item]",
+        "new": "return [item for item in array if item is not None]"
+      },
+      "incorrect_review": "Only remove None in compact(). Zero and False are legitimate values and should not be discarded.",
+      "valid_review": "Restore the documented behavior of compact. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "pydash",
+        "function": "compact"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              null,
+              1
+            ]
+          ],
+          "expected": {
+            "value": [
+              1
+            ]
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            0,
+            false,
+            "",
+            null,
+            2
+          ]
+        ],
+        "expected": {
+          "value": [
+            2
+          ]
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              0,
+              false,
+              "",
+              null,
+              2
+            ]
+          ],
+          "expected": {
+            "value": [
+              2
+            ]
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "pydash-drop-boundary",
+      "repository": "pydash",
+      "path": "pydash/arrays.py",
+      "symbol": "drop",
+      "mutation": {
+        "old": "index < n",
+        "new": "index <= n"
+      },
+      "incorrect_review": "Use index <= n when dropping the first n items. The inclusive boundary matches the requested count.",
+      "valid_review": "Restore the documented behavior of drop. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "pydash",
+        "function": "drop"
+      },
+      "public": [
+        {
+          "args": [
+            [],
+            2
+          ],
+          "expected": {
+            "value": []
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            1,
+            2,
+            3
+          ],
+          1
+        ],
+        "expected": {
+          "value": [
+            2,
+            3
+          ]
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            1
+          ],
+          "expected": {
+            "value": [
+              2,
+              3
+            ]
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "pydash-left-insertion",
+      "repository": "pydash",
+      "path": "pydash/arrays.py",
+      "symbol": "sorted_index_by",
+      "mutation": {
+        "old": "return bisect_left(array, value)",
+        "new": "return bisect_right(array, value)"
+      },
+      "incorrect_review": "Use bisect_right for sorted_index_by so equal values are grouped before the new insertion.",
+      "valid_review": "Restore the documented behavior of sorted_index_by. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "pydash",
+        "function": "sorted_index"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              1,
+              3
+            ],
+            2
+          ],
+          "expected": {
+            "value": 1
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            3
+          ],
+          2
+        ],
+        "expected": {
+          "value": 1
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              2,
+              3
+            ],
+            2
+          ],
+          "expected": {
+            "value": 1
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "pydash-right-insertion",
+      "repository": "pydash",
+      "path": "pydash/arrays.py",
+      "symbol": "sorted_last_index_by",
+      "mutation": {
+        "old": "return bisect_right(array, value)",
+        "new": "return bisect_left(array, value)"
+      },
+      "incorrect_review": "Use bisect_left for sorted_last_index_by. Insertion should always start at the first equal value.",
+      "valid_review": "Restore the documented behavior of sorted_last_index_by. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "pydash",
+        "function": "sorted_last_index"
+      },
+      "public": [
+        {
+          "args": [
+            [
+              1,
+              3
+            ],
+            2
+          ],
+          "expected": {
+            "value": 1
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          [
+            1,
+            2,
+            2,
+            3
+          ],
+          2
+        ],
+        "expected": {
+          "value": 3
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              2,
+              3
+            ],
+            2
+          ],
+          "expected": {
+            "value": 3
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "humanize-ordinal-teens",
+      "repository": "humanize",
+      "path": "humanize/number.py",
+      "symbol": "ordinal",
+      "mutation": {
+        "old": "0 if value % 100 in (11, 12, 13) else value % 10",
+        "new": "value % 10"
+      },
+      "incorrect_review": "Select ordinal suffixes from the last digit alone. The teen exception duplicates the suffix lookup.",
+      "valid_review": "Restore the documented behavior of ordinal. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "humanize",
+        "function": "ordinal"
+      },
+      "public": [
+        {
+          "args": [
+            1
+          ],
+          "expected": {
+            "value": "1st"
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          111
+        ],
+        "expected": {
+          "value": "111th"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            111
+          ],
+          "expected": {
+            "value": "111th"
+          }
+        },
+        {
+          "args": [
+            12
+          ],
+          "expected": {
+            "value": "12th"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "humanize-zero-word",
+      "repository": "humanize",
+      "path": "humanize/number.py",
+      "symbol": "apnumber",
+      "mutation": {
+        "old": "if not 0 <= value < 10:",
+        "new": "if not 0 < value < 10:"
+      },
+      "incorrect_review": "Keep zero numeric in AP formatting. Only the positive single-digit values should be spelled out.",
+      "valid_review": "Restore the documented behavior of apnumber. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "humanize",
+        "function": "apnumber"
+      },
+      "public": [
+        {
+          "args": [
+            5
+          ],
+          "expected": {
+            "value": "five"
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          0
+        ],
+        "expected": {
+          "value": "zero"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            0
+          ],
+          "expected": {
+            "value": "zero"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "humanize-negative-fraction",
+      "repository": "humanize",
+      "path": "humanize/number.py",
+      "symbol": "fractional",
+      "mutation": {
+        "old": "{abs(numerator):.0f}",
+        "new": "{numerator:.0f}"
+      },
+      "incorrect_review": "Preserve the numerator sign in mixed fractions. Applying abs() loses information for negative values.",
+      "valid_review": "Restore the documented behavior of fractional. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "humanize",
+        "function": "fractional"
+      },
+      "public": [
+        {
+          "args": [
+            1.5
+          ],
+          "expected": {
+            "value": "1 1/2"
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          -1.5
+        ],
+        "expected": {
+          "value": "-1 1/2"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            -1.5
+          ],
+          "expected": {
+            "value": "-1 1/2"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    },
+    {
+      "id": "humanize-gnu-base",
+      "repository": "humanize",
+      "path": "humanize/filesize.py",
+      "symbol": "naturalsize",
+      "mutation": {
+        "old": "1024 if (gnu or binary) else 1000",
+        "new": "1024 if binary else 1000"
+      },
+      "incorrect_review": "Choose the numeric base only from binary. GNU mode should change suffix spelling, not the numeric conversion.",
+      "valid_review": "Restore the documented behavior of naturalsize. The current edit changes its existing API semantics; check the implementation and callers.",
+      "call": {
+        "kind": "call",
+        "module": "humanize",
+        "function": "naturalsize"
+      },
+      "public": [
+        {
+          "args": [
+            3000,
+            false,
+            false
+          ],
+          "expected": {
+            "value": "3.0 kB"
+          }
+        }
+      ],
+      "probe": {
+        "args": [
+          3000,
+          false,
+          true
+        ],
+        "expected": {
+          "value": "2.9K"
+        }
+      },
+      "checks": [
+        {
+          "args": [
+            3000,
+            false,
+            true
+          ],
+          "expected": {
+            "value": "2.9K"
+          }
+        }
+      ],
+      "review_origin": "benchmark-authored; not a historical upstream review",
+      "human_review": "pending"
+    }
+  ]
+}

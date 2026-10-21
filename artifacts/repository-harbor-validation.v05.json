@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "tasks_loaded": 80,
+  "families": 20,
+  "harbor_version": "0.24.0",
+  "source_hash": "0ae6e951cd04805f8284c7166d8edbb29ce34c616a6e3f0faca051bfb40df16e",
+  "case_hash": "6f5225464b9c3dcaca48405cdd0e72455fdb7817bc876f34bf30118f704b8c22",
+  "docker_trials": "separate CI check"
+}

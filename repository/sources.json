@@ -1,0 +1,342 @@
+[
+  {
+    "id": "boltons",
+    "repository": "https://github.com/mahmoud/boltons",
+    "commit": "4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d",
+    "snapshot_url": "https://github.com/mahmoud/boltons/tree/4e5faa3d7e4008d89e0d8bf1ea87b6d9a061a16d",
+    "files": {
+      "LICENSE": {
+        "upstream_path": "LICENSE",
+        "sha256": "c301912653a8d8c99eab6212aa3aea8d164ea249d8ad53c941e0558a0a5ac1e3"
+      },
+      "README.md": {
+        "upstream_path": "README.md",
+        "sha256": "eeed2dddc89dce183589d77cebe0a7fedc202a58c4852c75f860b68f040bdeb8"
+      },
+      "boltons/__init__.py": {
+        "upstream_path": "boltons/__init__.py",
+        "sha256": "ba0f4ee941c9a000b66251d4a39263a8ed009c2a3e0b77b8665c8aeff7ebe730"
+      },
+      "boltons/cacheutils.py": {
+        "upstream_path": "boltons/cacheutils.py",
+        "sha256": "11071d2fa0c615e23f727ee4d1754ea2f5c40b1ddd166d46da53169b1c66164c"
+      },
+      "boltons/debugutils.py": {
+        "upstream_path": "boltons/debugutils.py",
+        "sha256": "9be7bba35c25952074bcd82b8fff6c6b702c438d2844332901600e5ced47e1d2"
+      },
+      "boltons/deprutils.py": {
+        "upstream_path": "boltons/deprutils.py",
+        "sha256": "a28ab815c0833e9c6a4759280b44fc67d3f011c5c289dd82f32958f79649e243"
+      },
+      "boltons/dictutils.py": {
+        "upstream_path": "boltons/dictutils.py",
+        "sha256": "fdfde7db7307af965b4b8677e56793f674e0ec200cf27b154b27fc72214a05ec"
+      },
+      "boltons/easterutils.py": {
+        "upstream_path": "boltons/easterutils.py",
+        "sha256": "1de2c30fc9ba32b40af311f1aaa1b81953a11732460b50662cc7ecac8905604b"
+      },
+      "boltons/ecoutils.py": {
+        "upstream_path": "boltons/ecoutils.py",
+        "sha256": "34589ae1d7c9d8c5faacd7a0ba6f2fdf9afad71ac2020e5eff267b663c145d9e"
+      },
+      "boltons/excutils.py": {
+        "upstream_path": "boltons/excutils.py",
+        "sha256": "6b94f06e006a1a28c9d6f532be0856bffbe651b51aab32d8744a73eb977d196b"
+      },
+      "boltons/fileutils.py": {
+        "upstream_path": "boltons/fileutils.py",
+        "sha256": "38361617659546431db4183e21a6f99ed6433e3556c93cd51a19d53607b5efc1"
+      },
+      "boltons/formatutils.py": {
+        "upstream_path": "boltons/formatutils.py",
+        "sha256": "9ea732109b73c3dc63516bbcc2e253a81596ae54499dc3392459634932260601"
+      },
+      "boltons/funcutils.py": {
+        "upstream_path": "boltons/funcutils.py",
+        "sha256": "656da1c12f6f7f1f746ece39e4e1a6ae3a49b730300d59b6e4d5ac49d99f6599"
+      },
+      "boltons/gcutils.py": {
+        "upstream_path": "boltons/gcutils.py",
+        "sha256": "7bf38c1f9bb9d63c9f5fa6406f4d7fc517a6f7705d1bfabb206ad8bd629d0c2d"
+      },
+      "boltons/ioutils.py": {
+        "upstream_path": "boltons/ioutils.py",
+        "sha256": "8b0f29c89b1d82bf54ffad80e23300219011a3fb98ed27e2f92c0ebcd36807cc"
+      },
+      "boltons/iterutils.py": {
+        "upstream_path": "boltons/iterutils.py",
+        "sha256": "3122f1868cb9c3140a538fe95a5bb9e879fdcf339311200616d55d15d38ebfa7"
+      },
+      "boltons/jsonutils.py": {
+        "upstream_path": "boltons/jsonutils.py",
+        "sha256": "756a3d374f3ea940d558956e794736e9163be1686491c20a55ffc05d535a7a09"
+      },
+      "boltons/listutils.py": {
+        "upstream_path": "boltons/listutils.py",
+        "sha256": "a84dc0b0fc9ce9d23fc0285eb163c5d24234430973a2d039c4421f97e92b007a"
+      },
+      "boltons/mathutils.py": {
+        "upstream_path": "boltons/mathutils.py",
+        "sha256": "710226a29f01557fd0f4a63f53ac6a0c8e139d2e89469aa72d1f8f82700482ed"
+      },
+      "boltons/mboxutils.py": {
+        "upstream_path": "boltons/mboxutils.py",
+        "sha256": "f2262e2bbcc8a2a9b64188a1e1282dbe18ed79b4dcc16a1b341cb7f6246e08d2"
+      },
+      "boltons/namedutils.py": {
+        "upstream_path": "boltons/namedutils.py",
+        "sha256": "3fbc90bdc6e9323a6fd8ad6e845e62a1dceb6e9052fb6c251d786d992e0c0c37"
+      },
+      "boltons/pathutils.py": {
+        "upstream_path": "boltons/pathutils.py",
+        "sha256": "189d623ba2c0145fa4b2cfeb85904267e4f37e0461b2181bc2d81f37d1535072"
+      },
+      "boltons/queueutils.py": {
+        "upstream_path": "boltons/queueutils.py",
+        "sha256": "3e0633ed4c9985ab4acbb617e6ff87ca0bdf8bf8f034ad79e579fd12855f20a5"
+      },
+      "boltons/setutils.py": {
+        "upstream_path": "boltons/setutils.py",
+        "sha256": "7b215a175984619ce77fca240b91ae91d9d9be24528c7aaba7febabd1c817f9a"
+      },
+      "boltons/socketutils.py": {
+        "upstream_path": "boltons/socketutils.py",
+        "sha256": "720618ea2689ed9d8c8186f0c759be9eaea6dffc58ce24b6e433142af1d99cbc"
+      },
+      "boltons/statsutils.py": {
+        "upstream_path": "boltons/statsutils.py",
+        "sha256": "c85c6fad12d4e00b9e4ffce31da897eeba8adff7e725af621f50cd7193e1e1d7"
+      },
+      "boltons/strutils.py": {
+        "upstream_path": "boltons/strutils.py",
+        "sha256": "2589a16c6fc2c4aa71e084a02b5d133e49d52385818dc8e200ae89cd039e4302"
+      },
+      "boltons/tableutils.py": {
+        "upstream_path": "boltons/tableutils.py",
+        "sha256": "7cf9539dea56bad60cd2fc2e929ae37f9fd9322ee12ae66b0bedcf62795eec81"
+      },
+      "boltons/tbutils.py": {
+        "upstream_path": "boltons/tbutils.py",
+        "sha256": "baf4f147223c7414faf0d1d7fe000c1213dffe6e16e61d0e58c7376fff23c962"
+      },
+      "boltons/timeutils.py": {
+        "upstream_path": "boltons/timeutils.py",
+        "sha256": "4d667e16fe112bf1627e2677f9f9ba9c0553981f1c0331192e7a6bdad483a2db"
+      },
+      "boltons/typeutils.py": {
+        "upstream_path": "boltons/typeutils.py",
+        "sha256": "e87eb6b320159b5e354a052159c38824fff59969aa682a1b43f52d1089d44bfb"
+      },
+      "boltons/urlutils.py": {
+        "upstream_path": "boltons/urlutils.py",
+        "sha256": "184020378dbbbd049f599b8be28247221f29fd58e016c06148f58490c4524b83"
+      }
+    },
+    "generated_files": {},
+    "accessed": "2026-10-20"
+  },
+  {
+    "id": "more-itertools",
+    "repository": "https://github.com/more-itertools/more-itertools",
+    "commit": "4aeb4338ae1407d8da9723e86da99efeb446f719",
+    "snapshot_url": "https://github.com/more-itertools/more-itertools/tree/4aeb4338ae1407d8da9723e86da99efeb446f719",
+    "files": {
+      "LICENSE": {
+        "upstream_path": "LICENSE",
+        "sha256": "2162b6b24a563bf763e00d507e650b2b07b0cd4646efa1e2f62fb99a19f7f85e"
+      },
+      "README.rst": {
+        "upstream_path": "README.rst",
+        "sha256": "3e3012682096bd49f0c7856f0512086369dc12588ffe1ceaf1a4c761b26c83cd"
+      },
+      "more_itertools/__init__.py": {
+        "upstream_path": "more_itertools/__init__.py",
+        "sha256": "901dc2ef27e97b28aa2dadfd1e85b7fcaf9f99728254f4cbe547fdf78e874016"
+      },
+      "more_itertools/more.py": {
+        "upstream_path": "more_itertools/more.py",
+        "sha256": "699aac9ec53a473e0f22c1ebaf575fca35be49341f0ff73dae3f6093f01fbd71"
+      },
+      "more_itertools/recipes.py": {
+        "upstream_path": "more_itertools/recipes.py",
+        "sha256": "fee84aca60993e6054413d71830243f40fc41caac97140a86073d226c2d4dfdd"
+      }
+    },
+    "generated_files": {},
+    "accessed": "2026-10-20"
+  },
+  {
+    "id": "itsdangerous",
+    "repository": "https://github.com/pallets/itsdangerous",
+    "commit": "672971d66a2ef9f85151e53283113f33d642dabd",
+    "snapshot_url": "https://github.com/pallets/itsdangerous/tree/672971d66a2ef9f85151e53283113f33d642dabd",
+    "files": {
+      "LICENSE.txt": {
+        "upstream_path": "LICENSE.txt",
+        "sha256": "b3f7620467c0781acabb70d6b4932a46949f21aa1dbb932f75a6abdc0221900e"
+      },
+      "README.md": {
+        "upstream_path": "README.md",
+        "sha256": "f05ab9ed6530a02ce14cef6e2fd35ed9c96853f5e515ac82bfa37253895a4e29"
+      },
+      "itsdangerous/__init__.py": {
+        "upstream_path": "src/itsdangerous/__init__.py",
+        "sha256": "3950f45e028929bd1e55e7595efb2e3c1f1b7b8ee83f899eba1eb0e99bac983c"
+      },
+      "itsdangerous/_json.py": {
+        "upstream_path": "src/itsdangerous/_json.py",
+        "sha256": "b38bef90cfcd6ee2fdee115b644921d78e63754aef2e7ddd63a987a86a7c18cf"
+      },
+      "itsdangerous/encoding.py": {
+        "upstream_path": "src/itsdangerous/encoding.py",
+        "sha256": "6546d4dcaca3a497dc280795fabd49d76fda2a19f68be6441560ffc5b48bcfac"
+      },
+      "itsdangerous/exc.py": {
+        "upstream_path": "src/itsdangerous/exc.py",
+        "sha256": "8b10e1d63a11c362641b272b4c8431bfe19eaf1108e63ff34dd2cfb6c4006a03"
+      },
+      "itsdangerous/serializer.py": {
+        "upstream_path": "src/itsdangerous/serializer.py",
+        "sha256": "63c30599269bdc92c690bdd631b8ae6cc648dbb63998c766c3542292872047be"
+      },
+      "itsdangerous/signer.py": {
+        "upstream_path": "src/itsdangerous/signer.py",
+        "sha256": "85d41ef5f64eb63e1299cad82d775b6021950cbfad355af3021084267be663c6"
+      },
+      "itsdangerous/timed.py": {
+        "upstream_path": "src/itsdangerous/timed.py",
+        "sha256": "4fab550338d97c65ba6ea124f0ac021fb1e4b50299a725d7d66f9924957f7fcf"
+      },
+      "itsdangerous/url_safe.py": {
+        "upstream_path": "src/itsdangerous/url_safe.py",
+        "sha256": "4d7db7718099818b3ec71b700d8397e3b5ce12ee9dcb345885b77ade693fb1be"
+      }
+    },
+    "generated_files": {},
+    "accessed": "2026-10-20"
+  },
+  {
+    "id": "pydash",
+    "repository": "https://github.com/dgilland/pydash",
+    "commit": "ef6a6427e488e29e827e0e0819f2630ad3ff4cdc",
+    "snapshot_url": "https://github.com/dgilland/pydash/tree/ef6a6427e488e29e827e0e0819f2630ad3ff4cdc",
+    "files": {
+      "LICENSE.rst": {
+        "upstream_path": "LICENSE.rst",
+        "sha256": "507dbac9ab0649e1767e3d93f24efac8d5a3b9547f958b47de9bf3b1497abc26"
+      },
+      "README.rst": {
+        "upstream_path": "README.rst",
+        "sha256": "a536ee5e3a8faaf506c9c8ed99ef3540ac971ee51bf2c7c3bbb33e9761ff00f9"
+      },
+      "pydash/__init__.py": {
+        "upstream_path": "src/pydash/__init__.py",
+        "sha256": "3434638d9fbb33f10d83948295bd04efb576aa6b902f8e74c34d51ec7285b435"
+      },
+      "pydash/arrays.py": {
+        "upstream_path": "src/pydash/arrays.py",
+        "sha256": "ebba3c88a49e8f6b85d2aa578cf834429d7266e8a729fc75223a378ab2b01096"
+      },
+      "pydash/chaining/__init__.py": {
+        "upstream_path": "src/pydash/chaining/__init__.py",
+        "sha256": "2bcca9482ebf3f39d807a05796b07c46d2eb7ab49af09ccde11d62d4b5f46ee1"
+      },
+      "pydash/chaining/all_funcs.py": {
+        "upstream_path": "src/pydash/chaining/all_funcs.py",
+        "sha256": "1efa445a70c14f83da9813c2d0a4592e81058ca1654be798f9b88eae5a2543c8"
+      },
+      "pydash/chaining/chaining.py": {
+        "upstream_path": "src/pydash/chaining/chaining.py",
+        "sha256": "577b01325ec68a18042c203ca2f3f381ecc4c1c222421ffd176b26b089e93c52"
+      },
+      "pydash/collections.py": {
+        "upstream_path": "src/pydash/collections.py",
+        "sha256": "f09946d23409f41f70e3be387bba61921ee01ff1953252d04ffdc64b577aa275"
+      },
+      "pydash/exceptions.py": {
+        "upstream_path": "src/pydash/exceptions.py",
+        "sha256": "ec609b8c7b97637be516ba4699876987ce0ec838dd750d31639b02fe4f3c6988"
+      },
+      "pydash/functions.py": {
+        "upstream_path": "src/pydash/functions.py",
+        "sha256": "40d1054578f41da80c428ba26c549159529372c72a08e76f2bffa41bc8580294"
+      },
+      "pydash/helpers.py": {
+        "upstream_path": "src/pydash/helpers.py",
+        "sha256": "f67e9636d87939966e40a92c3fda6d78e2b841aa74098f0b477171e19eeb9f51"
+      },
+      "pydash/numerical.py": {
+        "upstream_path": "src/pydash/numerical.py",
+        "sha256": "0d9383a6530bacf69a8c23d2d3fb6ee233d5fcfc8059601ec613ea587ac57c56"
+      },
+      "pydash/objects.py": {
+        "upstream_path": "src/pydash/objects.py",
+        "sha256": "86a18385272706dc55aabe8ccd5f434069feed9e8f2c5819d7fdef96cf5865c4"
+      },
+      "pydash/predicates.py": {
+        "upstream_path": "src/pydash/predicates.py",
+        "sha256": "b91819269a8f88111f8a28e6a131c57e71c611a31aeaeb2810d3dd1fdde1f241"
+      },
+      "pydash/strings.py": {
+        "upstream_path": "src/pydash/strings.py",
+        "sha256": "d0dea9caf35506ae5aa48effced1c6b8612149dbd3d3398b3c9dcd18ceb9d736"
+      },
+      "pydash/types.py": {
+        "upstream_path": "src/pydash/types.py",
+        "sha256": "57ef7f27651e6a5b5ed8392277e8408cb109f599d02262c227f1ef9cb4655012"
+      },
+      "pydash/utilities.py": {
+        "upstream_path": "src/pydash/utilities.py",
+        "sha256": "257888a87d14b0e7837d508e96564d5577085828fe7ea4c27e73e74cf520b86e"
+      }
+    },
+    "generated_files": {},
+    "accessed": "2026-10-20"
+  },
+  {
+    "id": "humanize",
+    "repository": "https://github.com/python-humanize/humanize",
+    "commit": "785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b",
+    "snapshot_url": "https://github.com/python-humanize/humanize/tree/785e5dcc0d0308ad0dff3f6cc0faa7085ad0375b",
+    "files": {
+      "LICENCE": {
+        "upstream_path": "LICENCE",
+        "sha256": "fe16ef6a8cd76711e2f6b4113062354e1a9159b5d7d20fbfbc1a162b240d28ef"
+      },
+      "README.md": {
+        "upstream_path": "README.md",
+        "sha256": "07319f37e8aee660aa9c1b180278f56e6fdb227d99b4b6c6b23202151b632971"
+      },
+      "humanize/__init__.py": {
+        "upstream_path": "src/humanize/__init__.py",
+        "sha256": "2fceaeb0c9e03e3026ac8bdfea96ad172065f4250c5c67fbb563a4922340478b"
+      },
+      "humanize/filesize.py": {
+        "upstream_path": "src/humanize/filesize.py",
+        "sha256": "cd03e59e4f6e6cb38f769c18ba8e664558f23bacb2fd40f290769b439c03e05b"
+      },
+      "humanize/i18n.py": {
+        "upstream_path": "src/humanize/i18n.py",
+        "sha256": "a9292ddedadd58f2c39864366bd93e6d982f674f009a42b4a43350ae479a036a"
+      },
+      "humanize/lists.py": {
+        "upstream_path": "src/humanize/lists.py",
+        "sha256": "0ad36edbada2746f03ae1f33cbb9ad7c4c8c94be9693b72c2713cfe91033f3bf"
+      },
+      "humanize/number.py": {
+        "upstream_path": "src/humanize/number.py",
+        "sha256": "64fdc45123e8beb42ea2c084b70cd8a1369885dd5a36356c34849f0ff6119054"
+      },
+      "humanize/time.py": {
+        "upstream_path": "src/humanize/time.py",
+        "sha256": "1cc3c9d9c51856dfeef4b3e604b3e97e98ed3d7ddba80f7d213b682e57c58be4"
+      }
+    },
+    "generated_files": {
+      "humanize/_version.py": "070c3fa896c8597b73f38c94eda8d5ceefc7be947480ca15c9516a17064fce8c"
+    },
+    "accessed": "2026-10-20"
+  }
+]

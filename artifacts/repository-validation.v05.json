@@ -1,0 +1,154 @@
+{
+  "version": "0.5.0",
+  "repositories": 5,
+  "families": 20,
+  "harbor_tasks": 80,
+  "passed": true,
+  "cases": [
+    {
+      "case": "boltons-clamp-point",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "boltons-ceil-equality",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "boltons-floor-equality",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "boltons-zero-plural",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "more-strict-tail",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "more-first-falsy-default",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "more-last-sequence",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "more-only-cardinality",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "signer-payload-separator",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "signer-newest-key",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "signer-old-key-verification",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "signer-payload-binding",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "pydash-compact-falsy",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "pydash-drop-boundary",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "pydash-left-insertion",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "pydash-right-insertion",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "humanize-ordinal-teens",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "humanize-zero-word",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "humanize-negative-fraction",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    },
+    {
+      "case": "humanize-gnu-base",
+      "correct_pass": true,
+      "mutant_public_pass": true,
+      "mutant_killed": true,
+      "passed": true
+    }
+  ],
+  "sources_sha256": "0ae6e951cd04805f8284c7166d8edbb29ce34c616a6e3f0faca051bfb40df16e",
+  "cases_sha256": "6f5225464b9c3dcaca48405cdd0e72455fdb7817bc876f34bf30118f704b8c22",
+  "human_validation": "pending",
+  "private_holdout": "not collected",
+  "note": "Authored checks on pinned upstream code and declared mutations; no model code executed."
+}

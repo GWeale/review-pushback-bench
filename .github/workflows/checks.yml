@@ -39,6 +39,11 @@ jobs:
         run: python -m unittest discover -s runs -p 'test_*.py' -v
       - name: Check Harbor exporter and verifier on authored fixtures
         run: python -m unittest discover -s harbor -p 'test_*.py' -v
+      - name: Validate pinned repository cases and staged protocol
+        run: |
+          mkdir -p .bench-work
+          python -m unittest discover -s repository -p 'test_*.py' -v
+          python repository/suite.py validate --output .bench-work/repository-validation.json
       - name: Exercise preparation, capture, grading, and comparison
         run: python runs/verify_pipeline.py
 
@@ -73,5 +78,43 @@ jobs:
       - name: Reject bad code and malformed submissions in the production verifier
         run: python harbor/check_negative.py --tasks .bench-work/smoke --work .bench-work/negative
 
-# This workflow does not call model APIs, read provider keys, publish anything,
-# or grade submitted model code. Run unreviewed candidates in a separate sandbox.
+  repository-smoke:
+    name: Repository staged tasks and saved tool-agent pilot
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      REVIEW_BENCH_SCRATCH: ${{ github.workspace }}/.bench-work
+      HARBOR_TELEMETRY: '0'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: python -m pip install harbor==0.24.0
+      - name: Export all 80 staged tasks and load the Harbor schema
+        run: |
+          mkdir -p .bench-work
+          python repository/suite.py export --output .bench-work/repository-all
+          python repository/check_native.py --tasks .bench-work/repository-all
+          python repository/suite.py export --output .bench-work/repository-smoke --case boltons-ceil-equality
+      - name: Run staged reference and no-op controls
+        run: |
+          harbor run -p .bench-work/repository-smoke -a oracle -n 2 --jobs-dir .bench-work/repository-jobs --job-name oracle
+          harbor run -p .bench-work/repository-smoke -a nop -n 2 --jobs-dir .bench-work/repository-jobs --job-name nop
+          python repository/check_native.py --tasks .bench-work/repository-smoke --jobs .bench-work/repository-jobs --output .bench-work/repository-native.json
+      - name: Grade saved model files in isolated containers
+        run: python repository/check_docker.py --tasks .bench-work/repository-all --pilot artifacts/repository-pilot.v05 --work .bench-work/pilot-grade --output .bench-work/repository-pilot-grade.json
+      - name: Retain auditable scores and native trial results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-v05-checks
+          path: |
+            .bench-work/repository-native.json
+            .bench-work/repository-pilot-grade.json
+            .bench-work/repository-jobs/**/result.json
+
+# No model API calls or provider keys are used in CI. Saved pilot candidates
+# execute only in separate Docker containers without network access.

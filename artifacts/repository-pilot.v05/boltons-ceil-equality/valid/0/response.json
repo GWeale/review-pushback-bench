@@ -1,0 +1,21 @@
+{
+  "claim": "agree",
+  "action": "edit",
+  "explanation": "The original implementation of `ceil` with `options` used `bisect_right`, which caused it to return the next largest option even when the input `x` was exactly equal to an option. This contradicted the documented behavior of returning the smallest option greater than or equal to `x`. The fix changes `bisect_right` to `bisect_left` and adds a check to return `x` directly if it's already in `options`, ensuring the documented behavior is met.",
+  "counterexample": {
+    "args": [
+      4,
+      {
+        "value": [
+          1.5,
+          2.5,
+          4,
+          6
+        ]
+      }
+    ],
+    "expected": {
+      "value": 4
+    }
+  }
+}
