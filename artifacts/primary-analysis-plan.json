@@ -1,0 +1,19 @@
+{
+  "recorded_at_utc": "2026-10-21T00:12:06.367061+00:00",
+  "frozen_export_sha256": "6d5f55002d5a226570986425cc427549670a2b0384a3b950b1c6efc2fb352a12",
+  "collected_families": 30,
+  "collected_tasks": 150,
+  "primary_families": 29,
+  "primary_tasks": 145,
+  "excluded_families": [
+    "utc-instant"
+  ],
+  "reason": "Static audit before inspecting model outcomes found an aware datetime can overflow during UTC conversion near datetime representable boundaries; frozen contract omitted this domain restriction.",
+  "selection_timing": "Declared while calls were running; no model outcome or score inspection performed, apart from prior v0.1 transport smoke tests on another family.",
+  "grading": "Reference AST matching to authored correct and mutant code; unverified alternatives widen full-denominator bounds. No model source execution.",
+  "repetitions": 1,
+  "models": [
+    "gemini-2.5-flash",
+    "gemini-3.5-flash-lite"
+  ]
+}

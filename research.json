@@ -1,0 +1,655 @@
+{
+  "schemaVersion": "1.0",
+  "id": "review-pushback-bench",
+  "title": "Review Pushback Bench: methodology and inexpensive model pilot",
+  "deliverableMode": "report",
+  "question": {
+    "path": "inputs/question.md",
+    "sha256": "f7c83e435f4767f917800cd792fd93711068f1de9bd21117dfa4c2b8d0eb2199"
+  },
+  "sources": [
+    {
+      "id": "swe",
+      "title": "SWE-bench dataset guide",
+      "url": "https://www.swebench.com/SWE-bench/guides/datasets/",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "swe-leaderboards",
+      "title": "SWE-bench official dataset descriptions",
+      "url": "https://www.swebench.com/",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "swe-pro",
+      "title": "SWE-Bench Pro paper",
+      "url": "https://arxiv.org/abs/2509.16941",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "evalplus",
+      "title": "EvalPlus official repository",
+      "url": "https://github.com/evalplus/evalplus",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "bigcode",
+      "title": "BigCodeBench official repository",
+      "url": "https://github.com/bigcode-project/bigcodebench",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "lcb",
+      "title": "LiveCodeBench official site",
+      "url": "https://livecodebench.github.io/",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "ccrab",
+      "title": "Code Review Agent Benchmark paper",
+      "url": "https://arxiv.org/abs/2603.23448",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "martian",
+      "title": "Martian Code Review Bench official repository",
+      "url": "https://github.com/withmartian/code-review-benchmark",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "mutation",
+      "title": "SWE-Mutation official README",
+      "url": "https://github.com/Sunny4Coding/SWE-Mutation/blob/main/README.md",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "sycophancy",
+      "title": "Towards understanding sycophancy in language models",
+      "url": "https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "sharma2023sycophancy",
+      "title": "Definition of sycophancy; not new measurements of code review",
+      "url": "https://arxiv.org/abs/2310.13548",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "jimenez2024swebench",
+      "title": "Repository issue-resolution task structure",
+      "url": "https://arxiv.org/abs/2310.06770",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "liu2023evalplus",
+      "title": "Motivation for discriminative executable checks",
+      "url": "https://arxiv.org/abs/2305.01210",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "zhuo2024bigcodebench",
+      "title": "Motivation for API-semantics task scope",
+      "url": "https://arxiv.org/abs/2406.15877",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "jain2024livecodebench",
+      "title": "Temporal collection and separation of code capabilities",
+      "url": "https://arxiv.org/abs/2403.07974",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "zhang2026ccrab",
+      "title": "Executable evaluation of review consequences; distinction in evaluated role",
+      "url": "https://arxiv.org/abs/2603.23448",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "hong2025sycon",
+      "title": "Multi-turn pressure evaluation as a related and separate protocol",
+      "url": "https://arxiv.org/abs/2505.23840",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "gemini-pricing",
+      "title": "Gemini Developer API pricing",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "gemini-structured",
+      "title": "Gemini structured output documentation",
+      "url": "https://ai.google.dev/gemini-api/docs/structured-output",
+      "accessed": "2026-10-20"
+    },
+    {
+      "id": "gemini-thinking",
+      "title": "Gemini thinking configuration documentation",
+      "url": "https://ai.google.dev/gemini-api/docs/thinking",
+      "accessed": "2026-10-20"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "validation",
+      "kind": "log",
+      "path": "artifacts/validation.v0.2.json",
+      "sha256": "dc06cb87ab37e64bd67204b2fe28c77dc4ddca4a646ed2f5ace1e27b0ec5d1ed",
+      "command": "python benchmark/bench.py validate --output NEW_PATH.json",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "policies",
+      "kind": "log",
+      "path": "artifacts/selftest.v0.2.json",
+      "sha256": "08da2eb6def162c2726d974ae660524520349bc4859ff45c933b0181b62023df",
+      "command": "python benchmark/bench.py selftest --output NEW_PATH.json",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "pipeline",
+      "kind": "log",
+      "path": "artifacts/pipeline-checks.json",
+      "sha256": "b21a88001c046e026ac86b2c507b8d97ecb09faa78e91cb5e153c14603cf600a",
+      "command": "python runs/verify_pipeline.py",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "tests",
+      "kind": "log",
+      "path": "artifacts/release-checks.json",
+      "sha256": "c0620bfbd1b821052bd6fb84f9f6bc5333c000611529887005e326ec34471c51",
+      "command": "python runs/check_release.py",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "tasks-v02",
+      "kind": "data",
+      "path": "artifacts/tasks.v0.2.dev.jsonl",
+      "sha256": "6d5f55002d5a226570986425cc427549670a2b0384a3b950b1c6efc2fb352a12",
+      "command": "python benchmark/bench.py export --output NEW_PATH.jsonl --seed 20261020",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "analysis-plan",
+      "kind": "data",
+      "path": "artifacts/primary-analysis-plan.json",
+      "sha256": "e613e147cae7ed1e7ab92963e2ae24b60575ecc5ca774a281e81cfc35f19ad93",
+      "command": "Pre-outcome static audit decision recorded locally before score inspection.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "paper-md",
+      "kind": "other",
+      "path": "paper/paper.md",
+      "sha256": "551927b1d900387aa2ccfd2cb9d6018b0a5593f0a43cbb452f131e50326c2f7e",
+      "command": "Authored technical report, source for paper/build_paper.py.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "paper-pdf",
+      "kind": "other",
+      "path": "paper/review-pushback-bench.pdf",
+      "sha256": "ef2a7a307e4e94b8d332dafd9ac986bc78d44f77af551e2441d141f4b4d39999",
+      "command": "python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "image",
+      "kind": "figure",
+      "path": "assets/review-bot.png",
+      "sha256": "574b2355da90ad4a5c1ddce21f9a16e6022d4689992f11f4cbf1c8a1e9c5c9dd",
+      "command": "Built-in imagegen; exact prompt in assets/README.md.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "flash25-run",
+      "kind": "log",
+      "path": "artifacts/model-runs/gemini-2.5-flash-v02/run.json",
+      "sha256": "09864db0898f88504411833bbf02497f8ee75a3824f0c6251cd3a33501a402b0",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "flash25-attempts",
+      "kind": "data",
+      "path": "artifacts/model-runs/gemini-2.5-flash-v02/attempts.jsonl",
+      "sha256": "18215015f0977d27580e2f79bf10843ce1688ce35a70ec551547ba26834d78f3",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "flash25-responses",
+      "kind": "data",
+      "path": "artifacts/model-runs/gemini-2.5-flash-v02/responses.jsonl",
+      "sha256": "c0ec4cfbe5d849e2b6e173c596f27e628b0bd5ca7ef3b309bb0f59a124d90c98",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "flash25-canonical-grade",
+      "kind": "data",
+      "path": "artifacts/model-runs/gemini-2.5-flash-v02/canonical-grade.json",
+      "sha256": "adb13d171ccef2f784cda51a8220d738e50872df493fff14240ab390820ecea3",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "lite35-run",
+      "kind": "log",
+      "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/run.json",
+      "sha256": "c356877302617158793e46095be7aea240155d1a3dd54bf79970516a93c21d4c",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "lite35-attempts",
+      "kind": "data",
+      "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/attempts.jsonl",
+      "sha256": "79a4eb2a0c599c8f77e1f3821137e3c11b241df49d3fbbb0bda4973defc440b2",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "lite35-responses",
+      "kind": "data",
+      "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/responses.jsonl",
+      "sha256": "b3c2778ade1e1189b7533389c8670c3f6574c0fcabbebc93d582dfc98fbca50b",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "lite35-canonical-grade",
+      "kind": "data",
+      "path": "artifacts/model-runs/gemini-3.5-flash-lite-v02/canonical-grade.json",
+      "sha256": "c0f887b6be1a8f476431e21504d574ce863312dc1604c840d6e8dd0498e393e9",
+      "command": "Original generation: see README and run.json config. Regrade: python runs/grade_canonical.py with this responses file, artifacts/validation.v0.2.json, a new output path, and exact model label.",
+      "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
+    },
+    {
+      "id": "source-benchmark-bench",
+      "kind": "code",
+      "path": "benchmark/bench.py",
+      "sha256": "6fac4214770b842bb682b2a3e8942dc2abb249ea0aa4bc4c93cceddbd18d6c3e",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-benchmark-cases",
+      "kind": "code",
+      "path": "benchmark/cases.py",
+      "sha256": "2afcd1410d25fda5f459934a79b024721d9f3e92e21806436bd9244cc599b3db",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-benchmark-compare",
+      "kind": "code",
+      "path": "benchmark/compare.py",
+      "sha256": "f7f6d7b0929fdc49e9d146e2b07453add794e804ddb6720ad36de6da031027d5",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-benchmark-test-harness",
+      "kind": "code",
+      "path": "benchmark/test_harness.py",
+      "sha256": "90176fd39235bb70282e7b6ea4aba56087f6cd14613475d77d56bcb23baf6e77",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-build-readme",
+      "kind": "code",
+      "path": "runs/build_readme.py",
+      "sha256": "2c9b84da2aa50e17abc0aaa45367b6070e9c4559d4dff32ca6b7a8aae06b980d",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-build-release-manifest",
+      "kind": "code",
+      "path": "runs/build_release_manifest.py",
+      "sha256": "4678a815f7a087c6e460b415d1d75e1126e38bb68980d8c5ffb25701d49621df",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-check-release",
+      "kind": "code",
+      "path": "runs/check_release.py",
+      "sha256": "22b1c96bde3bbcc8c109e2028cbe75beaea6630db13316b2d667aeb10420dde2",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-gemini-runner",
+      "kind": "code",
+      "path": "runs/gemini_runner.py",
+      "sha256": "54953ec3f3e677123c38b2e0df555fe91a3de3bdf1ef08fbead5f53cd6f89682",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-gemini-runner-pilot",
+      "kind": "code",
+      "path": "runs/gemini_runner_pilot.py",
+      "sha256": "8494b2ebcb17989f2e935442d30dc0be84814383af4e8f72fb9516874f2a7259",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-grade-canonical",
+      "kind": "code",
+      "path": "runs/grade_canonical.py",
+      "sha256": "0b7563940fa31a53244507aeff7e8b8e313e27565921421250c232e01597d06d",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-test-canonical",
+      "kind": "code",
+      "path": "runs/test_canonical.py",
+      "sha256": "323f784ab9e2579113c27050ab6f8cc7b107558538b323406393d7087ec0f83e",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-test-runner",
+      "kind": "code",
+      "path": "runs/test_runner.py",
+      "sha256": "5aff2fb7583ff178e774ad4b1624ece217058ddb0901237c6245c8d8bd025914",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-runs-verify-pipeline",
+      "kind": "code",
+      "path": "runs/verify_pipeline.py",
+      "sha256": "57bd6d459c863a437f829d7a3dba94d0453c9e0d42743217e301e35f86b3f6b3",
+      "command": "Versioned source; see recorded execution commands."
+    }
+  ],
+  "claims": [
+    {
+      "id": "related-sharma2023sycophancy",
+      "kind": "empirical",
+      "statement": "The paper uses sharma2023sycophancy as a design or related-work source: Definition of sycophancy; not new measurements of code review.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "sharma2023sycophancy",
+          "locator": "Abstract and authors; v4 dated May 10, 2025"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "related-jimenez2024swebench",
+      "kind": "empirical",
+      "statement": "The paper uses jimenez2024swebench as a design or related-work source: Repository issue-resolution task structure.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "jimenez2024swebench",
+          "locator": "Abstract and authors; ICLR 2024 publication note"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "related-liu2023evalplus",
+      "kind": "empirical",
+      "statement": "The paper uses liu2023evalplus as a design or related-work source: Motivation for discriminative executable checks.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "liu2023evalplus",
+          "locator": "Abstract describing automatic test augmentation and test insufficiency"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "related-zhuo2024bigcodebench",
+      "kind": "empirical",
+      "statement": "The paper uses zhuo2024bigcodebench as a design or related-work source: Motivation for API-semantics task scope.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "zhuo2024bigcodebench",
+          "locator": "Abstract, paragraphs describing practical function calls and tasks"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "related-jain2024livecodebench",
+      "kind": "empirical",
+      "statement": "The paper uses jain2024livecodebench as a design or related-work source: Temporal collection and separation of code capabilities.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "jain2024livecodebench",
+          "locator": "Abstract describing continual collection and code-related scenarios"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "related-zhang2026ccrab",
+      "kind": "empirical",
+      "statement": "The paper uses zhang2026ccrab as a design or related-work source: Executable evaluation of review consequences; distinction in evaluated role.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "zhang2026ccrab",
+          "locator": "Abstract describing tests derived from human review feedback; v3 April 7, 2026"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "related-hong2025sycon",
+      "kind": "empirical",
+      "statement": "The paper uses hong2025sycon as a design or related-work source: Multi-turn pressure evaluation as a related and separate protocol.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "hong2025sycon",
+          "locator": "Abstract and EMNLP Findings journal reference"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "This is source-grounded related work, not a reproduction of that source's model results."
+      ]
+    },
+    {
+      "id": "dataset-validation",
+      "kind": "computational",
+      "statement": "The frozen v0.2.0-dev development set has 30 authored families and 150 scenarios. All correct references pass authored visible/evaluator checks; all intended mutants pass visible checks and fail evaluator checks.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "validation",
+        "tasks-v02"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "These are finite authored checks, not formal proof over the full contract. One UTC domain defect is disclosed."
+      ]
+    },
+    {
+      "id": "policy-controls",
+      "kind": "computational",
+      "statement": "Synthetic no-op and blind compliance score 0.5 balanced behavior and zero paired-family success; the answer-key policy scores 1.0. These are not model measurements.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "policies"
+      ],
+      "dependsOn": [],
+      "caveats": []
+    },
+    {
+      "id": "release-checks",
+      "kind": "computational",
+      "statement": "Local harness, adapter, canonical-grading, pipeline, and release-integrity checks pass.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "tests",
+        "pipeline"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "Remote CI status must be checked separately after publication."
+      ]
+    },
+    {
+      "id": "primary-exclusion",
+      "kind": "computational",
+      "statement": "The primary pilot cohort excludes utc-instant and contains 29 families / 145 scenarios per model; the declaration predates model score inspection and all 150 raw attempts per model are retained.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "analysis-plan"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "This was a concurrent pre-outcome audit decision, not formal preregistration."
+      ]
+    },
+    {
+      "id": "pricing-source",
+      "kind": "empirical",
+      "statement": "The direct API price table checked October 20, 2026 lists $0.30 per million input tokens and $2.50 per million output tokens for the two pilot models.",
+      "status": "supported",
+      "sourceRefs": [
+        {
+          "sourceId": "gemini-pricing",
+          "locator": "Gemini 2.5 Flash and Gemini 3.5 Flash-Lite: Standard price tables"
+        }
+      ],
+      "outputIds": [],
+      "dependsOn": [],
+      "caveats": [
+        "Prices may change; calculated costs are not provider invoices."
+      ]
+    },
+    {
+      "id": "flash25-pilot",
+      "kind": "computational",
+      "statement": "gemini-2.5-flash returned 148/150 valid-format responses. On the primary 145 scenarios its strict decision-label agreement is 0.910344827586; harmful responses match the validated correct-reference AST in 56/58 cases. Balanced reference-test agreement is bounded by 0.801724137931 and 0.974137931034 under conservative matching.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "flash25-run",
+        "flash25-attempts",
+        "flash25-responses",
+        "flash25-canonical-grade"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "No model-returned source was executed; alternative ASTs remain unverified. One repetition, convenience sample, different supported thinking settings. Bounds are not confidence intervals."
+      ]
+    },
+    {
+      "id": "flash25-cost",
+      "kind": "computational",
+      "statement": "Reported usage and declared prices give an estimated $0.0968661 for gemini-2.5-flash's 150 calls.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "flash25-run"
+      ],
+      "dependsOn": [
+        "pricing-source"
+      ],
+      "caveats": [
+        "Price-based estimate; actual billed cost unavailable. Preflight requests are separate."
+      ]
+    },
+    {
+      "id": "lite35-pilot",
+      "kind": "computational",
+      "statement": "gemini-3.5-flash-lite returned 150/150 valid-format responses. On the primary 145 scenarios its strict decision-label agreement is 0.972413793103; harmful responses match the validated correct-reference AST in 58/58 cases. Balanced reference-test agreement is bounded by 0.844827586207 and 1.000000000000 under conservative matching.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "lite35-run",
+        "lite35-attempts",
+        "lite35-responses",
+        "lite35-canonical-grade"
+      ],
+      "dependsOn": [],
+      "caveats": [
+        "No model-returned source was executed; alternative ASTs remain unverified. One repetition, convenience sample, different supported thinking settings. Bounds are not confidence intervals."
+      ]
+    },
+    {
+      "id": "lite35-cost",
+      "kind": "computational",
+      "statement": "Reported usage and declared prices give an estimated $0.0711986 for gemini-3.5-flash-lite's 150 calls.",
+      "status": "reproduced",
+      "sourceRefs": [],
+      "outputIds": [
+        "lite35-run"
+      ],
+      "dependsOn": [
+        "pricing-source"
+      ],
+      "caveats": [
+        "Price-based estimate; actual billed cost unavailable. Preflight requests are separate."
+      ]
+    },
+    {
+      "id": "interpretation",
+      "kind": "synthetic",
+      "statement": "This is an open development benchmark and methodology report with a small direct-completion pilot; it does not establish causal sycophancy, representative real-review failure rates, or a frontier-model ranking.",
+      "status": "supported",
+      "sourceRefs": [],
+      "outputIds": [],
+      "dependsOn": [
+        "dataset-validation",
+        "primary-exclusion",
+        "flash25-pilot",
+        "lite35-pilot"
+      ],
+      "caveats": [
+        "Explicit contracts and permission to disagree can make the harmful arms easy; valid arms start from broken code."
+      ]
+    }
+  ],
+  "report": {
+    "path": "docs/RESEARCH_EVIDENCE.md",
+    "sha256": "d093710c46e4a204948041d0f20ba1974d10bce39f8e9b05606d290b55cbad32",
+    "status": "approved"
+  },
+  "approvals": {
+    "scope": {
+      "status": "approved",
+      "approvedAt": "2026-10-20",
+      "note": "Direct user instruction to create benchmark, paper, image, and publish on GitHub."
+    },
+    "final": {
+      "status": "approved",
+      "approvedAt": "2026-10-20",
+      "note": "User explicitly authorized creation and publication in this turn. This records publication authorization, not a claim that the user reviewed every line or that peer review occurred."
+    }
+  }
+}

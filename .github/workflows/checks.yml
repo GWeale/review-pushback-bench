@@ -1,0 +1,38 @@
+name: Authored benchmark checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authored-fixtures:
+    name: Python ${{ matrix.python }} authored fixtures
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
+    env:
+      REVIEW_BENCH_SCRATCH: ${{ runner.temp }}/review-pushback-bench
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Validate authored correct implementations and mutants
+        run: python benchmark/bench.py validate
+      - name: Check harness behavior
+        run: python -m unittest discover -s benchmark -p test_harness.py -v
+      - name: Check API adapter and conservative grading without network calls
+        run: python -m unittest discover -s runs -p 'test_*.py' -v
+
+# This workflow does not call model APIs, read provider keys, publish anything,
+# or grade submitted model code. Run unreviewed candidates in a separate sandbox.

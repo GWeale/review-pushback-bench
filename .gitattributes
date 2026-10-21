@@ -1,0 +1,6 @@
+# Keep experiment artifacts and recorded SHA-256 values byte-exact across clones.
+# Do not let a host's core.autocrlf setting rewrite source, prompts, or raw outputs.
+* -text
+*.png binary
+*.pdf binary
+*.zip binary

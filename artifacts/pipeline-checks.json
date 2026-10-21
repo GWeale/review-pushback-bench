@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": {
+    "prepared_visible_tests_pass": true,
+    "capture_and_grade_partial_run": true,
+    "authored_rejection_passes": true,
+    "grading_requires_execution_acknowledgment": true,
+    "paired_comparison_matches_known_difference": true,
+    "duplicate_comparison_run_rejected": true
+  },
+  "command": "python runs/verify_pipeline.py (from package root)",
+  "environment": "3.13.4",
+  "note": "Only authored fixtures and synthetic comparison rows were used. No model calls."
+}

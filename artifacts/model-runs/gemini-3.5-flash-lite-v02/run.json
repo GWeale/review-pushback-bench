@@ -1,0 +1,39 @@
+{
+  "started_at": "2026-10-21T00:10:06.704328+00:00",
+  "config": {
+    "model_id": "gemini-3.5-flash-lite",
+    "provider": "Google Gemini Developer API direct",
+    "track": "direct-completion",
+    "tasks_sha256": "6d5f55002d5a226570986425cc427549670a2b0384a3b950b1c6efc2fb352a12",
+    "expected_tasks": 150,
+    "benchmark_version": "0.2.0-dev",
+    "seed": 20261020,
+    "temperature": 0,
+    "thinking_budget": null,
+    "thinking_level": "minimal",
+    "max_output_tokens": 1536,
+    "tools_allowed": [],
+    "repetitions": 1,
+    "system_prompt": null,
+    "response_mime_type": "application/json",
+    "response_schema": "task_id:str, decision:enum, explanation:str, source:str",
+    "input_usd_per_million": 0.3,
+    "output_usd_per_million": 2.5,
+    "max_estimated_usd": 1.0,
+    "runner_sha256": "8494b2ebcb17989f2e935442d30dc0be84814383af4e8f72fb9516874f2a7259",
+    "adapter": "urllib standard library; no SDK; no automatic answer-dependent retries"
+  },
+  "status": "completed",
+  "finished_at": "2026-10-21T00:13:29.787800+00:00",
+  "attempts": 150,
+  "valid_responses": 150,
+  "prompt_tokens": 59962,
+  "output_and_thought_tokens": 21284,
+  "price_based_estimate_usd": 0.0711986,
+  "reserved_estimate_usd": 0.6909308999999999,
+  "billed_cost_usd": null,
+  "model_versions": [
+    "gemini-3.5-flash-lite"
+  ],
+  "note": "Usage-based price estimate, not a provider invoice. No returned code was executed. Failed/invalid requests are retained; no selective accuracy retries."
+}

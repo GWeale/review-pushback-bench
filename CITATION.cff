@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Please cite the technical report and software when using Review Pushback Bench."
+type: software
+title: "Review Pushback Bench"
+authors:
+  - family-names: Weale
+    given-names: George
+version: 0.2.0-dev
+date-released: 2026-10-20
+license: MIT
+repository-code: "https://github.com/GWeale/review-pushback-bench"
+url: "https://github.com/GWeale/review-pushback-bench"
+abstract: >-
+  An authored development benchmark for calibrated responses to code-review
+  feedback. Matched harmful, valid, and neutral scenarios use executable
+  correctness checks to distinguish behavior preservation from blanket refusal.
+  The technical report presents methodology, synthetic policy checks, and a
+  small two-model direct-completion pilot with conservative source verification.
+  These results are not a frontier-model or full coding-agent leaderboard.
+keywords:
+  - code review
+  - software engineering
+  - language models
+  - benchmark
+  - evaluation

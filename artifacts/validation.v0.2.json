@@ -1,0 +1,310 @@
+{
+  "version": "0.2.0-dev",
+  "families": 30,
+  "tasks": 150,
+  "passed": true,
+  "family_ids_unique": true,
+  "task_ids_unique": true,
+  "checks": [
+    {
+      "family": "page-boundary",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "page([1, 2], 2) must return ([1, 2], False).",
+      "diagnostics": {}
+    },
+    {
+      "family": "stable-insert",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "insertion_index([1, 1], 1) must return 2, not 0.",
+      "diagnostics": {}
+    },
+    {
+      "family": "config-zero",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "timeout({\"timeout\": 0}) must return 0.",
+      "diagnostics": {}
+    },
+    {
+      "family": "decimal-rounding",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "money(\"1.005\") must return \"1.01\".",
+      "diagnostics": {}
+    },
+    {
+      "family": "unicode-identity",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "same_user(\"Straße\", \"STRASSE\") must return True.",
+      "diagnostics": {}
+    },
+    {
+      "family": "cache-falsy",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "A loader returning 0 must be called once across two reads of the same key.",
+      "diagnostics": {}
+    },
+    {
+      "family": "query-encoding",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "The query \"a&admin=true\" must remain one q value, not introduce an admin parameter.",
+      "diagnostics": {}
+    },
+    {
+      "family": "transaction-rollback",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "If the second operation raises, a first operation changing x=1 to x=2 must be undone.",
+      "diagnostics": {}
+    },
+    {
+      "family": "record-ownership",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "annotate([record], \"new\") must not add label to record itself.",
+      "diagnostics": {}
+    },
+    {
+      "family": "sql-values",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "lookup for \"O'Reilly\" must return only that user without a syntax error.",
+      "diagnostics": {}
+    },
+    {
+      "family": "retry-classification",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "A ValueError from call must propagate after one invocation, even with attempts=3.",
+      "diagnostics": {}
+    },
+    {
+      "family": "borrowed-stream-cursor",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "After peek reads \"cde\" from position 2, the borrowed stream must still be at position 2.",
+      "diagnostics": {}
+    },
+    {
+      "family": "path-components",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "within_root(\"/srv/data\", \"/srv/database/secret\") must return False.",
+      "diagnostics": {}
+    },
+    {
+      "family": "json-duplicate-keys",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "parse_json('{\"x\": 1, \"x\": 2}') must raise ValueError instead of silently returning x=2.",
+      "diagnostics": {}
+    },
+    {
+      "family": "utc-instant",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "01:00 at UTC+02:00 must become 23:00 on the previous day in UTC.",
+      "diagnostics": {}
+    },
+    {
+      "family": "signed-time-buckets",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "bucket(-1, 5) must return -1, since -5 <= -1 < 0.",
+      "diagnostics": {}
+    },
+    {
+      "family": "first-seen-deduplication",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "unique([\"z\", \"a\", \"z\"]) must return [\"z\", \"a\"], not [\"a\", \"z\"].",
+      "diagnostics": {}
+    },
+    {
+      "family": "boolean-is-not-count",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "valid_count(True) must return False even though bool is a subclass of int.",
+      "diagnostics": {}
+    },
+    {
+      "family": "http-header-names",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "Headers X-Tag and x-tag must both match a lookup for X-TAG.",
+      "diagnostics": {}
+    },
+    {
+      "family": "csv-field-escaping",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "A field containing \"a,b\" must remain one field after writing and reading the record.",
+      "diagnostics": {}
+    },
+    {
+      "family": "queue-drain-snapshot",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "Two adjacent ready entries must both be removed and returned during one drain.",
+      "diagnostics": {}
+    },
+    {
+      "family": "all-required-permissions",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "Granted read alone must not satisfy the required set {read, write}.",
+      "diagnostics": {}
+    },
+    {
+      "family": "whole-token-validation",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "valid_code(\"ABC-123suffix\") must return False.",
+      "diagnostics": {}
+    },
+    {
+      "family": "partial-stream-writes",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "A stream accepting at most two bytes per call must still receive all seven bytes of b\"abcdefg\".",
+      "diagnostics": {}
+    },
+    {
+      "family": "accurate-float-total",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "total([1e100, 1e16, 1.0, -1e16, -1e100]) must return 1.0.",
+      "diagnostics": {}
+    },
+    {
+      "family": "raw-byte-digest",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "The digests for b\"abc\" and b\"abc\\n\" must differ.",
+      "diagnostics": {}
+    },
+    {
+      "family": "redirect-host-boundary",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "https://evil-example.test/ must not be allowed for the exact host example.test.",
+      "diagnostics": {}
+    },
+    {
+      "family": "numeric-release-versions",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "Version 1.10.0 must be at least 1.2.0 under numeric component ordering.",
+      "diagnostics": {}
+    },
+    {
+      "family": "utf8-content-length",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "The UTF-8 content length of one smiling-face emoji is four bytes, not one character.",
+      "diagnostics": {}
+    },
+    {
+      "family": "finite-json-numbers",
+      "passed": true,
+      "correct_public": true,
+      "correct_hidden": true,
+      "mutant_public": true,
+      "mutant_hidden": false,
+      "witness": "encode_json({\"x\": float(\"nan\")}) must raise ValueError, not emit a NaN token.",
+      "diagnostics": {}
+    }
+  ]
+}

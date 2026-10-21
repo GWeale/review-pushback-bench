@@ -1,0 +1,34 @@
+{
+  "checked_at": "2026-10-21T00:22:31.415070+00:00",
+  "passed": true,
+  "checks": {
+    "harness_tests": true,
+    "adapters_tests": true,
+    "authored_fixture_validation": true,
+    "synthetic_policy_checks": true,
+    "pipeline_checks": true,
+    "frozen_export_matches_analysis_plan": true,
+    "gemini-2.5-flash-v02_completed": true,
+    "gemini-2.5-flash-v02_frozen_inputs": true,
+    "gemini-2.5-flash-v02_primary_cohort": true,
+    "gemini-2.5-flash-v02_response_hash": true,
+    "gemini-2.5-flash-v02_no_model_execution": true,
+    "gemini-3.5-flash-lite-v02_completed": true,
+    "gemini-3.5-flash-lite-v02_frozen_inputs": true,
+    "gemini-3.5-flash-lite-v02_primary_cohort": true,
+    "gemini-3.5-flash-lite-v02_response_hash": true,
+    "gemini-3.5-flash-lite-v02_no_model_execution": true,
+    "no_provider_credentials_in_public_files": true,
+    "public_markdown_links": true,
+    "required_public_files_exist": true
+  },
+  "unittest_output": {
+    "harness": "test_authored_allowlist_accepts_only_known_programs (test_harness.HarnessTests.test_authored_allowlist_accepts_only_known_programs) ... ok\ntest_early_exit_does_not_pass (test_harness.HarnessTests.test_early_exit_does_not_pass) ... ok\ntest_export_is_reproducible_and_omits_private_oracles (test_harness.HarnessTests.test_export_is_reproducible_and_omits_private_oracles) ... ok\ntest_hanging_candidate_times_out (test_harness.HarnessTests.test_hanging_candidate_times_out) ... ok\ntest_partial_and_invalid_responses_stay_in_denominator (test_harness.HarnessTests.test_partial_and_invalid_responses_stay_in_denominator) ... ok\ntest_syntax_error_does_not_pass (test_harness.HarnessTests.test_syntax_error_does_not_pass) ... ok\ntest_unknown_and_duplicate_ids_are_rejected (test_harness.HarnessTests.test_unknown_and_duplicate_ids_are_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.665s\n\nOK\n",
+    "adapters": "test_authored_answer_key_is_verified_without_execution (test_canonical.CanonicalTests.test_authored_answer_key_is_verified_without_execution) ... ok\ntest_container_decisions_are_invalid_in_both_graders (test_canonical.CanonicalTests.test_container_decisions_are_invalid_in_both_graders) ... ok\ntest_missing_responses_remain_in_full_denominator (test_canonical.CanonicalTests.test_missing_responses_remain_in_full_denominator) ... ok\ntest_unknown_alternative_widens_bounds_instead_of_becoming_failure (test_canonical.CanonicalTests.test_unknown_alternative_widens_bounds_instead_of_becoming_failure) ... ok\ntest_malformed_provider_json_is_a_logged_reserved_attempt (test_runner.RunnerTests.test_malformed_provider_json_is_a_logged_reserved_attempt) ... ok\ntest_missing_candidates_are_logged_and_resume_does_not_call_again (test_runner.RunnerTests.test_missing_candidates_are_logged_and_resume_does_not_call_again) ... ok\ntest_parse_rejects_wrong_task_and_decision (test_runner.RunnerTests.test_parse_rejects_wrong_task_and_decision) ... ok\ntest_response_file_rebuilt_from_attempts_without_duplicates (test_runner.RunnerTests.test_response_file_rebuilt_from_attempts_without_duplicates) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.097s\n\nOK\n"
+  },
+  "privacy_issue_files": [],
+  "broken_links": [],
+  "pending_files": [],
+  "environment": "Python 3.13.4; standard library",
+  "note": "No model-returned source was executed. Remote GitHub CI is a separate check."
+}
