@@ -186,7 +186,7 @@ George Weale directed the work and requested its release. Coding agents assisted
 
 ## Harbor task edition
 
-A subsequent adapter exports 145 tasks across 29 families in the [Harbor task format](https://harborframework.com/docs/tasks/overview), with isolated agent images, reference solve scripts, and separate verifier containers. It excludes `utc-instant` and restricts `query-encoding` inputs to UTF-8-encodable strings, excluding lone surrogates. Agents edit the module and submit a structured review decision. The verifier checks final behavior and decision labels; explanation quality remains ungraded. This edition changes the task interface and one contract, so the completion-pilot results above are not Harbor agent measurements. The adapter guide documents setup and scoring.
+A subsequent adapter exports 145 tasks across 29 families in the [Harbor task format](https://docs.harborframework.com/tasks/overview), with isolated agent images, reference solve scripts, and separate verifier containers. It excludes `utc-instant` and restricts `query-encoding` inputs to UTF-8-encodable strings, excluding lone surrogates. Agents edit the module and submit a structured review decision. The verifier checks final behavior and decision labels; explanation quality remains ungraded. This edition changes the task interface and one contract, so the completion-pilot results above are not Harbor agent measurements. The adapter guide documents setup and scoring.
 
 ## References
 

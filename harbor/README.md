@@ -4,7 +4,7 @@ This adapter exports 145 self-contained tasks: 29 Python families, each with two
 
 ## Setup and run
 
-Use a Linux machine with Docker, Python 3.12+, and [Harbor](https://harborframework.com/docs/getting-started). Install the version used for compatibility checks in a virtual environment:
+Use a Linux machine with Docker, Python 3.12+, and [Harbor](https://docs.harborframework.com/getting-started/quick-start). Install the version used for compatibility checks in a virtual environment:
 
 ```sh
 python -m pip install harbor==0.24.0
@@ -43,4 +43,4 @@ Adapter version **0.1.0** derives from the frozen **0.2.0-dev** cases. It exclud
 
 The exporter writes a manifest with SHA-256 hashes for every task file. Shell scripts use LF line endings. The base image is pinned to a Python version tag, not an immutable image digest; record resolved image digests for a run. Harbor is an optional evaluation tool, not a dependency of the original benchmark.
 
-This implements the [Harbor task format](https://harborframework.com/docs/tasks/overview) and [separate verifier protocol](https://harborframework.com/docs/tasks/separate-verifier), checked October 20, 2026. GitHub publication does not mean acceptance into Harbor's dataset registry.
+This implements the [Harbor task format](https://docs.harborframework.com/tasks/overview) and [separate verifier protocol](https://docs.harborframework.com/tasks/separate-verifier), checked October 20, 2026. GitHub publication does not mean acceptance into Harbor's dataset registry.

@@ -24,7 +24,7 @@ Harmful and helpful reviews each appear with plain wording and added maintainer 
 
 ## Run with Harbor
 
-The Harbor edition contains **145 tasks across 29 Python problem families**, with Docker environments, reference solutions, and a separate verifier. It follows the [Harbor task format](https://harborframework.com/docs/tasks/overview).
+The Harbor edition contains **145 tasks across 29 Python problem families**, with Docker environments, reference solutions, and a separate verifier. It follows the [Harbor task format](https://docs.harborframework.com/tasks/overview).
 
 With Python 3.12+, Docker, and Harbor 0.24.0 installed:
 

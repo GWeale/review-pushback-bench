@@ -125,7 +125,7 @@
     {
       "id": "harbor-format",
       "title": "Self-contained task format and reward file convention",
-      "url": "https://harborframework.com/docs/tasks/overview",
+      "url": "https://docs.harborframework.com/tasks/overview",
       "accessed": "2026-10-20"
     }
   ],
@@ -190,7 +190,7 @@
       "id": "paper-md",
       "kind": "other",
       "path": "paper/paper.md",
-      "sha256": "046ea6432e20debfd2ada0a398137d2ad6441c4e483a29570682c09079275c20",
+      "sha256": "de649a13879d55e22761be140594c709d39e1f32d34c7d34d593906cafda563d",
       "command": "Authored technical report, source for paper/build_paper.py.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -198,7 +198,7 @@
       "id": "paper-pdf",
       "kind": "other",
       "path": "paper/review-pushback-bench.pdf",
-      "sha256": "ff3520a7ad473fed5b0b60efb14327cf86328773f9ff118a2ae5e3b636f421d0",
+      "sha256": "5c17db2ef856df816cbf91f5109e9200c4e1dd39be72b1dc2e113e8f3180c53b",
       "command": "python paper/build_paper.py; then pdflatex -interaction=nonstopmode main.tex twice from paper/latex; copy main.pdf to release path.",
       "environment": "Python 3.13.4, Windows; standard library. Authored checks use a writable REVIEW_BENCH_SCRATCH."
     },
@@ -306,7 +306,7 @@
       "id": "source-runs-build-readme",
       "kind": "code",
       "path": "runs/build_readme.py",
-      "sha256": "e508f86574abcfe846e574f3b56a26f4043f436a6a466c1457135a8a8d46f11d",
+      "sha256": "e994ca1375ccdf641dd6d2cefa8e115639353738ed344d33a44e22d8133bed05",
       "command": "Versioned source; see recorded execution commands."
     },
     {

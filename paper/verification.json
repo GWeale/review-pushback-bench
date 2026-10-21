@@ -7,13 +7,13 @@
   "known_domain_limits": "utc-instant excluded before outcome inspection; query-encoding caveat retained after outcome inspection",
   "model_results": "Two real API runs; conservative AST verification; no arbitrary returned Python executed",
   "sha256": {
-    "paper.md": "046ea6432e20debfd2ada0a398137d2ad6441c4e483a29570682c09079275c20",
-    "review-pushback-bench.pdf": "ff3520a7ad473fed5b0b60efb14327cf86328773f9ff118a2ae5e3b636f421d0",
+    "paper.md": "de649a13879d55e22761be140594c709d39e1f32d34c7d34d593906cafda563d",
+    "review-pushback-bench.pdf": "5c17db2ef856df816cbf91f5109e9200c4e1dd39be72b1dc2e113e8f3180c53b",
     "latex/main.tex": "5a16af4bc92fd2e9c196ebfe1a05c8f38d3b9cac852148a33d096598790aba88",
-    "latex/paper-body.tex": "4b3e241e2bfdb87037f6183cd72f14a62763107faea29cbbb2ea21b7748ccaa2",
+    "latex/paper-body.tex": "892b2e0f7d17e7f3efa96f999c4b8240f97589c367fb7406bb0ba4935dee1414",
     "build_paper.py": "3217c0aaa8a4e0fb757f71ac5db99592faefa1972df8fc8ca9aa49d3e8f2d710",
     "references.bib": "101f5b30c307b823f70f3eca66a571a570a4f573410de12b7253d906db057fc8",
-    "sources.json": "02b29c58c4c9e15b1b96215f522a7123f44fd7690a433d04459b438ce6b3fcee"
+    "sources.json": "fb3e78281b10df2ba89628c8935db876ca3ef1c7f42dcefddd204e7a13c79ca5"
   },
   "harbor_edition": "145 tasks, 29 families; schema-checked with Harbor 0.24.0; Docker smoke verified separately in CI"
 }
