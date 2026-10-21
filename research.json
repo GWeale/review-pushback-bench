@@ -369,7 +369,7 @@
       "id": "source-harbor-check-smoke",
       "kind": "code",
       "path": "harbor/check_smoke.py",
-      "sha256": "0ac92c066562dfef1957b0bb5ef6c5c439166c9ed7e1ef866d80af84728141d8",
+      "sha256": "8992ff4f3fbeacd2b87327a56190dfb929c04ee6e199759b437455d42751f876",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -383,7 +383,7 @@
       "id": "source-harbor-summarize",
       "kind": "code",
       "path": "harbor/summarize.py",
-      "sha256": "17b5f74700f4bacadcbbd40a8ab28b369c06e3e3df7f7c04520088bbe434ac9e",
+      "sha256": "b0be00bb40fa359057829f8da0dcac1e6379a55644abb59c2b129493a767f08e",
       "command": "Versioned source; see recorded execution commands."
     },
     {
@@ -391,6 +391,13 @@
       "kind": "code",
       "path": "harbor/test_adapter.py",
       "sha256": "9dfecb7bb18931685179d6fd8dca6fcf65acceb4579876ad45cc5c1d1d5cd5df",
+      "command": "Versioned source; see recorded execution commands."
+    },
+    {
+      "id": "source-harbor-test-results",
+      "kind": "code",
+      "path": "harbor/test_results.py",
+      "sha256": "b3bb19ee0e24bb3bb321ae784f7e2b983be9da224d2d1c17db81772ccd8f2307",
       "command": "Versioned source; see recorded execution commands."
     },
     {

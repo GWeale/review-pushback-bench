@@ -63,7 +63,7 @@ jobs:
       - name: Run the same tasks with no edits or decision submission
         run: harbor run -p .bench-work/smoke -a nop -n 2 --jobs-dir .bench-work/jobs --job-name nop
       - name: Assert reference rewards and no-op rejection
-        run: python harbor/check_smoke.py --jobs .bench-work/jobs
+        run: python harbor/check_smoke.py --jobs .bench-work/jobs --tasks .bench-work/smoke
 
 # This workflow does not call model APIs, read provider keys, publish anything,
 # or grade submitted model code. Run unreviewed candidates in a separate sandbox.

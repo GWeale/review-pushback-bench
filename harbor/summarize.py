@@ -8,6 +8,8 @@ def summarize(manifest, results):
     expected = {task['name']: task for task in manifest['tasks']}
     observed = {}
     for result in results:
+        if not isinstance(result, dict) or not isinstance(result.get('task_name'), str):
+            raise ValueError('Each result needs a string task_name.')
         name = result['task_name'].split('/')[-1]
         if name not in expected:
             raise ValueError('Result contains a task outside this manifest: ' + name)
@@ -17,13 +19,18 @@ def summarize(manifest, results):
     rows = []
     for name, task in expected.items():
         result = observed.get(name)
-        rewards = ((result.get('verifier_result') or {}).get('rewards') or {}) if result else {}
-        successful = bool(result and not result.get('exception_info'))
+        verifier = result.get('verifier_result') if result else None
+        rewards = verifier.get('rewards') if isinstance(verifier, dict) else None
+        metrics = ('behavior', 'decision', 'reward')
+        valid_rewards = (isinstance(rewards, dict)
+                         and all(type(rewards.get(key)) in (int, float) and rewards[key] in (0, 1)
+                                 for key in metrics)
+                         and rewards['reward'] == rewards['behavior'] * rewards['decision'])
+        successful = bool(result and result.get('exception_info') is None and valid_rewards)
         row = dict(task)
-        for metric in ('behavior', 'decision', 'reward'):
-            value = rewards.get(metric)
-            row[metric] = int(successful and isinstance(value, (int, float)) and value == 1)
-        row['valid_result'] = successful and all(key in rewards for key in ('behavior', 'decision', 'reward'))
+        for metric in metrics:
+            row[metric] = int(successful and rewards[metric] == 1)
+        row['valid_result'] = successful
         rows.append(row)
     def mean(group, metric):
         return sum(row[metric] for row in group) / len(group) if group else None
