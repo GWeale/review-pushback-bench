@@ -8,6 +8,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -49,6 +50,53 @@ def parse_record(text, task_id):
     return {key: value[key] for key in ('task_id', 'decision', 'source', 'explanation')}
 
 
+def load_tasks(data):
+    try:
+        lines = data.decode('utf-8').splitlines()
+    except UnicodeError:
+        raise ValueError('Task file must use UTF-8.') from None
+    if not lines:
+        raise ValueError('Task file must contain at least one task.')
+    tasks = []
+    seen = set()
+    for number, line in enumerate(lines, 1):
+        try:
+            task = json.loads(line)
+        except ValueError:
+            raise ValueError(f'Task file line {number} must contain a JSON object.') from None
+        if not isinstance(task, dict) or any(
+                not isinstance(task.get(field), str) or not task[field].strip()
+                for field in ('task_id', 'benchmark_version', 'prompt')):
+            raise ValueError(f'Task file line {number} needs nonempty task_id, benchmark_version, and prompt strings.')
+        if task['task_id'] in seen:
+            raise ValueError(f'Task file line {number} repeats a task_id.')
+        if tasks and task['benchmark_version'] != tasks[0]['benchmark_version']:
+            raise ValueError(f'Task file line {number} has a different benchmark_version.')
+        seen.add(task['task_id'])
+        tasks.append(task)
+    return tasks
+
+
+USAGE_COUNTS = ('promptTokenCount', 'candidatesTokenCount', 'thoughtsTokenCount')
+
+
+def validate_usage(usage):
+    if usage is None:
+        return {}
+    if not isinstance(usage, dict) or any(
+            type(usage.get(field, 0)) is not int or usage.get(field, 0) < 0
+            for field in USAGE_COUNTS):
+        raise ValueError('Invalid provider usage metadata.')
+    return usage
+
+
+def usage_count(record, field):
+    # Older attempt logs may contain malformed metadata; never retry those requests.
+    usage = record.get('usage')
+    value = usage.get(field, 0) if isinstance(usage, dict) else 0
+    return value if type(value) is int and value >= 0 else 0
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--tasks', type=Path, required=True)
@@ -63,6 +111,10 @@ def main():
     parser.add_argument('--pause-seconds', type=float, default=0.2)
     parser.add_argument('--thinking-level', choices=('minimal', 'low', 'medium', 'high'))
     args = parser.parse_args()
+    if not all(math.isfinite(value) for value in (
+            args.max_estimated_usd, args.input_usd_per_million,
+            args.output_usd_per_million, args.pause_seconds)):
+        parser.error('Budgets, rates, and pauses must be finite numbers.')
     if (args.max_output_tokens < 1 or args.max_estimated_usd <= 0 or args.input_usd_per_million < 0
             or args.output_usd_per_million < 0 or args.pause_seconds < 0 or
             (args.limit is not None and args.limit < 1)):
@@ -71,7 +123,10 @@ def main():
     if not key:
         parser.error('GEMINI_API_KEY is unavailable. Do not place credentials in source or output files.')
     data = args.tasks.read_bytes()
-    tasks = [json.loads(line) for line in data.decode('utf-8').splitlines() if line.strip()]
+    try:
+        tasks = load_tasks(data)
+    except ValueError as error:
+        parser.error(str(error))
     random.Random(args.seed).shuffle(tasks)
     if args.limit:
         tasks = tasks[:args.limit]
@@ -137,7 +192,7 @@ def main():
                 raw = json.load(response)
             # Only model output, usage and identifiers are logged; never request headers.
             record.update(status='received', model_version=raw.get('modelVersion'),
-                          response_id=raw.get('responseId'), usage=raw.get('usageMetadata', {}),
+                          response_id=raw.get('responseId'), usage=validate_usage(raw.get('usageMetadata')),
                           candidates=raw.get('candidates', []), prompt_feedback=raw.get('promptFeedback'))
             candidates = raw.get('candidates') or []
             parts = candidates[0].get('content', {}).get('parts', []) if candidates else []
@@ -156,7 +211,7 @@ def main():
         except (urllib.error.URLError, TimeoutError):
             record.update(status='transport-error', parse_valid=False)
             stop_reason = 'transport-error'
-        except (json.JSONDecodeError, UnicodeError, TypeError, AttributeError, IndexError):
+        except (ValueError, UnicodeError, TypeError, AttributeError, IndexError):
             record.update(status='invalid-provider-response', parse_valid=False)
             stop_reason = 'invalid-provider-response'
         record.update(finished_at=now(), elapsed_seconds=round(time.monotonic() - started, 3))
@@ -169,9 +224,9 @@ def main():
         if record['status'] != 'received':
             break
         time.sleep(args.pause_seconds)
-    prompt_tokens = sum(record.get('usage', {}).get('promptTokenCount', 0) for record in attempts)
-    output_tokens = sum(record.get('usage', {}).get('candidatesTokenCount', 0) +
-                        record.get('usage', {}).get('thoughtsTokenCount', 0) for record in attempts)
+    prompt_tokens = sum(usage_count(record, 'promptTokenCount') for record in attempts)
+    output_tokens = sum(usage_count(record, 'candidatesTokenCount') +
+                        usage_count(record, 'thoughtsTokenCount') for record in attempts)
     manifest.update(finished_at=now(), status=stop_reason, attempts=len(attempts),
                     valid_responses=sum(record.get('parse_valid', False) for record in attempts),
                     prompt_tokens=prompt_tokens, output_and_thought_tokens=output_tokens,
