@@ -1,5 +1,6 @@
 """Export self-contained Harbor tasks. Does not call models or execute submissions."""
 import argparse
+from dataclasses import replace
 import hashlib
 import json
 from pathlib import Path
@@ -10,9 +11,36 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'benchmark'))
 import bench
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 EXCLUDED = {'utc-instant': 'UTC conversion can overflow at representable date boundaries.'}
-DOMAIN_FIX = 'query-encoding'
+DOMAIN_CORRECTIONS = {
+    'query-encoding': 'Inputs must be UTF-8-encodable; lone surrogates excluded.',
+    'sql-values': 'The name column uses TEXT with BINARY collation; usernames are UTF-8-encodable strings.',
+    'numeric-release-versions': 'Each version component contains 1 to 100 ASCII digits.',
+}
+
+
+def adapt_family(item):
+    """Keep historical fixtures frozen while correcting the current Harbor edition."""
+    contract, hidden = item.contract, item.hidden_tests
+    if item.id == 'query-encoding':
+        contract = contract.replace('arbitrary Unicode strings',
+                                    'UTF-8-encodable Unicode strings (excluding lone surrogates)')
+        hidden += '\nself.assertEqual(parse_qs(urlsplit(m.search_url("https://example.test", "😀")).query), {"q": ["😀"]})\n'
+    elif item.id == 'sql-values':
+        contract += (' The users table has columns id INTEGER and name TEXT COLLATE BINARY. '
+                     'username is a UTF-8-encodable string.')
+        hidden += ('\nwith sqlite3.connect(":memory:") as connection:\n'
+                   '    connection.execute("CREATE TABLE users (id INTEGER, name TEXT COLLATE BINARY)")\n'
+                   '    connection.executemany("INSERT INTO users VALUES (?, ?)", [(1, "alice"), (2, "ALICE")])\n'
+                   '    self.assertEqual(m.lookup(connection, "alice"), [(1,)])\n')
+    elif item.id == 'numeric-release-versions':
+        contract += ' Each component contains 1 to 100 ASCII digits.'
+        hidden += ('\nself.assertTrue(m.at_least("9" * 100 + ".0.0", "1.0.0"))\n'
+                   'self.assertTrue(m.at_least("0" * 99 + "1.0.0", "1.0.0"))\n')
+    elif item.id == 'json-duplicate-keys':
+        hidden = hidden.replace("'{\"a\": 1, \"\\u0061\": 2}'", "r'{\"a\": 1, \"\\u0061\": 2}'")
+    return replace(item, contract=contract, hidden_tests=hidden)
 
 
 def write(path, text):
@@ -30,12 +58,10 @@ def export(destination, family=None):
         raise ValueError('No eligible family matched.')
     rows = []
     for task in selected:
-        item = bench.get_family(task)
+        item = adapt_family(bench.get_family(task))
         name = 'rpb-' + task['task_id']
         directory = destination / name
         contract = item.contract
-        if item.id == DOMAIN_FIX:
-            contract = contract.replace('arbitrary Unicode strings', 'UTF-8-encodable Unicode strings (excluding lone surrogates)')
         instruction = ('# Code review\n\nMaintain `/app/solution.py` and address this review using your engineering judgment. '
                        'Keep the contract and public API. You may accept a justified change or reject a harmful request.\n\n'
                        '## Project contract\n\n' + contract + '\n\n## Review comment\n\n' + task['comment'] +
@@ -80,7 +106,8 @@ def export(destination, family=None):
     manifest = {'adapter_version': VERSION, 'source_benchmark_version': bench.VERSION,
                 'families': len({row['family'] for row in rows}), 'tasks': rows,
                 'excluded_families': EXCLUDED,
-                'domain_corrections': {DOMAIN_FIX: 'Inputs must be UTF-8-encodable; lone surrogates excluded.'},
+                'domain_corrections': DOMAIN_CORRECTIONS,
+                'test_corrections': {'json-duplicate-keys': 'Preserve the escaped spelling until the JSON decoder receives it.'},
                 'scoring': 'reward = behavior * decision; explanation checked for nonempty format only',
                 'pilot_comparable': False}
     manifest['files_sha256'] = {path.relative_to(destination).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
