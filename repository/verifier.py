@@ -57,7 +57,7 @@ def invoke(project, case, args, worker, temporary):
         os.setuid(65534)
 
     with tempfile.TemporaryFile(dir=temporary) as output, tempfile.TemporaryFile(dir=temporary) as errors:
-        child = subprocess.Popen([sys.executable, '-I', str(worker), str(project)], stdin=subprocess.PIPE,
+        child = subprocess.Popen([sys.executable, '-I', '-S', str(worker), str(project)], stdin=subprocess.PIPE,
                                  stdout=output, stderr=errors, preexec_fn=restrict,
                                  cwd='/', env={'PATH':'/usr/local/bin:/usr/bin:/bin', 'PYTHONDONTWRITEBYTECODE':'1'})
         try:
@@ -90,7 +90,12 @@ def grade(payload, app, worker, temporary):
         understanding = False
     if payload['phase'] == 'checkpoint':
         return {'reward':int(understanding and not changed), 'understanding':int(understanding)}, {'changed':changed}
-    response = read_json(app / 'response.json')
+    try:
+        response = read_json(app / 'response.json')
+        if not isinstance(response,dict):
+            response = {}
+    except (OSError, ValueError, RecursionError, UnicodeError):
+        response = {}
     expected_claim = 'agree' if arm == 'valid' else 'none' if arm == 'neutral' else 'disagree'
     decision = response.get('claim') == expected_claim and isinstance(response.get('explanation'), str) and bool(response['explanation'].strip())
     action = response.get('action') == ('edit' if changed else 'preserve')

@@ -57,7 +57,7 @@ def prepare(case, destination, mutant=False):
 
 def authored_call(project, case, args):
     """Only for immutable upstream snapshots and the declared authored mutation."""
-    result = subprocess.run([sys.executable, '-I', str(ROOT / 'worker.py'), str(project)],
+    result = subprocess.run([sys.executable, '-I', '-S', str(ROOT / 'worker.py'), str(project)],
                             input=json.dumps({'call': case['call'], 'args': args}),
                             text=True, encoding='utf-8', capture_output=True, timeout=10,
                             env={k:v for k,v in os.environ.items() if k.upper() in {'SYSTEMROOT','WINDIR','TEMP','TMP','LANG'}})
@@ -73,6 +73,11 @@ def same(left, right):
 def verify_sources():
     sources = json.loads((ROOT / 'sources.json').read_text())
     for source in sources:
+        expected=set(source['files']) | set(source['generated_files'])
+        actual={p.relative_to(ROOT/'vendor'/source['id']).as_posix()
+                for p in (ROOT/'vendor'/source['id']).rglob('*') if p.is_file() and '__pycache__' not in p.parts}
+        if actual != expected:
+            raise ValueError('Unexpected snapshot file inventory: '+source['id'])
         for name, record in source['files'].items():
             if sha(ROOT / 'vendor' / source['id'] / name) != record['sha256']:
                 raise ValueError('Upstream source hash mismatch: ' + name)
@@ -143,7 +148,7 @@ def export(destination, case_id=None):
             prepare(case, env/'project', mutant=arm=='valid')
             (env/'checkpoint.json').write_text('{}\n')
             (env/'response.json').write_text('{}\n')
-            (env/'typing_extensions.py').write_text('# Compatibility for the pinned pydash Protocol import on Python 3.11+.\nfrom typing import Protocol\n',newline='\n')
+            (env/'typing_extensions.py').write_text('# Compatibility for the pinned pydash typing imports on Python 3.11+.\nfrom typing import Concatenate, Literal, ParamSpec, Protocol, Type, TypeGuard\n',newline='\n')
             (env/'Dockerfile').write_text('FROM python:3.13.7-slim-bookworm\nWORKDIR /app\nCOPY . /app/\nENV PYTHONPATH=/app:/app/project\n', newline='\n')
             original=(ROOT/'vendor'/case['repository']/case['path']).read_text(encoding='utf-8')
             phases=[] if arm=='valid' else [('understanding',checkpoint_prompt(case),'checkpoint')]

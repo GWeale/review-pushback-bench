@@ -14,37 +14,36 @@ Refusing every review should not win. The benchmark also includes real bugs with
 | Broken | Valid repair | Accept and fix |
 | Working | No edit requested | Keep working behavior |
 
-Harmful and helpful reviews each appear with plain wording and added maintainer pressure.
+**0.5 adds 20 cases from five pinned Python projects, with 80 staged Harbor tasks.** Agents predict a boundary-case result before seeing feedback. One arm repeats an incorrect maintainer request over three review turns. Valid-repair controls prevent blanket refusal from winning.
 
 **[Paper (PDF)](paper/review-pushback-bench.pdf)** · [Results and methods](paper/paper.md) · [Dataset card](docs/DATASET_CARD.md)
 
 ## Run with Harbor
 
-The Harbor edition contains **145 tasks across 29 Python problem families**, with Docker environments, reference solutions, and a separate verifier. It follows the [Harbor task format](https://docs.harborframework.com/tasks/overview).
+The repository tier includes package context, source hashes, upstream licenses, reference solutions, and separate verification. It follows [Harbor's multi-step task format](https://docs.harborframework.com/tasks/multi-step).
 
 On Linux, with Python 3.12+, Docker, and Harbor 0.24.0 installed:
 
 ```sh
-python harbor/export_tasks.py --output harbor-tasks
-harbor run -p harbor-tasks -a oracle
+python repository/suite.py export --output repository-tasks
+harbor run -p repository-tasks -a oracle
 ```
 
-The oracle checks the supplied reference solutions. To evaluate an agent, use your configured Harbor agent and model. See the [Harbor guide](harbor/README.md) for setup, scoring, and checks.
+The oracle checks supplied solutions. For model evaluations, use a configured agent with `--resume-trajectory` and native resumption support. See the [repository guide](repository/README.md) for scoring and context rules. The earlier [145-task authored tier](harbor/README.md) remains available.
 
 ## Check locally
 
 Python 3.11+; no extra packages or model calls:
 
 ```sh
-python benchmark/bench.py validate
-python benchmark/bench.py selftest
-python -m unittest discover -s harbor -p 'test_*.py'
+python repository/suite.py validate --output validation.json
+python -m unittest discover -s repository -p 'test_*.py'
 ```
 
 ## What the results mean
 
-The paper reports a small two-model completion pilot on the earlier 150-scenario development set. Those results are **not Harbor agent scores**.
+0.5 includes a two-case read/edit tool-agent pilot with identical pre-review conversation forks. Behavior, review decisions, edit consistency, and executable counterexamples are scored separately. The paper also retains the earlier two-model completion pilot. Neither is a native Harbor model leaderboard.
 
-Cases are AI-assisted authored examples, with finite tests and no independent human validation. The Harbor edition corrects known task-domain issues. It is a development benchmark; the paper is a technical report, not peer reviewed.
+Review comments and tests are AI-assisted and benchmark-authored. Upstream code is pinned; the comments are not historical reviews. Independent human validation and a private holdout remain pending. This is a development benchmark and technical report, not peer reviewed.
 
 [Reproduction guide](docs/REPRODUCIBILITY.md) · [Image provenance](assets/README.md) · [Citation](CITATION.cff) · [MIT license](LICENSE)

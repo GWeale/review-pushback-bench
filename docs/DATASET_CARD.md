@@ -1,5 +1,7 @@
 # Dataset card
 
+Version 0.5 adds a separate [repository tier](../repository/README.md): 20 cases from five pinned Python projects, exported as 80 staged Harbor tasks. Source provenance is in [sources.json](../repository/sources.json). The code is upstream; comments, mutations, and tests are benchmark-authored. All 20 cases await independent human validation. There is no private holdout. The earlier authored tier described below remains available and retains its original pilot records.
+
 ## Purpose and release status
 
 Review Pushback Bench measures how a coding system responds to technically incorrect and correct code-review feedback. It tests whether the final program meets a supplied contract, and whether the system's accept/reject decision agrees with that contract.

@@ -1,7 +1,7 @@
 # Review Pushback Bench: Evaluating Responses to Incorrect Code Review Feedback
 
 **George Weale**  
-Technical report · October 20, 2026 · Development release 0.4
+Technical report · October 20, 2026 · Development release 0.5
 
 **Status:** Public methodology report; not peer reviewed. Dataset construction and writing were AI-assisted. See the disclosure below.
 
@@ -29,7 +29,7 @@ The release contributes three things: a matched family construction that rewards
 
 **Code review evaluation.** c-CRAB evaluates generated reviews through executable tests derived from human review feedback [6]. Its use of program behavior is closely related to our grading principle. The evaluated roles differ: c-CRAB studies the review producer, whereas Review Pushback Bench supplies the review and evaluates the implementing model or agent. A direct comparison of their scores would not be meaningful.
 
-**Sustained social feedback.** SYCON Bench measures stance changes under multi-turn pressure [7]. Our implemented development protocol is single-turn and includes an authority cue. It cannot measure the turn at which a model abandons a previously established correct analysis. We describe that experiment as an extension rather than implying it has been performed.
+**Sustained social feedback.** SYCON Bench measures stance changes under multi-turn pressure [7]. The original development protocol is single-turn and includes an authority cue. The 0.5 repository tier adds a pre-review prediction and two follow-ups to an incorrect maintainer review. Its small tool-agent pilot forks a shared pre-review conversation. This records behavior across turns without identifying the psychological cause of a change.
 
 ## 3. Task construction
 
@@ -146,7 +146,7 @@ Run artifacts are under `artifacts/model-runs/`. Each configuration has metadata
 
 Strict label agreement is not equivalent to engineering judgment. AI-assisted inspection of the four Flash-Lite primary label mismatches found two harmful `signed-time-buckets` responses labeled `no_change`, although their explanations rejected the bad edit and their source matched the reference. A neutral `config-zero` response used `reject` while explaining that no change was needed. The valid `config-zero` response used `reject`, then corrected its own reasoning and supplied an alternative membership-based repair. These examples remain strict label mismatches in the recorded score; they are not four observed regressions.
 
-This finding limits interpretation of calibrated balance. Future versions should distinguish the disposition of a review claim from the action taken on the code, and validate the decision vocabulary before treating it as a semantic outcome. We preserve the original labels rather than retroactively normalizing them to improve the result. Explanation quality has not received independent human scoring.
+This finding limits interpretation of calibrated balance. The 0.5 tier separates review disposition, observed code changes, and executable witnesses. Strict labels can still be ambiguous. We preserve the original labels rather than retroactively normalizing them to improve the result. Explanation quality has not received independent human scoring.
 
 ## 6. Reproduction and evaluation protocol
 
@@ -156,13 +156,13 @@ For a model pilot, freeze the code revision, task export hash, system prompt, ex
 
 Candidate source is executable code. A subprocess, stripped environment, timeout, and completion marker improve reliability but are not a security sandbox. Behavioral evaluation of unreviewed model-generated source requires an isolated disposable environment with restricted access. A completion marker prevents an accidental early successful exit from being counted as a test pass; it is not a general defense against malicious submissions.
 
-A small pilot is sufficient to find construction problems and document illustrative model failures. It does not establish a stable ranking. A stronger pressure study would first elicit a correct analysis without a stance cue, freeze that conversation prefix, then branch into neutral, valid-feedback, and incorrect-feedback continuations. Primary correctness-retention analysis could condition on pre-feedback correctness while reporting the excluded population. Repeated insistence would add a multi-turn axis. These extensions are proposed, not implemented in the present protocol.
+A small pilot can find construction problems and document illustrative model failures. It does not establish a stable ranking. The 0.5 tool-agent pilot implements a shared-prefix prediction control for neutral, harmful, and authority continuations. Valid feedback starts fresh on mutated code, so it is not part of that same-prefix comparison. Both qualified and full-denominator behavior must be reported; a correct boundary prediction alone does not establish broad competence.
 
 ## 7. Threats to validity and release boundaries
 
-**Technical competence is a confound.** A small model may fail to understand the contract before considering social cues. The current neutral arm is not an equivalent test of pre-feedback understanding of the specific claim. A shared-prefix knowledge control is needed before interpreting a regression rate as susceptibility to persuasion.
+**Technical competence is a confound.** A small model may fail to understand the contract before considering social cues. The original neutral arm is not an equivalent test of pre-feedback understanding of the specific claim. The 0.5 boundary prediction gives a narrower control, but it also directs attention to a distinguishing input and cannot establish general understanding.
 
-**Explicit contracts can make tasks easy or artificial.** Some examples name the exact policy that a review contradicts. Such cases test whether a model honors a clear contract, but may understate the contextual inference needed in real code review. Conversely, implicit or disputed requirements would make labels unreliable. A future repository tier should retain enough callers and documentation to support the intended invariant without artificially spelling out every answer.
+**Explicit contracts can make tasks easy or artificial.** Some examples name the exact policy that a review contradicts. Such cases test whether a model honors a clear contract, but may understate the contextual inference needed in real code review. Conversely, implicit or disputed requirements would make labels unreliable. The 0.5 tier retains package source and root documentation, but its changes remain small function-level edits and its boundary checkpoint can make the relevant invariant conspicuous.
 
 **The harness grants permission to disagree.** The task prompt explicitly permits a justified rejection and asks the model to keep the contract intact. This standardizes the decision space, but can prime caution and understate failures in workflows that simply ask an agent to address every review comment. Prompt sensitivity should be studied as a separate condition rather than silently changing the prompt between models.
 
@@ -187,6 +187,20 @@ George Weale directed the work and requested its release. Coding agents assisted
 ## Harbor task edition
 
 Harbor adapter 0.2.0 exports 145 tasks across 29 families in the [Harbor task format](https://docs.harborframework.com/tasks/overview), with separate agent and verifier containers. It excludes `utc-instant` and corrects the domains and JSON check described above. Agents edit the module and submit a review decision; the verifier checks behavior and decision labels, while explanation quality remains ungraded. Candidate code shares the test interpreter, so deliberate runner tampering remains a limitation. The completion-pilot results above are not Harbor agent measurements. Setup, restrictions, and scoring are documented in the adapter guide.
+
+## Repository extension: development release 0.5
+
+This release adds 20 cases from pinned snapshots of boltons, more-itertools, itsdangerous, pydash, and humanize, with four cases per project. Commit hashes, upstream paths, file hashes, licenses, and package source are retained in `repository/sources.json` and `repository/vendor/`. The snapshots include package context and root documentation, not complete repository histories or upstream test suites. Humanize needs an explicit version-module packaging shim; pydash's six typing backports are mapped to their Python 3.11+ standard-library equivalents outside the pinned source. No source from SWE-bench or another benchmark is imported.
+
+Each case supplies a correct upstream implementation, one benchmark-authored mutation, basic examples that both implementations pass, and a distinguishing check. All 20 correct implementations pass the finite checks, and all 20 mutations are rejected by at least one distinguishing check. These are executable fixture checks, not independent validation of full API contracts. The review comments were authored for this benchmark and should not be attributed to upstream maintainers.
+
+Four arms yield 80 Harbor tasks: neutral, harmful, authority, and valid repair. Correct-start arms first ask for the result of a boundary call and a brief explanation. The authority arm then presents an incorrect maintainer review and two fixed follow-ups. Valid repair starts fresh on the declared mutant. Harbor schema 1.3 represents these as staged tasks. Native agent evaluations require `--resume-trajectory` and an agent that supports conversation resumption; file persistence alone is insufficient. Independent Harbor trials do not fork one identical checkpoint. Final-step rewards must be read alongside the checkpoint and earlier step results.
+
+The verifier reports program behavior, review disposition, action consistency, and executable evidence separately. Its main reward requires passing behavior, the expected disposition, and an action field consistent with whether the final file differs from the task's initial file. A counterexample earns a separate evidence score only if its claimed result matches the reference and differs from the mutant. This checks a concrete witness, not the overall reasoning quality. Expected outputs remain in a protected grading parent; submitted modules execute in an unprivileged child outside the protected test directory. Docker grading restricts networking, resources, and writable paths. This improves separation from the original shared test interpreter without constituting a general adversarial security guarantee.
+
+The tool-agent pilot fixes two convenience cases, boltons ceiling equality and pydash falsy-value compaction, before model calls. Gemini 2.5 Flash receives read, find, and replace tools without a shell or test execution. Each case first produces a prediction; its exact serialized conversation is then copied into neutral, harmful, and authority branches. Valid repair uses a separate fresh context. There is one repetition and no answer-dependent retries. The release retains the plan, raw calls, checkpoints, every saved source state, and strict decisions. Model-written source is executed only during isolated Docker grading. These are custom tool-agent observations, not native Harbor model scores.
+
+All cases are public. Independent human validation is pending for all 20. The supplied review packet requires two independent engineers to check each contract, mutation, and oracle, with evidence and resolved disagreements. Agent reviews do not count toward that gate. A private holdout, broader language and repository coverage, repeated native-agent model runs, and independent replication remain work for later releases. Version 0.5 does not claim readiness for 1.0.
 
 ## References
 

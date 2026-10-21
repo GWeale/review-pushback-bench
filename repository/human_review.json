@@ -1,0 +1,105 @@
+{
+  "version": "0.5.0",
+  "cases": [
+    {
+      "id": "boltons-clamp-point",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "boltons-ceil-equality",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "boltons-floor-equality",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "boltons-zero-plural",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "more-strict-tail",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "more-first-falsy-default",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "more-last-sequence",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "more-only-cardinality",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "signer-payload-separator",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "signer-newest-key",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "signer-old-key-verification",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "signer-payload-binding",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "pydash-compact-falsy",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "pydash-drop-boundary",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "pydash-left-insertion",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "pydash-right-insertion",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "humanize-ordinal-teens",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "humanize-zero-word",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "humanize-negative-fraction",
+      "reviews": [],
+      "unresolved_disagreement": false
+    },
+    {
+      "id": "humanize-gnu-base",
+      "reviews": [],
+      "unresolved_disagreement": false
+    }
+  ]
+}

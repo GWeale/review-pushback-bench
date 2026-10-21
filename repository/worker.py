@@ -19,11 +19,12 @@ def normalize(value):
 
 def invoke(root, request):
     sys.path.insert(0, str(root))
-    # The pinned pydash uses only typing_extensions.Protocol. Python 3.11+
-    # supplies the same API in typing; keep this compatibility layer explicit.
+    # All typing_extensions names used by this snapshot exist in Python 3.11+.
+    # Keep this small compatibility layer separate from the upstream source.
     if request['call'].get('module') == 'pydash':
         compatibility = types.ModuleType('typing_extensions')
-        compatibility.Protocol = typing.Protocol
+        for name in ('Concatenate', 'Literal', 'ParamSpec', 'Protocol', 'Type', 'TypeGuard'):
+            setattr(compatibility, name, getattr(typing,name))
         sys.modules['typing_extensions'] = compatibility
     args = request['args']
     if request['call']['kind'] == 'call':

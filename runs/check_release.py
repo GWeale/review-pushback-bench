@@ -22,8 +22,12 @@ def public_files():
         for pattern in patterns:
             paths.extend((ROOT / directory).glob(pattern))
     for name in ('validation.v0.2.json', 'selftest.v0.2.json', 'pipeline-checks.json',
-                 'tasks.v0.2.dev.jsonl', 'primary-analysis-plan.json', 'release-checks.json', 'harbor-validation.v01.json', 'harbor-validation.v02.json'):
+                 'tasks.v0.2.dev.jsonl', 'primary-analysis-plan.json', 'release-checks.json', 'harbor-validation.v01.json', 'harbor-validation.v02.json',
+                 'repository-validation.v05.json', 'repository-harbor-validation.v05.json', 'repository-human-review.v05.json',
+                 'repository-pilot-grade.v05.json', 'repository-pilot-summary.v05.json', 'repository-native.v05.json'):
         paths.append(ROOT / 'artifacts' / name)
+    for directory in ('repository', 'artifacts/repository-pilot.v05'):
+        paths.extend(p for p in (ROOT / directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
     for directory in ('gemini-2.5-flash-v02', 'gemini-3.5-flash-lite-v02'):
         for name in ('run.json', 'attempts.jsonl', 'responses.jsonl', 'canonical-grade.json'):
             paths.append(ROOT / 'artifacts/model-runs' / directory / name)
@@ -33,7 +37,7 @@ def public_files():
 def main():
     checks = {}
     logs = {}
-    for label, directory, pattern in [('harness', 'benchmark', 'test_*.py'), ('adapters', 'runs', 'test_*.py'), ('harbor', 'harbor', 'test_*.py')]:
+    for label, directory, pattern in [('harness', 'benchmark', 'test_*.py'), ('adapters', 'runs', 'test_*.py'), ('harbor', 'harbor', 'test_*.py'), ('repository','repository','test_*.py')]:
         result = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', directory, '-p', pattern, '-v'],
                                 cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
         checks[label + '_tests'] = result.returncode == 0
@@ -43,6 +47,9 @@ def main():
     checks['authored_fixture_validation'] = validation['passed'] and validation['families'] == 30 and validation['tasks'] == 150
     checks['synthetic_policy_checks'] = policy['passed']
     checks['pipeline_checks'] = json.loads((ROOT / 'artifacts/pipeline-checks.json').read_text())['passed']
+    repository_validation=json.loads((ROOT/'artifacts/repository-validation.v05.json').read_text())
+    checks['repository_fixtures']=repository_validation['passed'] and repository_validation['families']==20
+    checks['repository_harbor_schema']=json.loads((ROOT/'artifacts/repository-harbor-validation.v05.json').read_text())['tasks_loaded']==80
     export = ROOT / 'artifacts/tasks.v0.2.dev.jsonl'
     export_hash = hashlib.sha256(export.read_bytes()).hexdigest()
     plan = json.loads((ROOT / 'artifacts/primary-analysis-plan.json').read_text())
@@ -69,7 +76,7 @@ def main():
         data = path.read_bytes()
         if any(secret in data for secret in secret_values) or re.search(rb'AIza[0-9A-Za-z_-]{30,}|gh[pousr]_[0-9A-Za-z]{30,}', data):
             privacy_issues.append(path.relative_to(ROOT).as_posix())
-        if path.suffix == '.md':
+        if path.suffix == '.md' and 'vendor' not in path.relative_to(ROOT).parts:
             text = data.decode('utf-8')
             for target in re.findall(r'\]\(([^)]+)\)', text):
                 if '://' in target or target.startswith('#'):

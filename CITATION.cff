@@ -5,7 +5,7 @@ title: "Review Pushback Bench"
 authors:
   - family-names: Weale
     given-names: George
-version: 0.4.0-dev
+version: 0.5.0-dev
 date-released: 2026-10-20
 license: MIT
 repository-code: "https://github.com/GWeale/review-pushback-bench"
@@ -16,6 +16,8 @@ abstract: >-
   correctness checks to distinguish behavior preservation from blanket refusal.
   The technical report presents methodology, synthetic policy checks, and a
   small two-model direct-completion pilot with conservative source verification.
+  Version 0.5 adds 20 pinned repository cases, staged Harbor tasks, and a
+  two-case tool-agent pilot with shared pre-review conversation forks.
   These results are not a frontier-model or full coding-agent leaderboard.
 keywords:
   - code review

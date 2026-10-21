@@ -1,5 +1,7 @@
 # Reproducing a release
 
+For the 0.5 pinned repository cases, staged Harbor tasks, shared-prefix tool-agent pilot, and human-review gate, use the [repository guide](../repository/README.md). The protocols below describe the earlier single-module tier and its frozen completion pilot. Their results should remain separate.
+
 The core benchmark uses Python 3.11 or later and the standard library. It needs no model account, package installation, or network request to validate the authored fixtures.
 
 ## Authored fixture validation
@@ -59,7 +61,7 @@ For version changes, regenerate exports and validation artifacts. Do not combine
 
 ## Continuous integration
 
-The workflow in `.github/workflows/checks.yml` runs authored fixture and harness checks on Python 3.11 and 3.13. A separate Linux job loads all 145 exported tasks with Harbor 0.24.0, then runs all five page-boundary variants in Docker with the reference oracle and a no-op agent. It checks task identities, oracle rewards of one, no-op rewards of zero, and separate verification without trial errors. Additional Docker fixtures check a mutant with a valid decision, nested review JSON, false completion output, and excessive output. Obsolete workflow runs are cancelled after newer pushes. These are integration controls, not model results. The workflow requests read-only repository permission, does not persist checkout credentials, and contains no provider secrets, model calls, deployment, or publishing step.
+The workflow in `.github/workflows/checks.yml` runs authored fixture and harness checks on Python 3.11 and 3.13. One Linux job loads all 145 original Harbor tasks and checks five page-boundary variants with the reference oracle, a no-op agent, and four negative fixtures. Another loads all 80 staged repository tasks, checks four matched native oracle/no-op tasks, and grades the saved tool-agent pilot only in isolated Docker containers. Obsolete runs are cancelled after newer pushes. Authored controls are integration checks, not model results. The workflow requests read-only repository permission, does not persist checkout credentials, and contains no provider secrets, model API calls, deployment, or publishing step.
 
 CI action usage follows the official [checkout](https://github.com/actions/checkout) and [setup-python](https://github.com/actions/setup-python) documentation checked on October 20, 2026. Local validation does not establish that remote CI passed; inspect the actual workflow result after publication.
 
